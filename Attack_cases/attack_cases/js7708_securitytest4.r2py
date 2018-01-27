@@ -1,0 +1,30 @@
+# Open a file
+try: 
+  removefile("attack.txt")
+except:
+  pass
+myfile=ABopenfile("testfile.txt",True)
+ 
+#check against valid
+def close_after(t):
+  def sleep_for():
+    sleep(t)
+    log("Timeout on valid write/read...\n")
+    exitall()
+  return sleep_for
+
+timeout = close_after(5)
+createthread(timeout)
+try:
+    myfile.writeat("abcd", 0)
+    myfile.readat(4,0)
+
+except Exception as e:
+  log("%s -- Exception raised against valid input\n" % e)
+
+else:
+  pass
+ 
+finally:
+  myfile.close()
+  exitall()

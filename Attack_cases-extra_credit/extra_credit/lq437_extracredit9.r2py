@@ -1,0 +1,48 @@
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+# Open File Function Call
+try:
+  myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+except:
+  log("Accuracy: failed to open file!\n")
+
+# Write valid data to the file
+try:
+  myfile.writeat("StestE",0)
+except:
+  log("Accuracy: failed to write file!\n")
+
+#Close the file
+myfile.close()
+
+# Open File Function Call
+try:
+  myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+except:
+  log("Accuracy: failed to open file!\n")
+
+# Read data from the file
+try:
+  content=myfile.readat(6,0)
+except:
+  log("Accuracy: failed to read file!\n")
+
+# Write valid data to the file,
+try:
+  myfile.writeat("SanothertestE",0)
+except:
+  log("Accuracy: failed to write file!\n")
+
+#Should read from the original file
+try:
+  assert('StestE' == content)
+except:
+  log("Accuracy: read from the initial version of file is unsuccessful!\n")
+
+#Close the file
+myfile.close()

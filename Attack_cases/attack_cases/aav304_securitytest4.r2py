@@ -1,0 +1,18 @@
+# New File Operation
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+	removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+	removefile("testfile.txt.b")
+
+myfile=ABopenfile("testfile.txt",True)  #Create an empty file
+myfile.writeat("invalid data", 0) #write invalid data
+myfile.close()
+
+try:
+	assert("SE" == myfile.readat(None, 0)) #check if part 1 of assignment was done correctly
+	myfile.close()
+except:
+	myfile.close()
+	log("file contains invalid data\n")

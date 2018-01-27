@@ -1,0 +1,66 @@
+for i in range(4):
+    fn = 'testfile' + str(i) + '.txt'
+    afn = fn + '.a'
+    bfn = fn + '.b'
+    if afn in listfiles():
+        removefile(afn)
+    if bfn in listfiles():
+        removefile(bfn)
+    if fn in listfiles():
+        removefile(fn)
+
+try:    
+    myfile0=ABopenfile("testfile0.txt",True)
+    myfile1=ABopenfile("testfile1.txt",True)
+    myfile2=ABopenfile("testfile2.txt",True)
+    myfile3=ABopenfile("testfile3.txt",True)
+except:
+    log('open file failed\n')
+
+    
+try:
+    assert('SE' == myfile0.readat(2,0))
+    assert('SE' == myfile1.readat(2,0))
+    assert('SE' == myfile2.readat(2,0))
+    assert('SE' == myfile3.readat(2,0))
+except:
+    log('Empty file is not handled properly\n')
+
+try:
+    myfile0.writeat('StestE', 0)
+    myfile1.writeat('StestE', 0)
+    myfile2.writeat('StestE', 0)
+    myfile3.writeat('StestE', 0)
+except:
+    log('Valid data write to a file is unsuccessful!\n')
+finally:
+    try:
+        myfile0.close()
+        myfile1.close()
+        myfile2.close()
+        myfile3.close()
+    except:
+        log('File handler close failed\n')
+
+try:    
+    myfile0=ABopenfile("testfile0.txt",True)
+    myfile1=ABopenfile("testfile1.txt",True)
+    myfile2=ABopenfile("testfile2.txt",True)
+    myfile3=ABopenfile("testfile3.txt",True)
+except:
+    log('open file failed\n')
+try:
+    assert('StestE' == myfile0.readat(6,0))
+    assert('StestE' == myfile1.readat(6,0))
+    assert('StestE' == myfile2.readat(6,0))
+    assert('StestE' == myfile3.readat(6,0))
+except:
+    log('Valid data write to a file is unsuccessful!\n')
+finally:
+    try:
+        myfile0.close()
+        myfile1.close()
+        myfile2.close()
+        myfile3.close()
+    except:
+        log('File handler close failed\n')

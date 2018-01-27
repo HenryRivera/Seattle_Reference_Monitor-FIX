@@ -1,0 +1,20 @@
+# -----------------------Invalid file should not be saved
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+if "testfile.txt" in listfiles():
+  removefile("testfile.txt")
+
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+#Write invalid data
+myfile.writeat("Stest12345M",0)
+myfile.close()
+
+myfile=ABopenfile("testfile.txt", False) 
+try:
+  assert(myfile.readat(None,0) == "SE") #File should not have changed
+  myfile.close()
+except:
+  myfile.close()
+  log("File changed for invalid write\n")

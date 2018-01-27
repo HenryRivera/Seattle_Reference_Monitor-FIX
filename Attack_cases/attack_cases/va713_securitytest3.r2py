@@ -1,0 +1,6 @@
+
+try:
+  myfile=ABopenfile("TestFile.txt",True)  #Create an AB file
+  myfile.close()
+except Exception as e:
+  log(e,"File naming not handled properly")

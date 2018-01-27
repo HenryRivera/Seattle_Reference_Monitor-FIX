@@ -1,0 +1,70 @@
+# Uses multiple threads to access two files
+# Should break if the reference monitor did not use lock
+# The threads would write to their respective files
+# The write operation on one shouldn't be reflected on the other
+
+mycontext['completed_first_thread'] = False
+mycontext['completed_second_thread'] = False
+mycontext['completed_threads'] = False
+
+def first_thread():
+	if 'testfile1.txt.a' in listfiles():
+		removefile('testfile1.txt.a')
+	if 'testfile1.txt.b' in listfiles():
+		removefile('testfile1.txt.b')
+
+	myfile1 = ABopenfile('testfile1.txt', True)
+	myfile1.writeat("StestE", 0)
+
+	mycontext['completed_first_thread'] = True
+
+	if mycontext['completed_second_thread'] == False:
+		sleep(1)
+
+	myfile1.close()
+
+	myfile1 = ABopenfile('testfile1.txt', True)
+
+	data = myfile1.readat(None, 0)
+
+	try:
+		assert(data == 'StestE')
+	except:
+		log("Integrity of file 1 compromised\n")
+
+	myfile1.close()
+
+
+def second_thread():
+	if 'testfile2.txt.a' in listfiles():
+		removefile('testfile2.txt.a')
+	if 'testfile2.txt.b' in listfiles():
+		removefile('testfile2.txt.b')
+
+	myfile2 = ABopenfile('testfile2.txt', True)
+	myfile2.writeat("SBCDE", 0)
+
+	mycontext['completed_second_thread'] = True
+
+	if mycontext['completed_first_thread'] == False:
+		sleep(1)
+
+	myfile2.close()
+	myfile2 = ABopenfile('testfile2.txt', True)
+
+	data = myfile2.readat(None, 0)
+
+	try:
+	  assert(data == "SBCDE")
+	except:
+		log("Integrity of file 2 compromised\n")
+
+	myfile2.close()
+
+	mycontext['completed_threads'] = True
+
+
+createthread(first_thread)
+createthread(second_thread)
+if mycontext['completed_threads'] == False:
+	sleep(1)

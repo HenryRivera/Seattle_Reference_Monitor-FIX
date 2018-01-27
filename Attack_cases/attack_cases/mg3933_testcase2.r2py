@@ -1,0 +1,17 @@
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+myfile.writeat("StestE",0)
+myfile.close()
+
+# After the file is closed and saved, Bfile should be discarded
+try:
+ if "testfile.txt.b" in listfiles():
+ 	raise ValueError("file was not discarded!")
+except:
+ log("Security Bug: Bfile not discarded!\n")

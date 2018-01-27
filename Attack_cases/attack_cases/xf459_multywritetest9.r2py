@@ -1,0 +1,85 @@
+# Multiply Test: two Threads, both write
+
+testid = 9
+testfilename1 = "test_thread1_"+ str(testid) + ".txt"
+testfilea1 = "test_thread1_"+ str(testid) + ".txt.a"
+testfileb1 = "test_thread1_"+ str(testid) + ".txt.b"
+
+testfilename2 = "test_thread2_"+ str(testid) + ".txt"
+testfilea2 = "test_thread2_"+ str(testid) + ".txt.a"
+testfileb2 = "test_thread2_"+ str(testid) + ".txt.b"
+
+
+
+mycontext['threadOneIsDone'] = False
+mycontext['threadTwoIsDone'] = False
+mycontext['TestingIsDone'] = False
+
+mycontext['closed']=0
+
+def threadOne():
+  try:
+    if testfilename1 in listfiles():
+      removefile(testfilename1)
+    if testfilea1 in listfiles():
+      removefile(testfilea1)
+    if testfileb1 in listfiles():
+      removefile(testfileb1)
+    myfile1=ABopenfile(testfilename1,True)
+
+    #write something
+    myfile1.writeat("SooE",0)
+    assert('SE' == myfile1.readat(None,0))
+    
+    mycontext['threadOneIsDone'] = True
+
+    while mycontext['threadTwoIsDone'] == False:
+      sleep(1)
+
+    myfile1.writeat("STestTestE",0)
+    assert('SE' == myfile1.readat(None,0))
+
+    #Close the file
+    myfile1.close()
+    mycontext['closed']=1
+
+    myfile1=ABopenfile(testfilename1,True)
+    mycontext['closed']=0
+    assert('STestTestE' == myfile1.readat(None,0))
+    
+    myfile1.close();
+    mycontext['closed']=1
+    mycontext['TestingIsDone'] = True
+  except:
+    if mycontext['closed'] == 0:
+      myfile1.close()
+    log("Thread Error: both write failed!")
+    exitall()
+
+def threadTwo():
+  try:
+    if testfilename2 in listfiles():
+      removefile(testfilename2)
+    if testfilea2 in listfiles():
+      removefile(testfilea2)
+    if testfileb2 in listfiles():
+      removefile(testfileb2)
+    myfile2=ABopenfile(testfilename2,True)  #Open a file
+    
+    while mycontext['threadOneIsDone'] == False:
+      sleep(1)
+
+    myfile2.writeat("error",0)
+    myfile2.close()
+
+    mycontext['threadTwoIsDone'] = True
+  except:
+    myfile2.close()
+    log("Thread Error: both write failed!")
+    exitall()
+
+createthread(threadOne)
+createthread(threadTwo)
+
+while mycontext['TestingIsDone'] == False:
+  sleep(1)

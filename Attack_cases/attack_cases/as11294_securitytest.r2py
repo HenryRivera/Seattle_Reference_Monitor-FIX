@@ -1,0 +1,9 @@
+if "hello.txt.a" in listfiles():
+  removefile("hello.txt.a")
+if "hello.txt.b" in listfiles():
+  removefile("hello.txt.b")
+f = ABopenfile("hello.txt", True)
+assert('SE' == f.readat(2, 0))
+f.writeat("StestE", 0)
+assert('SE' == f.readat(None, 0))
+f.close()

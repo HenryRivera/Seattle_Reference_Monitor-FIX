@@ -1,0 +1,37 @@
+# READ OPERATION INVALID EOF
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+# Open File Function Call
+myfile = ABopenfile("testfile.txt",True)
+# Create an AB file to test offset past EOF and negative offset
+# Read the file to check the contents
+try:
+ 	myfile.readat(None, 10) #Attempt to read beyond EOF
+except SeekPastEndOfFileError:
+	pass
+else:
+ 	log("Invalid write operation, tried to read past the EOF \n")
+finally:
+	myfile.close()
+
+myfile = ABopenfile("testfile.txt", True)
+try:
+	myfile.readat(None, -1) # Attempt to read at a negative offset
+except RepyArgumentError:
+	pass
+else:
+	log("Invalid read operation, attempted to read at a negative offset \n")
+finally:
+	myfile.close()
+
+try:
+	myfile.readat(None, 0)
+except FileClosedError:
+	pass
+else:
+	log("Invalid operation, trying to read a closed file \n")

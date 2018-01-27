@@ -1,0 +1,54 @@
+# MODIFICATION OF EXISTING FILES
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+# Open File Function Call
+try:
+  myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+except:
+  log("Accuracy: failed to open file!\n")
+
+# Write valid data to the file
+try:
+  myfile.writeat("StestE",0)
+except:
+  log("Accuracy: failed to write file!\n")
+
+# Close the file
+myfile.close()
+
+# Reopen file again to write
+try:
+  myfile=ABopenfile("testfile.txt",True)
+except:
+  log("Accuracy: failed to reopen file!\n")
+
+# Write valid data to the file
+try:
+  myfile.writeat("S124E",0)
+except:
+  log("Accuracy: failed to rewrite file!\n")
+
+# Close the file
+myfile.close()
+
+# Reopen file again to read
+try:
+  myfile=ABopenfile("testfile.txt",True)
+except:
+  log("Accuracy: failed to reopen file!\n")
+
+# Read the file to check the contents
+try:
+  content = myfile.readat(None,0)
+except:
+  log("Accuracy: failed to read a file!\n")
+
+try:
+  assert('S124E' == content)
+except:
+  log("Accuracy: modification to an existing file is unsuccessful\n")

@@ -1,0 +1,47 @@
+# Multiple writes writing simulataneously to a single file - threads
+
+
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+def writetofiles():
+    try:
+        obj=myfile
+        obj.writeat("SabcdE",0);
+    except:
+        log("writeat action blocked: should be valid\n")
+
+def readfiles():
+    try:
+        obj=myfile
+        r = obj.readat(None,0);
+    except:
+        log("readat action blocked: should be valid\n")
+    finally:
+        try:
+            assert('SefghE'==r)
+        except:
+            log("incorrect read: accuracy error\n")
+
+def writetofiles1():
+    try:
+        obj=myfile
+        obj.writeat("SefghE",0);
+    except:
+        log("writeat action blocked: should be valid\n")
+
+
+myfile = ABopenfile("testfile.txt",True)
+sleep(1)
+createthread(writetofiles)
+createthread(writetofiles1)
+
+myfile.close()
+
+myfile = ABopenfile("testfile.txt",True)
+createthread(readfiles)
+myfile.close()

@@ -1,0 +1,13 @@
+#naa355_test2 Checks if file is able to be deleted by attacker
+
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+try: 
+	removefile("testfile.txt")
+except RepyArgumentError: 
+	pass
+except: 
+	log("Error: File deleted when it wasn't supposed to. ")
+
+myfile.close()

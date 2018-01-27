@@ -1,0 +1,18 @@
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+myfile=ABopenfile("testfile.txt",True)
+myfile.writeat("StestE",0)
+myfile.close()
+
+if "testfile.txt" in listfiles():
+  removefile("testfile.txt")
+
+mynewfile=ABopenfile("testfile.txt",True)
+
+try:
+ assert('StestE' == mynewfile.readat(None,0))
+except:
+ log("unable to reopen the file")

@@ -1,0 +1,20 @@
+'''
+    This attack tries to create a file with an invalid filename, ie. anything except alpha-numberic characters of file. 
+'''
+
+
+invalid_filenames = ['_testfile.txt']
+#invalid_filenames = ['_testfile.txt', 'test().txt', '%test.txt', 'test.+txt', 'test&.txt(', 'test/.txt']
+#invalid_filenames = ['test!.txt', 'test~.txt', 'test`.txt', 'test#.txt', 'test@.txt', 'test$.txt', "test'.txt", 'test=.txt']
+
+for filename in invalid_filenames:
+    # Clean up of existing file
+    if filename + '.a' in listfiles():
+        removefile(filename + ".a")
+    if filename + '.b' in listfiles():
+        removefile(filename + ".b")
+    
+    # Open File Function Call
+    myfile=ABopenfile(filename,True)  #Create an AB file
+    if  filename + ".a" in listfiles() or filename + '.b' in listfiles():
+        log('Created file with invalid name !')

@@ -1,0 +1,17 @@
+#The following test case tries to read data from the file with a negative value of offset.
+#If the security file doesn't catch this exception, you will see a RepyArgument Error with the log statement.
+
+
+
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+myfile=ABopenfile("testfile.txt",True)
+
+try:
+	myfile.readat(2,-10)
+except RepyArgumentError:
+	log("Offset is illegitimate value; Security compromised \n\n")
+

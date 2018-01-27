@@ -1,0 +1,61 @@
+# WRITE MULTIPLE FILE
+
+# Clean up of existing file
+if "testfile1.txt.a" in listfiles():
+  removefile("testfile1.txt.a")
+if "testfile1.txt.b" in listfiles():
+  removefile("testfile1.txt.b")
+
+if "testfile2.txt.a" in listfiles():
+  removefile("testfile2.txt.a")
+if "testfile2.txt.b" in listfiles():
+  removefile("testfile2.txt.b")
+
+if "testfile3.txt.a" in listfiles():
+  removefile("testfile3.txt.a")
+if "testfile3.txt.b" in listfiles():
+  removefile("testfile3.txt.b")
+
+
+try:
+  # Open File Function Call
+  myfile1=ABopenfile("testfile1.txt",True)  #Create an AB file
+  # Open File Function Call
+  myfile2=ABopenfile("testfile2.txt",True)  #Create an AB file
+  # Open File Function Call
+  myfile3=ABopenfile("testfile3.txt",True)  #Create an AB file
+
+  # Write valid data to the file
+  myfile1.writeat('S123456E',0)
+  #Close the file
+  myfile1.close()
+
+  # Write valid data to the file
+  myfile2.writeat('S123456E',0)
+  #Close the file
+  myfile2.close()
+
+  # Write valid data to the file
+  myfile3.writeat('S123456E',0)
+  #Close the file
+  myfile3.close()
+
+  # READ OPERATION
+  # Reopen file again to read
+  myfile1=ABopenfile("testfile1.txt",True)
+  myfile2=ABopenfile("testfile2.txt",True)
+  myfile3=ABopenfile("testfile3.txt",True)
+
+  # Read the file to check the contents
+  assert('S123456E' == myfile1.readat(8,0))
+  assert('S123456E' == myfile2.readat(8,0))
+  assert('S123456E' == myfile3.readat(8,0))
+  #Close the file
+  myfile1.close()
+  myfile2.close()
+  myfile3.close()
+except:
+ log("Write to multiple file is successfull!\n")
+ myfile1.close()
+ myfile2.close()
+ myfile3.close()

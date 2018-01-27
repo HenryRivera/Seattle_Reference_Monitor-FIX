@@ -1,0 +1,18 @@
+#new file write invalid, should read valid
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+
+myfile = ABopenfile('testfile.txt', True)
+myfile.writeat('Sadsfe', 0)
+myfile.close()
+
+try:
+  myfile = ABopenfile('testfile.txt', True)
+  assert('SE' == myfile.readat(2, 0))
+except:
+  log('Failed~\n')

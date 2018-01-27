@@ -1,0 +1,16 @@
+if "testfile.txt.a" in listfiles():
+    removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+    removefile("testfile.txt.b")
+
+#Test 3: testing empty file read/creation of new file
+    
+myfile = ABopenfile("testfile.txt", True)
+
+
+try:
+    assert('SE' == myfile.readat(None,0))
+except:
+    log("New file not created correctly, or issue with readat function\n")
+
+myfile.close()

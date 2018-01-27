@@ -1,0 +1,26 @@
+# Checks if reference monitor will read a negative offset
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+myfile.writeat("SexampletextE",0)
+
+myfile.close()
+
+myfile=ABopenfile("testfile.txt",True)
+
+
+try:
+ readResult=myfile.readat(0,-1)
+except :
+    pass
+else:
+    log("Should not be able to read before file begins.")
+finally:
+ myfile.close()
+

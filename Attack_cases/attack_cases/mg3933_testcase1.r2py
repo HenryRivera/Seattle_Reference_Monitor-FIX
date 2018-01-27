@@ -1,0 +1,28 @@
+# Write valid content for the first time, file should save and contain 'StestE'
+# Reopen the same file, write something invalid, file should not save 'steste'
+
+
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+myfile.writeat("StestE",0)
+myfile.close()
+
+myfile2=ABopenfile("testfile.txt",True)  #Reopen the AB file
+myfile2.writeat("steste",0)
+myfile2.close()                          #Should not save 'steste' due to lowercase
+
+
+# Reopen file again to read
+myfile3=ABopenfile("testfile.txt",True)
+try:
+ assert('StestE' == myfile3.readat(None,0))
+ myfile3.close()
+except:
+ myfile3.close()
+ log("Accuracy Bug: Should not save invalid data!\n")

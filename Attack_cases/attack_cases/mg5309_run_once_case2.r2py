@@ -1,0 +1,22 @@
+
+if "testfile.txt.a" in listfiles():
+ removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+ removefile("testfile.txt.b")
+if "testfile.a" in listfiles():
+ removefile("testfile.a")
+if "testfile.b" in listfiles():
+ removefile("testfile.b")
+#handling create = False and checking for backup
+myfile=ABopenfile("testfile.txt",True)
+myfile.writeat("S1dE",0)
+myfile.close()
+
+try:
+	myfile=ABopenfile("testfile.txt",False)
+	assert('S1dE' == myfile.readat(4,0))
+	myfile.writeat("",0)
+	myfile.close()
+except:
+	log("Fail to store the backup")
+	myfile.close()

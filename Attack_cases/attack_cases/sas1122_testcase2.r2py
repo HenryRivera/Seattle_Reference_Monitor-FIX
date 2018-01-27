@@ -1,0 +1,15 @@
+#	checks that an invalid file is deleted or that if there are two valid 
+#	files then one of them is deleted
+if "testfile.txt.a" in listfiles():
+		removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+		removefile("testfile.txt.b")
+
+myfile=ABopenfile("testfile.txt",True)
+
+myfile.writeat("SSomevalidTextE",0)
+
+myfile.close()
+
+if ("testfile.txt.b" in listfiles() and "testfile.txt.a" in listfiles()):
+	log("Extra file not deleted")

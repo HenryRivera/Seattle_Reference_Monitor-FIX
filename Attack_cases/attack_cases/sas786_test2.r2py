@@ -1,0 +1,30 @@
+# WRITE OPERATION
+# New File Operation
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+
+
+
+
+# Read the file to check the contents
+
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+myfile.writeat("Stesting123E",0)
+myfile.close()
+
+myfile = ABopenfile("testfile.txt", True)
+
+try:
+  x = myfile.readat(12,0)
+  assert("Stesting123E" == x)
+  myfile.close()
+
+except:
+  myfile.close()
+  log("Monitor Compromised - Valid Data Write Not Successful - \'" + str(x)+ "\' - was written.\n\n\n")

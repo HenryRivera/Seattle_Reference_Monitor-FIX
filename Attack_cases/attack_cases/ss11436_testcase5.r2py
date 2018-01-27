@@ -1,0 +1,21 @@
+# security layer should not block any write
+# because when it chooses it may later write 'S' at the start and 'E' at the end.
+
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+myfile=ABopenfile("testfile.txt",True)
+myfile.writeat("StestE",0)
+myfile.writeat("    ",6)
+myfile.writeat("E",10)
+myfile.close()
+
+mynewfile=ABopenfile("testfile.txt",False)
+try:
+ assert('StestE    E' == mynewfile.readat(None,0))
+ mynewfile.close()
+except:
+ mynewfile.close()
+ log("Valid write is blocked !! ")

@@ -1,0 +1,24 @@
+# WRITE OPERATION
+# WRITE information to file and read it immediately before close, normally we should not get the wroten information
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+# Write invalid data to the file
+myfile.writeat("StestE",0)
+
+# Read the file to check the contents
+try:
+ assert('SE' == myfile.readat(2,0))
+ #Close the file
+ myfile.close()
+except:
+ #Close the file
+ myfile.close()
+ log("The information wroten to Bfile should not be synchronized to Afile immediately!\n")

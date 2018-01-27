@@ -1,0 +1,41 @@
+# Testing that a valid write does not overwrite afile.
+
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+# Create a new file
+try:
+  myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+except:
+  log("can't open a new file\n")
+  exitall()
+
+# I should get 'SE' when reading an empty file...
+try: 
+  assert('SE' == myfile.readat(None,0))
+except:
+  log("afile is not valid-at-birth\n")
+  exitall()
+
+# put some valid data in the file.
+try:
+  myfile.writeat("Stest12345E",0)
+except:
+  log("writing to the file fails\n")
+  exitall()
+
+# I should still get 'SE' because the file wasn't closed.
+try: 
+  assert('SE' == myfile.readat(None,0))
+except:
+  log("afile was changed by a bfile write\n")
+  exitall()
+
+# Close the file
+try:
+  myfile.close()
+except:
+  log("Can't close my file?")
+  exitall()

@@ -1,0 +1,18 @@
+if "other.txt.a" in listfiles():
+	removefile("other.txt.a")
+if "other.txt.b" in listfiles():
+	removefile("other.txt.b")
+
+myfile=ABopenfile("other.txt",True)
+myfile.writeat("Sh",0)
+myfile.writeat("E",2)
+myfile.close()
+
+
+myfile=ABopenfile("other.txt",True)
+try:
+	assert('ShE' == myfile.readat(None,0))
+	myfile.close()
+except:
+	log("Read is unsuccessfull!\n")
+	myfile.close()

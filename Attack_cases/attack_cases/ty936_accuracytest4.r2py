@@ -1,0 +1,25 @@
+# WRITE OPERATION
+# New File Operation
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+
+
+try:
+ # Write to files with unreasonable parameter
+ myfile.readat(None,8)
+ myfile.close()
+except:
+ #Close the file
+ myfile.close()
+ #this file contains only "SE" but here we try to read
+ #starting from index 8 which does not really exist.
+ #this could result in exception
+ log("Unreasonable call readat(None,8) isn't handled well!")

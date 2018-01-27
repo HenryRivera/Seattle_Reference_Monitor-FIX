@@ -1,0 +1,39 @@
+# New File Operation
+#test case 1: Accuracy
+#This test case is a  test case to test the security. We use the multiple thread, and test if it works well in the situation of two threads writing
+#something in the program.
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+ removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+ removefile("testfile.txt.b")
+
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+mycontext['threadonepause'] = False
+mycontext['threadtwopause'] = False
+
+def threadOne():
+    myfile.writeat("Stehihoijkljk345E",0)
+    mycontext['threadonepause'] = True
+    sleep[5]
+    myfile.writeat("Stehihoijkljk345E1",0)
+
+
+
+def threadTwo():
+    while mycontext['threadonepause'] == True:
+        myfile.writeat("Stehihoijkljk345E",0)
+        mycontext['threadonepause'] = True
+
+createthread(threadOne)
+createthread(threadTwo)
+try:
+    myfile.close()
+    myfile=ABopenfile("testfile.txt",True)
+    invalid data should not be saved
+    assert('Stehihoijkljk345EStehihoijkljk345E1Stehihoijkljk345E'== myfile.readat(None,0))
+    myfile.close()
+except:
+    myfile.close()
+    log("invalid data is not handled properly here!")

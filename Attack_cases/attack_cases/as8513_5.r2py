@@ -1,0 +1,62 @@
+# Testing that an invalid write is not saved.
+
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+# Create a new file
+try:
+  myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+except:
+  log("can't open a new file\n")
+  exitall()
+
+# I should get 'SE' when reading an empty file...
+try: 
+  assert('SE' == myfile.readat(None,0))
+except:
+  log("afile is not valid-at-birth\n")
+  exitall()
+
+# put some invalid data in the file.
+try:
+  myfile.writeat("stest12345E",0)
+except:
+  log("writing to the file fails\n")
+  exitall()
+
+# I should still get 'SE' because the file wasn't closed.
+try: 
+  assert('SE' == myfile.readat(None,0))
+except:
+  log("afile was changed by a bfile write\n")
+  exitall()
+
+# Close the file
+try:
+  myfile.close()
+except:
+  log("Can't close my file?")
+  exitall()
+
+# Open the file up again, create is false.
+try: 
+  myfile = ABopenfile("testfile.txt", False)
+except:
+  log("Can't open the file I just made\n")
+  exitall()
+
+# A read should return SE.
+try:
+  assert('SE' == myfile.readat(None,0))
+except:
+  log("The file I had before doesn't have the valid data I wrote\n")  
+  exitall()
+
+# Done here
+try:
+  myfile.close()
+except:
+  log("Can't close my file?")
+  exitall()

@@ -1,0 +1,42 @@
+# WRITE OPERATION
+# New File Operation
+
+# Clean up of existing file
+if "testfile1.txt.a" in listfiles():
+    removefile("testfile1.txt.a")
+if "testfile2.txt.a" in listfiles():
+    removefile("testfile2.txt.a")
+if "testfile1.txt.b" in listfiles():
+    removefile("testfile1.txt.b")
+if "testfile2.txt.b" in listfiles():
+    removefile("testfile2.txt.b")
+
+# Open Two files
+myfile1=ABopenfile("testfile1.txt",True)
+myfile2=ABopenfile("testfile2.txt",True)
+
+# Write invalid data to file1 and wirte valid data to file2
+myfile1.writeat("St",0)
+myfile2.writeat("StestE",0)
+
+#Close the file
+myfile1.close()
+myfile2.close()
+
+# READ OPERATION
+# Reopen file again to read
+myfile1=ABopenfile("testfile1.txt",True)
+myfile2=ABopenfile("testfile2.txt",True)
+
+# Read the file to check the contents
+try:
+    assert('SE' == myfile1.readat(2,0))
+    assert('StestE' == myfile2.readat(6,0))
+    #Close the file
+    myfile1.close()
+    myfile2.close()
+except:
+    #Close the file
+    myfile1.close()
+    myfile2.close()
+    log("Multiples files Data writing is not handled properly!")

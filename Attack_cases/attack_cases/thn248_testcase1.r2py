@@ -1,0 +1,29 @@
+"""
+Name: To Hung (Lily) Ng
+NET ID: thn248
+
+"""
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+ removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+ removefile("testfile.txt.b")
+
+# Open File Function Call
+myfile = ABopenfile("testfile.txt",True)  #Create an AB file
+
+# attempt to write invalid data
+myfile.writeat("invalidE",0)
+
+# Close the file
+myfile.close()
+
+# Open file again, reading this time
+myfile=ABopenfile("testfile.txt", False)
+
+# Test case: try to see if invalid data is read as valid data
+if "invalidE" == myfile.readat(8,0):
+	myfile.close()
+	log("invalid data could be written and read as valid, when invalid data are written normally!")
+myfile.close()

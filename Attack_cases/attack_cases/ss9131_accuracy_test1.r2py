@@ -1,0 +1,22 @@
+# Simple Test Case 1
+
+# Clean up existing files
+
+if "testfile.txt.a" in listfiles():
+	removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+	removefile("testfile.txt.b")
+
+# Open File function call
+
+myFile = ABopenfile("testfile.txt", True)
+
+try:
+	# Empty file should have SE as a requirement
+	assert('SE' == myFile.readat(2, 0))
+	# Close file
+	myFile.close()
+except:
+	myFile.close()
+	# Error handling or failure
+	log("Empty file not handled properly")

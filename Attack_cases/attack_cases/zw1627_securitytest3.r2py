@@ -1,0 +1,14 @@
+#two ABopen
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+myfile=ABopenfile("testfile.txt",True)
+try:
+  myfileB=ABopenfile("testfile.txt",True)
+  log('Cannot have to ABopen for the same file\n')
+except:
+  pass

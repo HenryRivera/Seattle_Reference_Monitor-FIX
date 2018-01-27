@@ -1,0 +1,24 @@
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+myfile.writeat("Ste\nstE",0)
+myfile.close()
+
+myfile=ABopenfile("testfile.txt",True)
+
+try:
+ assert('StestE' == myfile.readat(6,0))
+ #Close the file
+ myfile.close()
+except:
+ #Close the file
+ myfile.close()
+ log("can new line be implemented in input?!\n")
+
+#myfile.close()
+
+

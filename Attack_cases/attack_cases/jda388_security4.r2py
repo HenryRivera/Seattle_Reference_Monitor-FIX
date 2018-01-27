@@ -1,0 +1,9 @@
+if "test.txt" in listfiles():
+  removefile("test.txt")
+myfile=openfile("test.txt",True)
+myfile.writeat("qwerty",17)
+cvs = myfile.readat(17,0)
+if cvs == "qwerty":
+  log("wrote inside file")
+#Close the file
+myfile.close()

@@ -1,0 +1,31 @@
+#to check the invalid writting 
+# New File Operation
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+  	removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+myfile.writeat(" ", 0)
+
+# Write something here
+try:
+	assert(myfile.readat(2,0) == "SE")
+except SeekPastEndOfFileError:
+	log("Seek offset extends past the error of file\n")
+	pass
+except RepyArgumentError:
+	log("there is repy argumenet error\n")
+	pass
+except:
+	log("Invalid writting is not successful!")
+else:
+	pass
+
+#Close the file
+myfile.close()
+

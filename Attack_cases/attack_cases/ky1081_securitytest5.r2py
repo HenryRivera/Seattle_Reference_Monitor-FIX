@@ -1,0 +1,35 @@
+# REWRITE OPERATION
+# REWRITE information to file
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+# Write invalid data to the file
+myfile.writeat("StestE",0)
+
+#Close the file
+myfile.close()
+
+#Reopen
+myfile=ABopenfile("testfile.txt",True)
+#Rewrite information
+myfile.writeat("StestRewriteE",0)
+myfile.close()
+
+#open for read
+myfile=ABopenfile("testfile.txt",True)
+# Read the file to check the contents
+try:
+ assert('StestRewriteE' == myfile.readat(13,0))
+ #Close the file
+ myfile.close()
+except:
+ #Close the file
+ myfile.close()
+ log("Can not Rewrite to a file successfully!\n")

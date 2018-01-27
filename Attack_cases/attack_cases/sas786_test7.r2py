@@ -1,0 +1,27 @@
+#Test 7 - Writing E before S
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+myfile.writeat("E",1)
+myfile.close()
+
+myfile=ABopenfile("testfile.txt",True)
+myfile.writeat("S",0)
+myfile.close()
+
+
+myfile=ABopenfile("testfile.txt",True)
+
+try:
+  x = myfile.readat(2,0)
+  assert("SE" == x)
+  myfile.close()
+except:
+  myfile.close()
+  log("Monitor Compromised: \'" + str(x)+ "\' was written!\n\n")

@@ -1,0 +1,15 @@
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+try:
+    myfile=ABopenfile("test-file_1.txt",True)  #Create an AB file
+    
+except:
+    # Error Handle or Failure Condition
+    log("<----Attack Test Passed----> Valid special characters are not being allowed in the file name")
+
+
+
+

@@ -1,0 +1,22 @@
+if "hello.file" in listfiles():
+  removefile("hello.file")
+# In repyV2 we use openfile(filename, create)
+# Boolean value decide whether creating file if such file doesn't exist
+myfileobject = ABopenfile("hello.file", True)
+
+# Use fileobject.writeat(data, offset) to write data into file
+myfileobject.writeat("hello world", 0)
+
+myfileobject.close()
+
+newfileobject = ABopenfile("hello.file", True)
+
+# Use fileobject.readat(sizelimit, offset) to read data from file
+newfilecontent = newfileobject.readat(None, 0)
+
+try:
+	assert('SE' == newfilecontent)
+	newfileobject.close()
+except:
+	log("Invalid data was saved\n")
+	newfileobject.close()

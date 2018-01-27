@@ -1,0 +1,25 @@
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+#Create an AB file
+myfile=ABopenfile("testfile.txt",True)  
+
+#Put some invalid data in the file.
+myfile.writeat("2E",0)
+#Closes file
+myfile.close()
+
+#Reopens file
+myfile=ABopenfile("testfile.txt",True) 
+
+try:
+    #Checks if SE is written to file
+    assert('SE' == myfile.readat(None,0))
+    myfile.close()
+    
+except:
+    myfile.close()
+    log("Failed, does not check for SE for file validlity\n")
+    

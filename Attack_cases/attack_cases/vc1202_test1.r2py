@@ -1,0 +1,21 @@
+if "test.txt.a" in listfiles():
+  removefile("test.txt.a")
+if "test.txt.b" in listfiles():
+  removefile("test.txt.b")
+
+
+myfile=ABopenfile("test.txt",True)  #Create an AB file
+
+
+myfile.writeat("S1E",0)
+
+myfile.close()
+
+myfile=ABopenfile("test.txt",True)
+
+try:
+  assert('S1E' == myfile.readat(None,0))
+  myfile.close()
+except:
+  
+  log("Accuracy Error")

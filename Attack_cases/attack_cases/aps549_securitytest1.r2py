@@ -1,0 +1,25 @@
+#!/usr/bin/env python
+
+#Check if the file exist
+if "hello.txt.a" in listfiles():
+  removefile("hello.txt.a")
+if "hello.txt.b" in listfiles():
+  removefile("hello.txt.b")
+
+#Create an AB file
+myfile = ABopenfile("hello.txt", True)
+
+#Should get 'SE' when reading an empty file...
+try:
+    assert('SE' == myfile.readat(2, 0))
+except exceptions.NameError:
+    log("Refence Monitor failed")
+
+#Put some valid data in the file.
+myfile.writeat("StestE", 0)
+
+#Should still get 'SE' because the file wasn't closed.
+assert('SE' == myfile.readat(None, 0))
+
+#Close the file
+myfile.close()

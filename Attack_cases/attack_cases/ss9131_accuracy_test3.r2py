@@ -1,0 +1,37 @@
+# WRITE OPERATION INVALID EOF
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+# Open File Function Call
+myfile = ABopenfile("testfile.txt",True)
+# Create an AB file to test offset past EOF and negative offset
+# Read the file to check the contents
+try:
+ 	myfile.writeat("SEEE", 10) #Attempt to write beyond EOF
+except SeekPastEndOfFileError:
+	pass
+else:
+	log("Invalid write operation, tried to write past EOF\n")
+finally:
+	myfile.close()
+
+myfile = ABopenfile("testfile.txt", True)
+try:
+	myfile.writeat("SEE", -1) # Attempt to write at a negative offset
+except RepyArgumentError:
+	pass
+else:
+	log("Invalid write operation, attempted to write at a negative offset \n")
+finally:
+	myfile.close()
+
+try:
+	myfile.writeat("SE", 0)
+except FileClosedError:
+	pass
+else:
+	log("Invalid write operation, attempted to write a closed file\n")

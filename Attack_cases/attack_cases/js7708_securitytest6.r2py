@@ -1,0 +1,30 @@
+#end program if stalled for 8 seconds
+def breakOut():
+	amtTime = 0
+	while(amtTime < 8):
+		amtTime = getruntime()
+	log("reference monitor stalled for 8 seconds")
+	exitall()
+
+createthread(breakOut)
+
+#Open a file
+myfile=openfilemyfile=ABopenfile("testfile.txt",True)
+
+# Attempt to write over upper letters with lowercase letters
+try:
+    myfile.writeat("TT", 0)
+    myfile.writeat("bCD",0)
+
+except ValueError:
+  #If security layer successful, this should fail
+  pass
+
+else:
+  #If security layer fails
+  log("Secure data compromised!")	
+ 
+finally:
+  # Close the file after our attempt.
+  myfile.close()
+  exitall()

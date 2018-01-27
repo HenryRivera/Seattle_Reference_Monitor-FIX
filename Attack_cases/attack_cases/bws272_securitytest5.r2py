@@ -1,0 +1,23 @@
+
+if "testfile.txt.a" in listfiles():
+	removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+	removefile("testfile.txt.b")
+
+myfile=ABopenfile("testfile.txt",True)  
+
+myfile.writeat("S12345E",0)
+
+
+
+myfile.close()
+
+myfile=ABopenfile("testfile.txt",True)
+
+try:
+	myfile.writeat("abcde",1)
+	myfile.close()
+	log("Security bug")
+except:
+	myfile.close()
+	

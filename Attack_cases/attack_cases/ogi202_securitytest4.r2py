@@ -1,0 +1,25 @@
+#Check if reference montiro allows writing before beginning of file
+
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+myfile=ABopenfile("testfile.txt",True)
+
+myfile.writeat("SexampletextE",-1)
+
+myfile.close()
+
+myfile=ABopenfile("testfile.txt",True)
+
+
+try:
+ readResult=myfile.readat(0,-1)
+except :
+    pass
+else:
+    log("Should not be able to write before file begins.")
+finally:
+ myfile.close()
+

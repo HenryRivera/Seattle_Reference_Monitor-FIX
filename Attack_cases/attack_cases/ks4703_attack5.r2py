@@ -1,0 +1,23 @@
+#valid write fith offset error in met398 
+
+if "testfile.txt.a" in listfiles():
+ removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+ removefile("testfile.txt.b")
+
+myfile=ABopenfile("testfile.txt",True)
+
+myfile.writeat("Sabcde",0)
+myfile.writeat("E",5)
+myfile.close()
+
+myfile=ABopenfile("testfile.txt",False)
+
+try:
+ 
+ assert('SabcdE' == myfile.readat(None,0))
+ myfile.close()
+except:
+ myfile.close()
+ # Error Handle or Failure Condition
+ log("Error for valid write\n")

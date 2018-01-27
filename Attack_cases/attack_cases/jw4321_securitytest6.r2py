@@ -1,0 +1,22 @@
+# to check the open file operation 
+# Clean up of existing file
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+## a file is SE and is valid, b file is empty
+try:
+    assert(myfile.readat(2,0) == "SE")
+except:
+	log("initialize file is not propery")
+
+
+# Write invalid data to the file
+#myfile.writeat("StestE",0)
+
+myfile.close()
+

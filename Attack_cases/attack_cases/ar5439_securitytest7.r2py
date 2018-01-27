@@ -1,0 +1,20 @@
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+# Write valid data to the file
+myfile.writeat("Stest",0)
+try:
+ myfile.writeat("afE",3)
+except:
+ log("<----Attack Test Passed----> Invalid End of File error shown ")
+ exitall()
+
+#Close the file
+myfile.close()
+

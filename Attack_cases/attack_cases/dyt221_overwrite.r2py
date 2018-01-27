@@ -1,0 +1,19 @@
+# This attack makes sure that writing to the file does not change the result when reading from it.
+
+# Delete the A and B files for a clean start.
+ls = set(listfiles())
+if "testfile.txt.a" in ls:
+    removefile("testfile.txt.a")
+if "testfile.txt.b" in ls:
+    removefile("testfile.txt.b")
+# Open the file through the reference monitor.
+myfile = ABopenfile("testfile.txt", True)
+# Write some data into the file.
+myfile.writeat("Stest1234E", 0)
+# Overwrite some data in the file.
+myfile.writeat("5678", 5)
+# The file should still read "SE" because it wasn't closed.
+if "SE" != myfile.readat(None, 0):
+    log("A write operation destroyed the valid copy.\n")
+# Close the file.
+myfile.close()

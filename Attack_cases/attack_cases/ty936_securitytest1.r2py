@@ -1,0 +1,39 @@
+# New File Operation
+
+# Clean up of existing file
+if "testfile1.txt.a" in listfiles():
+ removefile("testfile1.txt.a")
+if "testfile1.txt.b" in listfiles():
+ removefile("testfile1.txt.b")
+if "testfile2.txt.a" in listfiles():
+ removefile("testfile2.txt.a")
+if "testfile2.txt.b" in listfiles():
+ removefile("testfile2.txt.b")
+
+# Open File Function Call
+myfile1=ABopenfile("testfile1.txt",True)  
+myfile2=ABopenfile("testfile2.txt",True)
+
+myfile1.writeat("S this is file1 E",0)
+myfile2.writeat("S this is file2 E",0)
+
+
+assert('SE' == myfile1.readat(None,0))
+assert('SE' == myfile2.readat(None,0))
+
+myfile1.close()
+myfile2.close()
+
+
+
+try:
+  myfile1=ABopenfile("testfile1.txt",True)  
+  myfile2=ABopenfile("testfile2.txt",True)
+  assert('S this is file1 E' == myfile1.readat(None,0))
+  assert('S this is file2 E' == myfile2.readat(None,0))
+  myfile1.close()
+  myfile2.close()
+except:
+  myfile1.close()
+  myfile2.close()
+  log("Writing to mutiple files fails!")

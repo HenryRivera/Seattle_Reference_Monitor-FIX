@@ -1,0 +1,27 @@
+# Can I open a file, and is the afile correct?
+
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+# Create a new file
+try:
+  myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+except:
+  log("can't open a new file\n")
+  exitall()
+
+# I should get 'SE' when reading an empty file...
+try: 
+  assert('SE' == myfile.readat(None,0))
+except:
+  log("afile is not valid-at-birth\n")
+  exitall()
+
+# Close the file
+try:
+  myfile.close()
+except:
+  log("closing the file raises an exception\n")
+  exitall()

@@ -1,0 +1,24 @@
+# New File Operation
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+ removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+ removefile("testfile.txt.b")
+
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+myfile.writeat("hello", 0) #this is invalid
+myfile.close()
+
+try:
+	myfile = ABopenfile("testfile.txt", False) #open same file
+	myfile.writeat("SvalidE", 0) #this is valid so it should be written and saved after closing
+	myfile.close()
+
+	myfile = ABopenfile("testfile.txt", False) #open same file
+	assert("SvalidE" == myfile.readat(None,0)) #check if file has the valid data
+	myfile.close()
+except:
+	myfile.close()
+	log("File data is not valid\n")

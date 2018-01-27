@@ -1,0 +1,232 @@
+try:
+    mycontext['END_LOCK'] = createlock()
+    mycontext['END'] = False
+    lock = createlock()
+
+
+    def deadLock():
+        for i in range(1, 20):
+            mycontext['END_LOCK'].acquire(True)
+            try:
+                if (mycontext['END']):
+                    return
+            finally:
+                mycontext['END_LOCK'].release()
+            sleep(0.5)
+        log("Dead lock exist!")
+
+
+    createthread(deadLock)
+
+    if "ieojboiejb.jioejbioje.a" in listfiles():
+        removefile("ieojboiejb.jioejbioje.a")
+    if "ieojboiejb.jioejbioje.b" in listfiles():
+        removefile("ieojboiejb.jioejbioje.b")
+
+    myfile = ABopenfile("ieojboiejb.jioejbioje", True)
+
+    try:
+        assert ('SE' == myfile.readat(None, 0))
+    except:
+        log("1 Init Data fail")
+    finally:
+        myfile.close()
+
+    myfile = ABopenfile("ieojboiejb.jioejbioje", True)
+
+    try:
+        assert ('SE' == myfile.readat(None, 0))
+    except:
+        log("2 Init Data fail")
+    finally:
+        myfile.close()
+
+    myfile = ABopenfile("ieojboiejb.jioejbioje", True)
+
+    try:
+        assert ('SE' == myfile.readat(None, 0))
+    except:
+        log("3 Init Data fail")
+    finally:
+        myfile.close()
+
+    if "ieojboiejb.jioejbioje.a" in listfiles():
+        removefile("ieojboiejb.jioejbioje.a")
+    if "ieojboiejb.jioejbioje.b" in listfiles():
+        removefile("ieojboiejb.jioejbioje.b")
+
+    myfile = ABopenfile("ieojboiejb.jioejbioje", True)
+
+    try:
+        assert ('SE' == myfile.readat(None, 0))
+    except:
+        log("4 Init Data fail")
+    finally:
+        myfile.close()
+
+    myfile = ABopenfile("ieojboiejb.jioejbioje", False)
+
+    try:
+        assert ('SE' == myfile.readat(None, 0))
+    except:
+        log("5 Init Data fail")
+    finally:
+        myfile.close()
+
+    myfile = ABopenfile("ieojboiejb.jioejbioje", False)
+
+    try:
+        assert ('SE' == myfile.readat(None, 0))
+    except:
+        log("6 Init Data fail")
+    finally:
+        myfile.close()
+
+    if "ieojboiejb.jioejbioje.a" in listfiles():
+        removefile("ieojboiejb.jioejbioje.a")
+    if "ieojboiejb.jioejbioje.b" in listfiles():
+        removefile("ieojboiejb.jioejbioje.b")
+
+    myfile = ABopenfile("ieojboiejb.jioejbioje", True)
+
+    try:
+        myfile.writeat("tttt", 0)
+        assert ('SE' == myfile.readat(None, 0))
+    except:
+        log("1 Invalid Data write to a file is successful!")
+    finally:
+        myfile.close()
+
+    myfile = ABopenfile("ieojboiejb.jioejbioje", True)
+
+    try:
+        myfile.writeat("tttt", 0)
+        assert ('SE' == myfile.readat(None, 0))
+    except:
+        log("2 Invalid Data write to a file is successful!")
+    finally:
+        myfile.close()
+
+    myfile = ABopenfile("ieojboiejb.jioejbioje", True)
+
+    try:
+        myfile.writeat("tttt", 0)
+        assert ('SE' == myfile.readat(None, 0))
+    except:
+        log("3 Invalid Data write to a file is successful!")
+    finally:
+        myfile.close()
+
+    if "ieojboiejb.jioejbioje.a" in listfiles():
+        removefile("ieojboiejb.jioejbioje.a")
+    if "ieojboiejb.jioejbioje.b" in listfiles():
+        removefile("ieojboiejb.jioejbioje.b")
+
+    myfile = ABopenfile("ieojboiejb.jioejbioje", True)
+
+    try:
+        myfile.writeat("tttt", 0)
+        assert ('SE' == myfile.readat(None, 0))
+    except:
+        log("4 Invalid Data write to a file is successful!")
+    finally:
+        myfile.close()
+
+    myfile = ABopenfile("ieojboiejb.jioejbioje", False)
+
+    try:
+        myfile.writeat("tttt", 0)
+        assert ('SE' == myfile.readat(None, 0))
+    except:
+        log("5 Invalid Data write to a file is successful!")
+    finally:
+        myfile.close()
+
+    myfile = ABopenfile("ieojboiejb.jioejbioje", False)
+
+    try:
+        myfile.writeat("tttt", 0)
+        assert ('SE' == myfile.readat(None, 0))
+    except:
+        log("6 Invalid Data write to a file is successful!")
+    finally:
+        myfile.close()
+
+    if "ieojboiejb.jioejbioje.a" in listfiles():
+        removefile("ieojboiejb.jioejbioje.a")
+    if "ieojboiejb.jioejbioje.b" in listfiles():
+        removefile("ieojboiejb.jioejbioje.b")
+
+    myfile = ABopenfile("ieojboiejb.jioejbioje", True)
+
+    try:
+        myfile.writeat("StttteaeibjioaebjioejbiojeiojbiojoE", 0)
+        assert ('SE' == myfile.readat(None, 0))
+    except:
+        log("1 Valid Data write to a file is unsuccessful!")
+    finally:
+        myfile.close()
+
+    myfile = ABopenfile("ieojboiejb.jioejbioje", True)
+
+    try:
+        myfile.writeat("StttteaeibjioaebjioejbiojeiojbiojoE", 0)
+        assert ('StttteaeibjioaebjioejbiojeiojbiojoE' == myfile.readat(None, 0))
+    except:
+        log("2 Valid Data write to a file is unsuccessful!")
+    finally:
+        myfile.close()
+
+    myfile = ABopenfile("ieojboiejb.jioejbioje", True)
+
+    try:
+        myfile.writeat("StttteaeibjioaebjioejbiojeiojbiojoE", 0)
+        assert ('StttteaeibjioaebjioejbiojeiojbiojoE' == myfile.readat(None, 0))
+    except:
+        log("3 Valid Data write to a file is unsuccessful!")
+    finally:
+        myfile.close()
+
+    if "ieojboiejb.jioejbioje.a" in listfiles():
+        removefile("ieojboiejb.jioejbioje.a")
+    if "ieojboiejb.jioejbioje.b" in listfiles():
+        removefile("ieojboiejb.jioejbioje.b")
+
+    myfile = ABopenfile("ieojboiejb.jioejbioje", True)
+
+    try:
+        myfile.writeat("StttteaeibjioaebjioejbiojeiojbiojoE", 0)
+        assert ('SE' == myfile.readat(None, 0))
+    except:
+        log("4 Valid Data write to a file is unsuccessful!")
+    finally:
+        myfile.close()
+
+    myfile = ABopenfile("ieojboiejb.jioejbioje", False)
+
+    try:
+        myfile.writeat("StttteaeibjioaebjioejbiojeiojbiojoE", 0)
+        assert ('StttteaeibjioaebjioejbiojeiojbiojoE' == myfile.readat(None, 0))
+    except:
+        log("5 Valid Data write to a file is unsuccessful!")
+    finally:
+        myfile.close()
+
+    myfile = ABopenfile("ieojboiejb.jioejbioje", False)
+
+    try:
+        myfile.writeat("StttteaeibjioaebjioejbiojeiojbiojoE", 0)
+        assert ('StttteaeibjioaebjioejbiojeiojbiojoE' == myfile.readat(None, 0))
+    except:
+        log("6 Valid Data write to a file is unsuccessful!")
+    finally:
+        myfile.close()
+
+    mycontext['END_LOCK'].acquire(True)
+    try:
+        mycontext['END'] = True
+    finally:
+        mycontext['END_LOCK'].release()
+except:
+    log("Exception thrown!")
+    raise

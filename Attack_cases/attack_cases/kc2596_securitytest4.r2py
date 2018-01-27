@@ -1,0 +1,22 @@
+if "testfile.txt.a" in listfiles():
+    removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+    removefile("testfile.txt.b")
+
+# Open and create a file
+myfile = ABopenfile("testfile.txt", True)
+
+try:
+    myfile.writeat("SabE",0)
+    assert('SabE' == myfile.readat(4, 0))
+    myfile.writeat("Scd", 0)
+    assert('SabE' == myfile.readat(4, 0))
+
+except:
+    # If security layer successful, should fail
+    pass
+
+finally:
+    # Close the file after attempt
+    myfile.close()
+

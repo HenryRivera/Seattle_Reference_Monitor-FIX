@@ -1,0 +1,15 @@
+if "testfile.txt.a" in listfiles():
+    removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+    removefile("testfile.txt.b")
+
+#Test 1: Standard ABfile creation
+
+try:
+    myfile = ABopenfile("testfile.txt", True)
+    try:
+        myfile.close()
+    except:
+        log("Error Closing File\n")
+except:
+    log("File Creation Error\n")

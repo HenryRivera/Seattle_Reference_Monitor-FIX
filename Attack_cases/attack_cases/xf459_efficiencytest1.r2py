@@ -1,0 +1,57 @@
+# Efficiency Test
+
+testid = 1
+testfilename = "test_"+ str(testid) + ".txt"
+testfilea = "test_"+ str(testid) + ".txt.a"
+testfileb = "test_"+ str(testid) + ".txt.b"
+mycontext['closed'] =0
+try:
+  if testfilename in listfiles():
+    removefile(testfilename)
+  if testfilea in listfiles():
+    removefile(testfilea)
+  if testfileb in listfiles():
+    removefile(testfileb)
+
+  myfile=ABopenfile(testfilename,True)
+  assert('SE' == myfile.readat(None,0))
+  myfile.writeat("error",0)
+  assert('SE' == myfile.readat(None,0))
+  myfile.close()
+  mycontext['closed'] = 1
+
+  if (testfilename1 in listfiles()) or (testfilea1 in listfiles()) or (testfileb1 in listfiles()):
+    log("Efficiency Error")
+
+  myfile=ABopenfile(testfilename,True)
+  mycontext['closed'] = 0
+  #write a valid data
+  myfile.writeat("SeattlE",0)
+  assert('SE' == myfile.readat(None,0))
+
+  myfile.close()
+  mycontext['closed'] = 1
+
+  #check if the program save the all files on disk
+  if testfilename in listfiles():
+    if testfilea in listfiles():
+      if testfileb in listfiles():
+        log("Efficiency Error: cannot keep a complete copy of every file on disk!")
+
+  myfile=ABopenfile(testfilename,True)
+  mycontext['closed'] = 0
+  assert('SeattlE' == myfile.readat(None,0))
+  myfile.writeat("errorrrrrrr",0)
+  myfile.close()
+
+  #check if the program save the all files on disk
+  if testfilename in listfiles():
+    if testfilea in listfiles():
+      if testfileb in listfiles():
+        log("Efficiency Error: cannot keep a complete copy of every file on disk!")
+
+except:
+  myfile.close()
+  log("Efficiency is not handled properly!")
+
+

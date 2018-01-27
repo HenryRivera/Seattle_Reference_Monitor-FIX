@@ -1,0 +1,193 @@
+try:
+    mycontext['END_LOCK'] = createlock()
+    mycontext['END'] = False
+    lock = createlock()
+
+
+    def deadLock():
+        for i in range(1, 20):
+            mycontext['END_LOCK'].acquire(True)
+            try:
+                if (mycontext['END']):
+                    return
+            finally:
+                mycontext['END_LOCK'].release()
+            sleep(0.5)
+        log("Dead lock exist!")
+
+
+    createthread(deadLock)
+
+    if "ieojboiejb.jioejbioje.a" in listfiles():
+        removefile("ieojboiejb.jioejbioje.a")
+    if "ieojboiejb.jioejbioje.b" in listfiles():
+        removefile("ieojboiejb.jioejbioje.b")
+
+    if "qeiovjoiqjb.wbijowjbo.a" in listfiles():
+        removefile("qeiovjoiqjb.wbijowjbo.a")
+    if "qeiovjoiqjb.wbijowjbo.b" in listfiles():
+        removefile("qeiovjoiqjb.wbijowjbo.b")
+
+    myfile1 = ABopenfile("ieojboiejb.jioejbioje", True)
+
+    myfile2 = ABopenfile("qeiovjoiqjb.wbijowjbo", True)
+
+    myfile1.writeat("Stest1E", 0)
+
+    myfile2.writeat("Stest2E", 0)
+
+    myfile1.close()
+
+    myfile2.close()
+
+    myfile1 = ABopenfile("ieojboiejb.jioejbioje", True)
+
+    try:
+        myfile2 = ABopenfile("qeiovjoiqjb.wbijowjbo", True)
+        try:
+            myfile1.writeat("Stest1E", 0)
+            myfile2.writeat("Stest2E", 0)
+            myfile1.writeat("tttt1", 1)
+            myfile2.writeat("tttt2", 1)
+            assert ('Stest1E' == myfile1.readat(None, 0))
+            assert ('Stest2E' == myfile2.readat(None, 0))
+        except:
+            log("1 Valid Data write to a file is unsuccessful!")
+        finally:
+            myfile2.close()
+    finally:
+        myfile1.close()
+
+    myfile1 = ABopenfile("ieojboiejb.jioejbioje", True)
+
+    try:
+        myfile2 = ABopenfile("qeiovjoiqjb.wbijowjbo", True)
+        try:
+            myfile1.writeat("ttttt1", 0)
+            myfile2.writeat("ttttt2", 0)
+            assert ('Stttt1E' == myfile1.readat(None, 0))
+            assert ('Stttt2E' == myfile2.readat(None, 0))
+        except:
+            log("2 Valid Data write to a file is unsuccessful!")
+        finally:
+            myfile2.close()
+    finally:
+        myfile1.close()
+
+    myfile1 = ABopenfile("ieojboiejb.jioejbioje", False)
+    try:
+        myfile2 = ABopenfile("qeiovjoiqjb.wbijowjbo", True)
+        try:
+            myfile1.writeat(randombytes(), 0)
+            assert ('Stttt1E' == myfile1.readat(None, 0))
+        except:
+            log("3 Invalid Data write to a file is successful!")
+        finally:
+            myfile2.close()
+    finally:
+        myfile1.close()
+
+    myfile1 = ABopenfile("ieojboiejb.jioejbioje", False)
+    try:
+        myfile2 = ABopenfile("qeiovjoiqjb.wbijowjbo", True)
+        try:
+            myfile1.writeat('SS', 0)
+            myfile2.writeat('SS', 0)
+            myfile1.writeat('E' * 1024, 1)
+            myfile2.writeat('E' * 1024, 1)
+            assert ('Stttt1E' == myfile1.readat(None, 0))
+            assert ('Stttt2E' == myfile2.readat(None, 0))
+        except:
+            log("4 Invalid Data write to a file is successful!")
+        finally:
+            myfile2.close()
+    finally:
+        myfile1.close()
+
+    myfile1 = ABopenfile("ieojboiejb.jioejbioje", False)
+    try:
+        myfile2 = ABopenfile("qeiovjoiqjb.wbijowjbo", False)
+        try:
+            myfile1.writeat('S' * 1024, 0)
+            myfile2.writeat('S' * 1024, 0)
+            myfile1.writeat('E', 1024)
+            myfile2.writeat('E', 1024)
+            assert ('S' + 'E' * 1024 == myfile1.readat(None, 0))
+            assert ('S' + 'E' * 1024 == myfile2.readat(None, 0))
+        except:
+            log("5 Valid Data write to a file is unsuccessful!")
+        finally:
+            myfile2.close()
+    finally:
+        myfile1.close()
+
+    myfile1 = ABopenfile("ieojboiejb.jioejbioje", False)
+    try:
+        myfile2 = ABopenfile("qeiovjoiqjb.wbijowjbo", False)
+        try:
+            myfile1.writeat('S' * 1024 + 'E' * 1024, 0)
+            myfile2.writeat('S' * 1024 + 'E' * 1024, 0)
+            assert ('S' * 1024 + 'E' == myfile1.readat(None, 0))
+            assert ('S' * 1024 + 'E' == myfile2.readat(None, 0))
+        except:
+            log("6 Valid Data write to a file is unsuccessful!")
+        finally:
+            myfile2.close()
+    finally:
+        myfile1.close()
+
+    myfile1 = ABopenfile("ieojboiejb.jioejbioje", False)
+    try:
+        myfile2 = ABopenfile("qeiovjoiqjb.wbijowjbo", True)
+        try:
+            myfile1.writeat(randombytes() + randombytes(), 0)
+            myfile2.writeat(randombytes() + randombytes(), 0)
+            myfile1.writeat(randombytes() + randombytes(), 0)
+            myfile2.writeat(randombytes() + randombytes(), 0)
+            assert ('S' * 1024 + 'E' * 1024 == myfile1.readat(None, 0))
+            assert ('S' * 1024 + 'E' * 1024 == myfile2.readat(None, 0))
+        except:
+            log("7 Valid Data write to a file is unsuccessful!")
+        finally:
+            myfile2.close()
+    finally:
+        myfile1.close()
+
+    myfile1 = ABopenfile("ieojboiejb.jioejbioje", False)
+    try:
+        myfile2 = ABopenfile("qeiovjoiqjb.wbijowjbo", True)
+        try:
+            myfile1.writeat('S' * 1024 + 'E' * 1024, 0)
+            myfile2.writeat('S' * 1024 + 'E' * 1024, 0)
+            myfile1.writeat('E' * 1024, 1500)
+            myfile2.writeat('E' * 1024, 1500)
+            assert ('S' * 1024 + 'E' * 1024 == myfile1.readat(None, 0))
+            assert ('S' * 1024 + 'E' * 1024 == myfile2.readat(None, 0))
+        except:
+            log("8 Valid Data write to a file is unsuccessful!")
+        finally:
+            myfile2.close()
+    finally:
+        myfile1.close()
+
+    myfile1 = ABopenfile("ieojboiejb.jioejbioje", False)
+    try:
+        myfile2 = ABopenfile("qeiovjoiqjb.wbijowjbo", True)
+        try:
+            assert ('S' * 1024 + 'E' * 1500 == myfile1.readat(None, 0))
+            assert ('S' * 1024 + 'E' * 1500 == myfile2.readat(None, 0))
+        except:
+            log("9 Valid Data write to a file is unsuccessful!")
+        finally:
+            myfile2.close()
+    finally:
+        myfile1.close()
+
+    mycontext['END_LOCK'].acquire(True)
+    try:
+        mycontext['END'] = True
+    finally:
+        mycontext['END_LOCK'].release()
+except:
+    log("Exception thrown!")
+    raise

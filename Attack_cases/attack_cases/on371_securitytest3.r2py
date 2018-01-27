@@ -1,0 +1,63 @@
+# WRITE OPERATION
+# New File Operation
+
+# Clean up of existing file
+if "testfile3.txt.a" in listfiles():
+  removefile("testfile3.txt.a")
+if "testfile3.txt.b" in listfiles():
+  removefile("testfile3.txt.b")
+
+try:
+    myfile=ABopenfile("testfile3.txt",False) #Create an AB file
+
+  # Open File Function Call
+    try:
+        myfile.readat(None,0)
+
+    except RepyArgumentError :
+            pass
+    except FileClosedError:
+            pass
+    except SeekPastEndOfFileError :
+            pass
+    except:
+       log(" Bug Found while reading File on opening non-existent file with False create option ")
+
+    try:
+
+      myfiile.writeat("SSSSSSSSSSSSSXXXXXXXXXXXX",5)
+      log(myfile.readat(1,0))
+      log(myfile.readat(None,0)[-1])
+
+    except RepyArgumentError :
+            pass
+    except FileClosedError:
+            pass
+    except SeekPastEndOfFileError :
+            pass
+    except:
+     log(" Bug Found while writing on opening non-existent file with False create option \n ")
+
+    try :
+
+       myfile.close()
+
+    except :
+      log("Valid Data write to a file is unsuccessfull!")
+
+
+
+except RepyArgumentError:
+         pass
+except FileInUseError:
+         pass
+except ResourceExhaustedError:
+         pass
+except FileNotFoundError:
+        pass
+except :
+        log("Bug Found while opening non-existent file with False create option: Unexpected Exception : exception is other than File not found error: ")
+
+
+
+# Write valid data to the file

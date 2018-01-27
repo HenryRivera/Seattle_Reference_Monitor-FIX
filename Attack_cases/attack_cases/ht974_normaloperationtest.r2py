@@ -1,0 +1,28 @@
+# Normal Operations: Openfile, ReadFile, WriteFile, CloseFile
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+ removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+ removefile("testfile.txt.b")
+
+# Open File Function Call
+try:
+ myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+except:
+ log("Cannot open file normally!\n")
+
+try:
+ myfile.readat(2,0)
+except:
+ log("Cannot read file normally!\n")
+
+try:
+ myfile.writeat('S2345E',0)
+except:
+ log("Cannot normally write file!\n")
+
+try:
+ myfile.close()
+except:
+ log("Cannot close file normally!\n")

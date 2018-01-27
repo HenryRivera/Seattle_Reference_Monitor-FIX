@@ -1,0 +1,25 @@
+try:
+  if "attack.txt" in listfiles():
+    removefile("attack.txt")
+    
+  testFile = openfile("attack.txt",True)
+
+  try:
+    testFile.setmaxfilesize(-1)
+    
+  except RepyArgumentError:
+    pass
+
+  except ValueError:
+    pass
+
+  else:
+    raise Exception
+
+  testFile.close()
+
+except Exception as e:
+  log("Failure")
+  
+else:
+  pass

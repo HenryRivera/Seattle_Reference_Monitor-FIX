@@ -1,0 +1,19 @@
+#Chaitanya Bolla
+#Test Case 4
+
+#Code derived from assignment
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+	removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+	removefile("testfile.txt.b")
+
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+# Write invalid data to the file
+myfile.writeat("Test",0)
+
+#Check if testfile.txt.b exists because if A file is invalid, B is supposed to be deleted
+if "testfile.txt.b" in listfiles():
+	log("Security Layer Vulnerable. textfile.txt.b shouldn't exist if the file is invalid.\n")

@@ -1,0 +1,53 @@
+#SeattleTestbed ABStoragePartTwo
+# Tesing with threads
+# Written by Tian Lin
+
+def writeTest(): 
+	# Write valid data to the file
+	#this function is meant to be used in a createthread call
+	try:
+		myfile.writeat("StestE",0)
+	except:
+		myfile.close()
+		log("\nFailed to write from threads!\n")
+
+	sleep(.1) # thread sleep .1 seconds
+
+	try:
+		#should be nothing written cause filed not closed yet
+		assert('SE' == myfile.readat(None,0))
+	except:
+		myfile.close()
+ 		log("Empty file read is wrong")
+
+
+
+#BEGIN TESTING----------------------------------------------
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+ removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+ removefile("testfile.txt.b")
+
+
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+#loop valid writes in a thread
+for x in range (0, 10):
+	createthread(writeTest)
+
+#Close file. Now written changes should appear
+myfile.close() 
+
+# Reopen file again to read
+myfile=ABopenfile("testfile.txt",True)
+try:
+	assert('StestE' == myfile.readat(6,0))
+	#Close the file
+	myfile.close()
+except:
+	#Close the file
+	myfile.close()
+	log("Valid Data write to a file is unsuccessfull!")

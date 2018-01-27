@@ -1,0 +1,45 @@
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+myFile=ABopenfile("testfile.txt.a",True)
+myFile2=ABopenfile("testfile.txt.b", True)
+myFile.writeat('SE',0)
+
+myFile.writeat('b', 0)
+
+myFile2.writeat('abcde',0)
+    
+try:
+    assert('SEb' == myFile.readat(3,0)) #write to valid file 
+
+except:
+
+    log("Should not have permission to write to valid file \n")
+
+try:
+    assert(os.access(myFile2, os.R_OK)) #read invalid file
+
+except:
+    log("File should not be read \n")
+
+try:
+    assert(removefile("testfile.txt.a") #remove valid file
+    
+except:
+           
+    log("Valid file should not be allowed to be removed \n")
+
+removefile("testfile.txt.b")
+
+myFile2 = ABopenfile("testfile.txt.b, True)
+
+myFile2.writeat('SE',0) # two valid files open
+
+try:
+    assert(removefile('testfile.txt.b'))
+
+except:
+    log("The most recent valid file modified should not be able to be removed \n")   

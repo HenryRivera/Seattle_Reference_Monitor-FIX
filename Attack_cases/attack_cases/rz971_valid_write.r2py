@@ -1,0 +1,15 @@
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+#Create an AB file
+myfile=ABopenfile("testfile.txt",True)  
+
+try:
+    #Put some valid data in the file.
+    myfile.writeat("SE",0)
+    myfile.close()
+except:
+    myfile.close()
+    log("Failed, unable to write to file without raising exception\n")

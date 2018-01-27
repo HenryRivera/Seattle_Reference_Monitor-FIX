@@ -1,0 +1,64 @@
+testid = 'A'
+testfilename1 = "testfile_"+ str(testid) + "_1.txt"
+testfilename2 = "testfile_"+ str(testid) + "_2.txt"
+
+mycontext['threadOneIsDone'] = False
+mycontext['threadTwoIsDone'] = False
+mycontext['TestingIsDone'] = False
+
+def threadOne():
+
+
+  try:
+    if testfilename1 in listfiles():
+      removefile(testfilename1)
+    myfile1=ABopenfile(testfilename1,True)  #Open a file
+    #write something
+    myfile1.writeat("STestE",0)
+    
+    mycontext['threadOneIsDone'] = True
+
+    while mycontext['threadTwoIsDone'] == False:
+      sleep(1)
+
+    myfile1.writeat("STestTestE",0)
+
+
+    #Close the file
+
+    assert('STestTestE' == myfile1.readat(10,0))
+    #Close the file
+    myfile1.close()
+    mycontext['TestingIsDone'] = True
+  except:
+    #Close the file
+    myfile1.close()
+    log("Valid Data write to a file is unsuccessfull!")
+    exitall()
+
+
+def threadTwo():
+  try:
+    if testfilename2 in listfiles():
+      removefile(testfilename2)
+    myfile2=ABopenfile(testfilename2,True)  #Open a file
+    
+    while mycontext['threadOneIsDone'] == False:
+      sleep(1)
+
+    myfile2.writeat("STestTestTestE",0)
+    assert('STestTestTestE' == myfile2.readat(14,0))
+    myfile2.close()
+    mycontext['threadTwoIsDone'] = True
+  except:
+    #close the file
+    myfile2.close()
+    log("Valid Data write to a file is unsuccessfull!")
+    exitall()
+    #Close the file
+
+createthread(threadOne)
+createthread(threadTwo)
+
+while mycontext['TestingIsDone'] == False:
+  sleep(1)

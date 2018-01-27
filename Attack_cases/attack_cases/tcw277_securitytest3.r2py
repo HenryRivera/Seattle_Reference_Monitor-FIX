@@ -1,0 +1,44 @@
+# Timothy Wong 
+# HW 2.2
+
+# Attack strategy:
+# Write nothing to the file
+# Reference monitor might go to the written file and not check for
+# the length of the file and then do file[0] == 'S' && file[-1] == 'E'
+# which will cause an error
+
+# New file operation
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+ removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+ removefile("testfile.txt.b")
+
+
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+try:
+	myfile.writeat("", 0)					    
+	myfile.close()
+except:
+	# crashed here our attack works
+	log("Success")	
+	myfile.close()
+	# no need to break anything anymore
+	# exitall() is not used for testcasing, just to end the program
+	exitall()
+
+# if we end up here the reference monitor was able to 
+# prevent the attack, test if the blank write broke something
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+try:
+ # reference monitor handled it correctly
+ assert('SE' == myfile.readat(2,0))
+ myfile.close()
+except:
+ # reference monitor did not handle it correctly
+ myfile.close()
+ log("Success")
+

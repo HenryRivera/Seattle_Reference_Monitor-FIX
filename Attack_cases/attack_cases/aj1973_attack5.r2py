@@ -1,0 +1,29 @@
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+# Write valid data to the file
+myfile.writeat("StestE",0)
+
+#Close the file
+myfile.close()
+
+#Try removing file B and read from A then
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+ 
+#Re-open the previous written file 
+myfile=ABopenfile("testfile.txt",False)  
+
+# Read the file to check the contents
+try:
+ assert('StestforBfilesexistenceE' == myfile.readat(None,0))
+ myfile.close()
+except:
+ myfile.close()
+ log("Valid Data write to a file is unsuccessfull!")

@@ -1,0 +1,36 @@
+# Writing - Checking Thread Safety
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+def write_in_thread():
+  myfile.writeat("S12345E",0)
+
+
+
+
+# Read the file to check the contents
+try:
+  myfile=ABopenfile("testfile.txt",True)
+  myfile.writeat("Stesting123E",0)
+  myfile.close()
+
+  myfile=ABopenfile("testfile.txt",True)
+  createthread(write_in_thread())
+  myfile.close()
+
+
+except:
+  #reference monitor successfully prevents race conditions
+  #myfile.close()
+  log(str(myfile.readat(12,0))+ " in except clause\n")
+  #pass
+
+else:
+  log("Monitor Compromised \n\n")
+finally:
+  #Close the file
+  myfile.close()

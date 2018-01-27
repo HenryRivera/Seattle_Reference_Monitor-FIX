@@ -1,0 +1,30 @@
+"""
+Name: To Hung (Lily) Ng
+NET ID: thn248
+
+"""
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+ removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+ removefile("testfile.txt.b")
+
+# Open File Function Call
+myfile = ABopenfile("testfile.txt",True)  #Create an AB file
+
+# write some valid data
+myfile.writeat("StestE",0)
+
+# Close the file
+myfile.close()
+
+# At this point, because the data is valid, B file should not exist in the system. 
+# Test case: try to see if A file(which should exist) and B file (which should've been deleted) exists
+# (See if the A/B file system works as expected)
+aexists = "testfile.txt.a" in listfiles()
+bexists = "testfile.txt.b" in listfiles()
+if bexists:
+	log("'B' file not deleted upon valid write.")
+	if aexists:
+		log("Both A and B files exist after close.")

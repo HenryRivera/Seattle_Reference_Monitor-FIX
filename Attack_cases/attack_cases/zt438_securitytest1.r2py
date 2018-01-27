@@ -1,0 +1,21 @@
+# MODIFYING VALID FILE WITHOUT USING WRITEAT
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+myfile.writeat('SsomethingE', 0) #valid file should contain "SsomethingE" now
+myfile.close()
+
+myfile=ABopenfile("testfile.txt", True)
+# valid file should still have "SsomethingE"
+try:
+  assert(myfile.readat(None, 0) == "SsomethingE")
+  myfile.close()
+except:
+  log("Successfully modified the valid file without using writeat, file contains: " + myfile.readat(None, 0) + "\n")
+  myfile.close()

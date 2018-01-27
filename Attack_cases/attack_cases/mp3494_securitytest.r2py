@@ -1,0 +1,38 @@
+# New File Operation
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+ removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+ removefile("testfile.txt.b")
+
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+try:
+ # Empty/New File should have contents 'SE' satisfying the requirement
+ assert('SE' == myfile.readat(2,0))
+ # Close the file:
+ myfile.close()
+except:
+ myfile.close()
+ # Error Handle or Failure Condition
+ log("Empty file is not handled properly!")
+
+# Open the file again and see what happens
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+# Now to check to ensure that it is being written and the most updated is being saved
+try:
+    # Try to write to the file at offset 0
+    myfile.writeat("SPleaseGiveMeA100E",0)
+    myfile.close()
+    assert('SPleaseGiveMeA100E' == myfile.readat(18, 0))
+except:
+    myfile.close()
+    # Error Handle or Failure Condition
+    log("System did not actively save the most updated document")
+
+# Lets see what happenss if we try to open multiple files
+myfile=ABopenfile("testfile.txt",True)
+myfile2=ABopenfile("testfile2.txt",True)

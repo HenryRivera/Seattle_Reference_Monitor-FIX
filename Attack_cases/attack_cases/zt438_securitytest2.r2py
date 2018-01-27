@@ -1,0 +1,23 @@
+# LARGE OFFSET READ OPERATION
+# there are some reference monitors that fail to complete execution on running this instead of raising EOF exception
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+# Try to read at offset > 0, should output empty string or return 
+# security layer should also produce no output
+try:
+  myfile.readat(None, 10)
+  myfile.close()
+except SeekPastEndOfFileError:
+  myfile.close()
+  log("EOF exception was raised\n")
+except:
+  myfile.close()
+  log("Unexpected exception was raised\n")

@@ -1,0 +1,49 @@
+#This case checks to see if multiple writes between closes are handled properly when file is valid before close.
+#Many are giving seek offset extends past EOF; I believe these are the ones that
+#already don't handle valid input properly. This one attempts to break ref monitors
+#that do handle valid input correctly.
+
+#for referencemonitor in reference_monitor_*; do echo $referencemonitor under test; for testcase in ddw284_multiple*; do python repy.py restrictions.default encasementlib.r2py $referencemonitor $testcase; done; done
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+    removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+    removefile("testfile.txt.b")
+
+#Open file
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+#Hex just in case that breaks something but I don't think it will
+data = "test"
+
+#Write valid data to file
+myfile.writeat(data,0)
+myfile.writeat('S',0)
+myfile.writeat('E',4)
+
+#Close so it can validity check
+myfile.close()
+
+# Reopen file again to write more
+myfile=ABopenfile("testfile.txt",True)
+
+myfile.writeat(data,0)
+myfile.writeat('S',0)
+
+myfile.close()
+
+#Reopen to read
+myfile=ABopenfile("testfile.txt",True)
+
+try:
+    flen = len(myfile.readat(None, 0))
+
+    assert("SestE" == myfile.readat(None, 0))
+    myfile.close()
+except:
+    log("multiple_write_2 - File failed check.\n")
+    log("Original: SestE\n")
+    log("File: " + myfile.readat(None, 0) + "\n")
+
+    myfile.close()

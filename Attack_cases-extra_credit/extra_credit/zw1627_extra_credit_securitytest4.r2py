@@ -1,0 +1,18 @@
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+myfile = ABopenfile('testfile.txt', True)  #A valid, B invalid-w
+myfile.writeat('SBE', 0)
+myfile.close()
+
+myfile = ABopenfile('testfile.txt', False) #A valid-w, B valid
+myfile.writeat('SCE', 0)
+myfile.close()
+
+if 'testfile.txt.a' in listfiles() and 'testfile.txt.b' in listfiles():
+  log("Failed~1\n")
+elif 'testfile.txt.a' not in listfiles() and 'testfile.txt.b' not in listfiles():
+  log('Failed~2\n')

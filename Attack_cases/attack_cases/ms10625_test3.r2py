@@ -1,0 +1,24 @@
+# FILE CREATION AND CLOSING
+
+if "testfile.txt.a" in listfiles():
+ removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+ removefile("testfile.txt.b")
+
+myfile=ABopenfile("testfile.txt",True)
+
+myfile.close
+
+myfile=ABopenfile("testfile.txt",True)
+
+try:
+
+ assert('SE' == myfile.readat(2,0))
+
+ myfile.close()
+ 
+except:
+
+ myfile.close()
+
+ log("File creation and closing not handled properly for empty file\n")

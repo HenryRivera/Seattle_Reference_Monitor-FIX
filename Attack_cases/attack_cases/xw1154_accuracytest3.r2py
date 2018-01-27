@@ -1,0 +1,20 @@
+#New File Operation
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+#handling multiple writing and offsets
+myfile.writeat("SabSESE",0)
+myfile.close()
+
+myfile=ABopenfile("testfile.txt",True)
+
+#testing readat, offsets
+try:
+ assert('SESE' == myfile.readat(4,3))
+ myfile.close()
+except:
+ myfile.close()
+ log("Error: Data empty\n")

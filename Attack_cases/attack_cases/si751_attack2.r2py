@@ -1,0 +1,18 @@
+if "testfile.txt.a" in listfiles():
+    removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+    removefile("testfile.txt.b")
+
+#Test 2: Test for file made with capital letters in name
+try:
+    myfile = ABopenfile("testFile.txt", True)
+    log ("File with illegal character created successfully\n")
+except:
+    pass
+
+try:
+    myfile.close()
+    log ("Can or tries to close file made with illegal character\n")
+except:
+    pass
+

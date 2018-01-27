@@ -1,0 +1,54 @@
+if "abc.txt.a" in listfiles():
+  removefile("abc.txt.a")
+if "abc.txt.b" in listfiles():
+  removefile("abc.txt.b")
+
+if "pqr.txt.a" in listfiles():
+  removefile("pqr.txt.a")
+if "pqr.txt.b" in listfiles():
+  removefile("pqr.txt.b")
+
+if "xyz.txt.a" in listfiles():
+  removefile("xyz.txt.a")
+if "xyz.txt.b" in listfiles():
+  removefile("xyz.txt.b")
+ 
+#SEQUENCE: Trying to read/write multiple files
+myfile1 = ABopenfile("abc.txt",True)  #Create an AB file
+myfile2 = ABopenfile("pqr.txt",True)  #Create an AB file
+myfile3 = ABopenfile("xyz.txt",True)  #Create an AB file
+
+
+def write_to_file1():
+	myfile1.writeat("SWE",0)
+ 	myfile1.close()
+
+def write_to_file2():
+ 	myfile2.writeat("SWEE",0)
+ 	myfile2.close()
+
+def write_to_file3():
+ 	myfile3.writeat("SWEEE",0)
+ 	myfile3.close()
+
+
+def readall():	
+ 	try:
+ 		assert("SWE" == myfile1.readat(None,0))
+ 		assert("SWEE" == myfile2.readat(None,0))
+ 		assert("SWEEE" == myfile3.readat(None,0))
+ 	except:
+ 		log("Invalid Data. Failed to write and read from/to multiple files\n")
+ 	finally:
+ 		myfile1.close()
+ 		myfile2.close()
+ 		myfile3.close()
+
+createthread(write_to_file1)
+createthread(write_to_file2)
+createthread(write_to_file3)
+sleep(2)
+myfile1 = ABopenfile("abc.txt",True)  #Create an AB file
+myfile2 = ABopenfile("pqr.txt",True)  #Create an AB file
+myfile3 = ABopenfile("xyz.txt",True)  #Create an AB file
+createthread(readall)

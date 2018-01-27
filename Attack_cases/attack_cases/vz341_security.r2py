@@ -1,0 +1,109 @@
+#Attack file tests for security of writeat, readat, open, and close, as well as checking if thread times out
+
+#Checks if runtime goes over 8 secs
+def timeout():
+  time_out = 8.0
+  while True:
+    if(getruntime() >= time_out):
+      log("Time out, goes over 8 secs\n")
+      exitall()
+
+#Checks if invalid input was found or saved
+def checkForInvalidInput(inValid):
+  aExist=False
+  bExist=False
+  if "testfile.txt.a" in listfiles():
+    aExist=True
+  if "testfile.txt.b" in listfiles():
+    bExist=True
+
+  if aExist:
+    aOpened=True
+     #Checks if text file A can open
+    try:
+      validFile=openfile("testfile.txt.a",False)
+      aOpened=True
+    except:
+      log("File A exists, security layer cannot open file A properly\n")
+      aOpened=False
+    #If file exists, checks if file has valid input
+    if aOpened:
+      try:
+        assert(inValid != validFile.readat(6,0))
+      except:
+        #Exception thrown when valid input was not found
+        log("Security is not fulfilled, invalid input was found or not discarded\n")
+      try: 
+        validFile.close()
+      except:
+        validFile.close()
+        log("File cannot be closed properly\n")  
+      if "testfile.txt.a" in listfiles():
+        removefile("testfile.txt.a")
+
+  if bExist:
+    bOpened=True
+     #Checks if text file A can open
+    try:
+      validFile=openfile("testfile.txt.b",False)
+      bOpened=True
+    except:
+      log("File B exists, security layer cannot open file B properly\n")
+      bOpened=False
+    #If file exists, checks if file has valid input
+    if bOpened:
+      try:
+        assert(inValid != validFile.readat(6,0))
+      except:
+        #Exception thrown when valid input was not found
+        log("Security is not fulfilled, invalid input was found or not discarded\n")
+      try: 
+        validFile.close()
+      except:
+        validFile.close()
+        log("File cannot be closed properly")
+      if "testfile.txt.b" in listfiles():
+        removefile("testfile.txt.b")
+    
+  #If both files do not exist, then there is a bug
+  if aExist == False and bExist == False:
+    log("Accuracy was not fulfilled, text file a and b was missing, input cannot be checked\n")
+
+#Function to open, write invalid input, and close
+def writeInvalidInput(inValid):
+  try:
+    if "testfile.txt.a" in listfiles():
+      removefile("testfile.txt.a")
+    if "testfile.txt.b" in listfiles():
+      removefile("testfile.txt.b")
+    myfile=ABopenfile("testfile.txt",True) #Creates an AB file
+  except:
+    log("Security layer did not open properly\n")
+  #Tests if invalid characters are saved
+  try:
+    #Should not stop me from writing charaters
+    myfile.writeat(inValid,0)
+  except:
+    #This should not be raised as input is valid
+    log("Accuracy is not fulfilled, layer is preventing me from writing\n")
+  try: 
+    myfile.close()
+  except:
+    myfile.close()
+    log("Security layer did not handle close properly\n")
+    pass
+  checkForInvalidInput(inValid)
+
+#Function to put invalid input into functions
+def securityTest():
+  writeInvalidInput("#$%^&&")
+  writeInvalidInput("123456")
+  writeInvalidInput("ABCDEF")
+  writeInvalidInput("abcdef")
+  writeInvalidInput("Sabcde")
+  writeInvalidInput("sabcdE")
+
+  exitall()
+
+createthread(securityTest)
+createthread(timeout)

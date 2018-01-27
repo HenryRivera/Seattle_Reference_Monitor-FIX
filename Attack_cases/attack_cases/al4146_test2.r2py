@@ -1,0 +1,25 @@
+# WRITE OPERATION
+# New File Operation
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+# Write invalid data to the file
+myfile.writeat("test",0)
+
+#Close the file
+myfile.close()
+
+# Check if there are any files saved -- there should not be
+try:
+ if "testfile.txt.b" in listfiles():
+     raise ValueError('Invalid file was saved')
+except:
+ #Close the file
+ log("Invalid file was saved")

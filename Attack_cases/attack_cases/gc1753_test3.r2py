@@ -1,0 +1,17 @@
+# New File Operation
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+	removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+	removefile("testfile.txt.b")
+
+myfile=ABopenfile("testfile.txt",True)  #Create an empty file
+myfile.writeat("SabcE", 0)
+myfile.close()
+
+try:
+	assert("testfile.txt.a" in listfiles() or "testfile.txt.b" in listfiles())
+	
+except:
+    log("Incorrect file name. Should be named under filename testfile.txt.a or testfile.txt.b after writing\n")

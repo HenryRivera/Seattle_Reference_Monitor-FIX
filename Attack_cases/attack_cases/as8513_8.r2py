@@ -1,0 +1,13 @@
+# Testing that a good name works.
+
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+# Create a new file with exactly 119 chars in its name
+try:
+  myfile=ABopenfile("1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345.txt",True)  #Create an AB file
+except:
+  log("can't open a new file with a valid length\n")
+  exitall()

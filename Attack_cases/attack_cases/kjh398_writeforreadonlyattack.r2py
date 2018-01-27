@@ -1,0 +1,21 @@
+# New File Operation
+# Kevin Huang Attack 1
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+ removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+ removefile("testfile.txt.b")
+
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+myfile.writeat("attack", 0)
+
+try:
+ # Empty/New File should have contents 'SE' satisfying the requirement
+ assert('SE' == myfile.readat(2,0))
+ myfile.close()
+except:
+ # Error Handle or Failure Condition
+ log("Can write to the file even when read only: ")
+ myfile.close()
+

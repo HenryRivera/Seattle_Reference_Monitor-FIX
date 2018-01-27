@@ -1,0 +1,14 @@
+if "testfile.txt.a" in listfiles():
+	removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+	removefile("testfile.txt.b")
+
+myfile=ABopenfile("testfile.txt",True)
+
+try:
+	#Trying large offset when writing
+	myfile.writeat("SE", 99999999999)	
+	myfile.close()
+except:
+	myfile.close()
+	log("FAIL: Large offset not handled correctly!")

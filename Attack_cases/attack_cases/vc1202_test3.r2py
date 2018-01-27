@@ -1,0 +1,19 @@
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+check="SE"+" "
+myfile.writeat(check,0)
+myfile.close()
+myfile=ABopenfile("testfile.txt",True)
+test1=myfile.readat(None,0)
+try:
+    assert('SE'==test1)
+except:
+    log(test1)
+    log("Space issue")
+
+
+myfile.close()

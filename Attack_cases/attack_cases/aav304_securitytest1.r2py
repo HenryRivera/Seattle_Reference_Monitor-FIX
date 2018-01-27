@@ -1,0 +1,18 @@
+# New File Operation
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+	removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+	removefile("testfile.txt.b")
+
+myfile=ABopenfile("testfile.txt",True)  #Create an empty file
+myfile.writeat("S!!!E", 0) #write valid data
+myfile.close()
+
+try:
+	assert("testfile.txt.a" in listfiles() and "testfile.txt.b" in listfiles()) #check if Afile and Bfile exist at same time
+	log("2 files exist at the same time\n")
+except:
+	#do nothing
+	pass

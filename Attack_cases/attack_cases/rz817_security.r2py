@@ -1,0 +1,82 @@
+# Test the security of the security layer
+
+# Attempt to open and close an empty file
+# If the close function deals with indices of the file, this might
+# throw an error since it is empty
+
+# Clean up any old files in directory
+if "testfile.txt.a" in listfiles():
+    removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+    removefile("testfile.txt.b")
+
+try:
+    # Create new file but don't write anything into it
+    myfile = ABopenfile("testfile.txt", True)
+    # Close the empty file
+    myfile.close()
+except:
+    log("        ERROR handling empty file \n")
+
+# Test the security of the security layer
+
+# Attempt to open a new file and write valid data into it
+# Close the file - this should delte the (.a) part since (.b) is valid
+# Create an invald .a file
+# Attempt to open the file again and read data
+# Data should not be read!
+
+
+# Try to create a new file and write valid data into it
+try:
+  # Create new file
+  myfile = ABopenfile("testfile.txt", True)
+  # Write valid data into file
+  myfile.writeat("S TESTING WRITE E", 0)
+  # Close file
+  myfile.close()
+except:
+  log("        ERROR writing to file \n")
+
+# Try to create (.a) file that is invalid
+try:
+  # Create new .a file
+  newa = openfile("testfile.txt.a", True)
+  # Write valid/different data
+  newa.writeat("S DIFFERENT STUFF", 0)
+  # Close file
+  newa.close()
+except:
+  log("Writing to .a failed")
+
+# Open file and read data from it
+try:
+  # Open file
+  myfile = ABopenfile("testfile.txt", True)
+  # Read data from file
+  s = myfile.readat(17, 0)
+  # Check if data matches what was previously written
+  assert(s == "S TESTING WRITE E")
+  # Close file
+  myfile.close()
+except:
+  log("        ERROR reading from invalid file \n")
+
+# Test the security of the security layer
+
+myfile = ABopenfile("testfile.txt", True)
+
+def openfil(s):
+  myfile.writeat(s, 0)
+
+def openf1():
+  openfil("S TEST1 E")
+
+def openf2():
+  openfil("S TEST2 E")
+
+try:
+  createthread(openf1)
+  createthread(openf2)
+except:
+  log ("        ERROR handling threads")

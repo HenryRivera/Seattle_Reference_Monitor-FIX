@@ -1,0 +1,41 @@
+#This tries adding weird things like null bytes to the input (shouldn't break anything but)
+#and not deleting files before doing stuff with them (although it does leave create True so if)
+#they don't exist they should be created
+
+#for referencemonitor in reference_monitor_*; do echo $referencemonitor under test; for testcase in ddw284_input_w*; do python repy.py restrictions.default encasementlib.r2py $referencemonitor $testcase; done; done
+
+#Open file
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+data = "\x53\x00weird_\x00input\x45"
+
+#Write valid data to file
+myfile.writeat(data,0)
+myfile.writeat(data,15)
+
+#Close so it can validity check
+myfile.close()
+
+# Reopen file again to write more
+myfile=ABopenfile("testfile.txt",True)
+
+myfile.writeat(data,30)
+
+myfile.close()
+
+#Reopen to read
+myfile=ABopenfile("testfile.txt",True)
+
+try:
+    flen = len(myfile.readat(None, 0))
+
+    assert('S' == myfile.readat(1,0))
+    assert('E' == myfile.readat(1,flen-1))
+    assert(data*3 == myfile.readat(None, 0))
+    myfile.close()
+except:
+    log("input_weird - Null byte removed from file.\n")
+    log("Original: " + data*3 + "\n")
+    log("File: " + myfile.readat(None, 0) + "\n")
+
+    myfile.close()

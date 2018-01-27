@@ -1,0 +1,54 @@
+#Accuracy
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+    removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+    removefile("testfile.txt.b")
+
+# Open File Function Call
+myFile=ABopenfile("testfile.txt.a",True)
+myFile2=ABopenfile("testile.txt.b",True)
+myFile2.writeat("sabcdefe",0)
+
+
+
+try:
+    myFile.writeat('SE',0) #make empty file valid
+
+except:
+
+    log("Empty file not handled properly.")
+
+try:
+    myFile.readat(2,0)
+except:
+
+    log("System hould have permission to read from valid file \n")
+
+
+
+try:
+    myFile2.writeat('a', 0)
+
+except:
+
+    log("System should have permission to write to invalid file \n")
+
+try:
+    removefile("testfile.txt.a")
+
+except:
+    log("Invalid file should be allowed to be removed. \n")
+
+
+removefile("testfile.txt.b")
+
+myFile3=ABopenfile("testfile.txt.b" , True)
+myFile3.writeat('SE',0)
+
+try:
+
+    removefile("testfile.txt.b")
+
+except:
+    log("If there are two valid files, the oldest file should be discarded \n")

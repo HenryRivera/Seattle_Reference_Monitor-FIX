@@ -1,0 +1,6 @@
+try:
+    myfile=openfile("testfile.txt",True)
+except :
+    log("pass")
+else:
+    log("")

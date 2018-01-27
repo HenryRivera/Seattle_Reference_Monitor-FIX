@@ -1,0 +1,15 @@
+if "testfile.txt.a" in listfiles():
+    removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+    removefile("testfile.txt.b")
+
+# Open and create a file
+myfile = ABopenfile("testfile.txt", True)
+
+myfile.writeat("SabE", 0)
+assert('SabE' == myfile.readat(4,0))
+myfile.writeat("SaE", 0)
+assert('SE' == myfile.readat(None, 0))
+
+myfile.close()
+

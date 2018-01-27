@@ -1,0 +1,46 @@
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+mycontext['oneDone'] = False
+mycontext['twoDone'] = False
+mycontext['myfile']=ABopenfile("testfile.txt", True)
+
+def threadone():
+	mycontext['myfile'].writeat("StestE",0)
+	mycontext['myfile'].close()
+	mycontext['myfile'] = ABopenfile("testfile.txt", False)
+
+	mycontext['oneDone'] = True
+	while mycontext['twoDone'] == False:
+		sleep(1)
+
+	mycontext['myfile']=ABopenfile("testfile.txt", False)
+	mycontext['myfile'].writeat("Sabcd", 0)
+	mycontext['myfile'].close()
+	try:
+		mycontext['myfile']=ABopenfile("testfile.txt", False)
+		assert('SabcdE' == mycontext['myfile'].readat(None,0))
+		mycontext['myfile'].close()
+	except:
+		log("Data write is unsuccessfull!\n")
+		mycontext['myfile'].close()
+
+def threadtwo():
+	while mycontext['oneDone'] == False:
+		sleep(1)
+	mycontext['myfile'].writeat("S1234E", 0)
+	mycontext['myfile'].close()
+
+	try:
+		mycontext['myfile']=ABopenfile("testfile.txt", False)
+		assert('S1234E' == mycontext['myfile'].readat(None,0))
+		mycontext['myfile'].close()
+		mycontext['twoDone'] = True
+	except:
+		log("Valid Data\n")
+		mycontext['twoDone'] = True
+
+createthread(threadone)
+createthread(threadtwo)

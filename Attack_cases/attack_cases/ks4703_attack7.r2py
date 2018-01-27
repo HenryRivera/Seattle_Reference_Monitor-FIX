@@ -1,0 +1,19 @@
+#offset handle
+
+if "testfile.txt.a" in listfiles():
+ removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+ removefile("testfile.txt.b")
+myfile=ABopenfile("testfile.txt",True)
+
+
+try:
+
+ myfile.writeat("SabcdE",10)
+ myfile.close()
+ 
+except:
+ myfile.close()
+ # Error Handle or Failure Condition
+ log("Offset not handled\n")
+

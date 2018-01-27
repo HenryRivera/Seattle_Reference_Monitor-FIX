@@ -1,0 +1,44 @@
+
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+myfile=ABopenfile("testfile.txt.a", True)  #Create an AB file
+
+# Write valid data to the file
+myfile.writeat("StestE",0)
+
+# I should get 'SE' when reading an empty file...
+try:
+ # Empty/New File should have contents 'SE' satisfying the requirement
+ assert('SE' == myfile.readat(2,0))
+ # Close the file:
+ myfile.close()
+except:
+ myfile.close()
+ # Error Handle or Failure Condition
+ log("Empty file is not handled properly!")
+
+
+def file_open_thread():
+  count =0
+  while count < 5:
+
+    try:
+      assert('StestE' == myfile.readat(6,0))
+      #Close the file
+      myfile.close()
+    except:
+      #Close the file
+      myfile.close()
+      log("Valid Data write to a file is unsuccessfull!")
+    count += 1
+
+try:
+
+  # Read the file to check the contents
+  myfile=ABopenfile("testfile.txt",True)
+  createthread(file_open_thread)
+  createthread(file_open_thread)
+except:
+  log ("Error: unable to start thread")

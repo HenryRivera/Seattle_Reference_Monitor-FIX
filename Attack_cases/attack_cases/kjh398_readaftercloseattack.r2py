@@ -1,0 +1,23 @@
+# New File Operation
+# Kevin Huang Attack 1
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+ removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+ removefile("testfile.txt.b")
+
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+myfile.close()
+
+try:
+ # File is valid but the closed file was still read
+ assert('SE' == myfile.readat(2,0))
+ # Error Handle or Failure Condition
+ log("Can read the file after it is closed: ")
+ myfile.close()
+except:
+ # Already closed
+ pass
+
+ 

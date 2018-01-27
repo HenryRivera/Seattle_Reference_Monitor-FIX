@@ -1,0 +1,15 @@
+
+# Clean up of existing file
+if "Testfile.txt.a" in listfiles():
+  removefile("Testfile.txt.a")
+if "Testfile.txt.b" in listfiles():
+  removefile("Testfile.txt.b")
+
+
+try: 
+ # Open File Function Call
+ myfile=ABopenfile("Testfile.txt", True)  #Create an AB file
+ myfile.close()
+except:
+ #Close the file
+ log("File name convention handled improperly | Capital letters\n")

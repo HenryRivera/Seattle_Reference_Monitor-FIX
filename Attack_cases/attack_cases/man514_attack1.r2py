@@ -1,0 +1,13 @@
+if "abc.txt.a" in listfiles():
+  removefile("abc.txt.a")
+if "abc.txt.b" in listfiles():
+  removefile("abc.txt.b")
+
+#SEQUENCE: Open New File -> Try to Read Content -> Check if data == 'SE'
+
+myfile=ABopenfile("abc.txt",True)  #Create an AB file
+try:
+	assert('SE' == myfile.readat(None,0))
+except:
+	myfile.close()
+	log("Unable to read from a valid newly created file\n")

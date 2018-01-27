@@ -1,0 +1,48 @@
+# Security Test: check the write operation
+
+testid = 2
+testfilename = "test_"+ str(testid) + ".txt"
+testfilea = "test_"+ str(testid) + ".txt.a"
+testfileb = "test_"+ str(testid) + ".txt.b"
+
+
+  #clear the file directory
+if testfilename in listfiles():
+  removefile(testfilename)
+if testfilea in listfiles():
+  removefile(testfilea)
+if testfileb in listfiles():
+  removefile(testfileb)
+isclosed = 0 #to record the close() operation
+try:
+  myfile=ABopenfile(testfilename,True)
+  assert('SE' == myfile.readat(None,0))
+ 
+  #write a valid data
+  myfile.writeat("SeattlE",0)
+  assert('SE' == myfile.readat(None,0))
+  myfile.close()
+  isclosed=1
+
+  #open again and check the content
+  myfile = ABopenfile(testfilename, True)
+  assert('SeattlE' == myfile.readat(None,0))
+  
+  #write a invalid data
+  myfile.writeat("errorrrrr",0)
+
+  myfile.close()
+  isclosed=1
+  
+  #open again and check content
+  myfile = ABopenfile(testfilename, True)
+  assert('SeattlE' == myfile.readat(None,0))
+  
+  myfile.close()
+  isclosed=1
+except:
+  if isclosed == 0:
+    myfile.close()
+  log("Writing is not handled properly!")
+
+

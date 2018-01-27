@@ -1,0 +1,25 @@
+# New File Operation
+#test case 1: Accuracy
+#This test case is a basic test case to test the accuracy. This
+#is to test if the system handles correctly in the case  we write
+#some invalid data to the AB file.
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+    removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+    removefile("testfile.txt.b")
+
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+# put some invalid data in the file.
+myfile.writeat("Stest12345E1",0)
+
+try:
+    myfile.close()
+    myfile=ABopenfile("testfile.txt",True)
+    assert('Stest12345E1'!= myfile.readat(None,0))
+    myfile.close()
+except:
+    myfile.close()
+    # Error Handle or Failure Condition
+    log("invalid data is not handled properly here!")

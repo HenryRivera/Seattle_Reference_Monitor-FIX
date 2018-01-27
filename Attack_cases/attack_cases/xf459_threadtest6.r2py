@@ -1,0 +1,63 @@
+# Security Test: two Threads, check efficiency
+
+testid = 6
+testfilename1 = "test_thread1_"+ str(testid) + ".txt"
+testfilea1 = "test_thread1_"+ str(testid) + ".txt.a"
+testfileb1 = "test_thread1_"+ str(testid) + ".txt.b"
+
+if testfilename1 in listfiles():
+  removefile(testfilename1)
+if testfilea1 in listfiles():
+  removefile(testfilea1)
+if testfileb1 in listfiles():
+  removefile(testfileb1)
+
+mycontext['threadOneIsDone'] = False
+mycontext['threadTwoIsDone'] = False
+mycontext['TestingIsDone'] = False
+mycontext['file']=ABopenfile(testfilename1,True)  #Open a file
+mycontext['closed'] = 0
+
+def threadOne():
+  try:
+    
+    #write something
+    mycontext['file'].writeat("SooE",0)
+    assert('SE' == mycontext['file'].readat(None,0))
+
+    mycontext['threadOneIsDone'] = True
+
+    while mycontext['threadTwoIsDone'] == False:
+      sleep(1)
+
+    #Close the file
+    mycontext['file'].close()
+    #check if the program save the all files on disk
+    if (testfilename1 in listfiles()) or (testfilea1 in listfiles()) or (testfileb1 in listfiles()):
+      log("Efficiency Error in multiThread: cannot keep a complete copy of every file on disk!")
+    mycontext['TestingIsDone'] = True
+  except:
+    mycontext['file'].close()
+    log("Thread Error: Efficiency failed!\n")
+    exitall()
+
+def threadTwo():
+  try:
+        
+    while mycontext['threadOneIsDone'] == False:
+      sleep(1)
+
+    mycontext['file'].writeat("error",0)
+
+    mycontext['threadTwoIsDone'] = True
+  except:
+    log("22222")
+    mycontext['file'].close()
+    log("Thread Error: Efficiency failed!")
+    exitall()
+
+createthread(threadOne)
+createthread(threadTwo)
+
+while mycontext['TestingIsDone'] == False:
+  sleep(1)

@@ -1,0 +1,22 @@
+# Create New File Operation
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+ removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+ removefile("testfile.txt.b")
+
+
+
+try:
+ # Open File Function Call
+ myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+except:
+ # Error Handle or Failure Condition
+ log("\nCreation of a new file is not handled properly!\n")
+
+try:
+ # Close the file:
+ myfile.close()
+except:
+ pass

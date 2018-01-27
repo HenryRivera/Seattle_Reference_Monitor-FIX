@@ -1,0 +1,14 @@
+if "testfile.txt.a" in listfiles():
+    removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+    removefile("testfile.txt.b")
+
+#Test 8: Check if only one valid file exists after closing
+
+myfile = ABopenfile("testfile.txt", True)
+myfile.close()
+
+if "testfile.txt.a" in listfiles() and "testfile.txt.b" in listfiles():
+    log("Too many files left after closing\n")
+
+    

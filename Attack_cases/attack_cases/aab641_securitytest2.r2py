@@ -1,0 +1,20 @@
+
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+# Write valid data to the file
+try:
+    myfile.writeat("StestE",0)
+except:
+    log("Error Writing\n")
+
+try:
+    assert("SE" == myfile.readat(None,0))
+except:
+    log("Error Reading a new ABfile.\n")
+
+#Close the file
+try:
+    myfile.close()
+except:
+    log("Error closing\n")

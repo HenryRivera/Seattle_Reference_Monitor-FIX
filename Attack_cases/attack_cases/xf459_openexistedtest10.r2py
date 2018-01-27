@@ -1,0 +1,33 @@
+# open exit file test
+
+testid = 10
+testfilename = "test_"+ str(testid) + ".txt"
+testfilea = "test_"+ str(testid) + ".txt.a"
+testfileb = "test_"+ str(testid) + ".txt.b"
+mycontext['closed'] =0
+try:
+  if testfilename in listfiles():
+    removefile(testfilename)
+  if testfilea in listfiles():
+    removefile(testfilea)
+  if testfileb in listfiles():
+    removefile(testfileb)
+
+  myfile=ABopenfile(testfilename,True)
+  assert('SE' == myfile.readat(None,0))
+  myfile.writeat("S12345E",0)
+  myfile.close()
+  mycontext['closed'] = 1
+
+  myfile=ABopenfile(testfilename, False)
+  assert('S12345E' == myfile.readat(None,0))
+
+  myfile.close()
+  mycontext['closed'] = 1
+
+except:
+  if mycontext['closed'] == 0:
+    myfile.close()
+  log("Open existed file(set False) is not handled properly!")
+
+

@@ -1,0 +1,20 @@
+
+#The following test case tries to read data from a valid file after a close operation has already been performed. 
+#If the security layer fails to catch this exception, you will see the a File closed error log statement
+
+
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+myfile=ABopenfile("testfile.txt",True)
+	
+myfile.close()
+
+try:
+	myfile.readat(None,0)
+except FileClosedError:
+	log("The file is already closed; Security compromised \n\n")
+
+

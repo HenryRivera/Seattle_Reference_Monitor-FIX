@@ -1,0 +1,37 @@
+'''
+Justina Choi
+jc8415@nyu.edu
+Information Security and Privacy - Cappos
+Assignment 2.2
+October 26, 2017
+
+'''
+
+# Clean up of existing files
+testfiles = [x for x in listfiles() if x.startswith('testfile')]
+for file in testfiles:
+    removefile(file)
+
+
+myfile1 = ABopenfile('testfile.txt', True)
+myfile1.writeat('StestE', 0)
+
+try:
+    myfile2 = ABopenfile('testfile.txt', True)
+    myfile2.writeat('StwoE', 0)
+    myfile2.close()
+except:
+    pass # supposed to throw an exception
+
+myfile1.close()
+myfile1 = ABopenfile('testfile.txt', True)
+
+try:
+    assert('StestE' == myfile1.readat(None, 0))
+    myfile1.close()
+except:
+    myfile1.close()
+    log('Original results were overwritten; test unsuccessful\n')
+
+
+

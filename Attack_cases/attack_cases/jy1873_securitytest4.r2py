@@ -1,0 +1,39 @@
+
+# write invaild data to file after reopening the file
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+    removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+    removefile("testfile.txt.b")
+
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+# Write valid data to the file
+myfile.writeat("StestE",0)
+
+#Close the file
+myfile.close()
+
+# READ OPERATION
+# Reopen file again
+myfile=ABopenfile("testfile.txt",True)
+# Write invalid data to the file
+myfile.writeat("test!!",0)
+#Close the file
+myfile.close()
+
+# Reopen file again to read
+myfile=ABopenfile("testfile.txt",True)
+
+# Read the file to check the contents
+try:
+    assert('StestE' == myfile.readat(6,0))
+    #Close the file
+    myfile.close()
+except:
+    #Close the file
+    myfile.close()
+    log("Invalid data write is successfull!\n")
+

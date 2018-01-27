@@ -1,0 +1,41 @@
+def creation():
+	createthread(write1)
+	createthread(write2)
+
+def write1():
+	
+
+	# Write valid data to the file
+	myfile.writeat("StestE",0)
+	#Close the file
+	myfile.close()
+	sleep(1)
+	# READ OPERATION
+	# Reopen file again to read
+	myfile1=ABopenfile("testfile.txt",True)
+
+	# Read the file to check the contents
+	try:
+		assert('StestE' == myfile1.readat(6,0))
+		#Close the file
+		myfile1.close()
+	except:
+	#Close the file
+ 		myfile1.close()
+ 		log("InValid Data write to a file!")
+
+def write2():
+	# Write invalid data to the file
+	myfile.writeat("StestA",0)	
+
+
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+	removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+	removefile("testfile.txt.b")
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+sleep(1)
+creation()

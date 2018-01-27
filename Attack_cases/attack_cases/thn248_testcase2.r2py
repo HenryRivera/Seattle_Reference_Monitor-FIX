@@ -1,0 +1,40 @@
+"""
+Name: To Hung (Lily) Ng
+NET ID: thn248
+
+"""
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+ removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+ removefile("testfile.txt.b")
+
+# Open File Function Call
+myfile = ABopenfile("testfile.txt",True)  #Create an AB file
+
+# write some valid data
+myfile.writeat("StestE",0)
+
+# Close the file
+myfile.close()
+
+# Open file again
+myfile = ABopenfile("testfile.txt",False)
+
+# this time, write with invalid data
+myfile.writeat("E", 1)
+myfile.writeat("s", 6)
+
+myfile.close()
+
+# Open file again
+myfile = ABopenfile("testfile.txt",False)
+
+# Test case: see whether valid writes can be invalidated later on. When the later write is invalid, is the previous data still there?
+try:
+	assert(myfile.readat(None,0) == "StestE")
+	myfile.close()
+except:
+	myfile.close()
+	log("Previously valid data is not present upon a later invalid write.")

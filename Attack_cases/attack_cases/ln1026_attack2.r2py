@@ -1,0 +1,10 @@
+myfile=ABopenfile("testfile.txt",True)
+try:
+    myfile.close()
+except :
+    log("pass")
+else:
+    log("")
+
+
+

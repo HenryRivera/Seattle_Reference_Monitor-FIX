@@ -1,0 +1,17 @@
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+myfile=ABopenfile("testfile.txt",True)
+myfile.writeat("StestE",0)
+myfile.writeat("    ",0)
+myfile.close()
+
+mynewfile=ABopenfile("testfile.txt",False)
+try:
+ assert('SE' == mynewfile.readat(None,0))
+ mynewfile.close()
+except:
+ mynewfile.close()
+ log("INVALID!! ")

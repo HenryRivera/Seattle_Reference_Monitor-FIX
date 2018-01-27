@@ -1,0 +1,31 @@
+# Timothy Wong 
+# HW 2.2
+
+# Attack strategy:
+# Confuse the reference monitor's way of intepreting the file
+# Write \r\n to see if reference monitor ignores it
+# Reference monitor should ignore it and read the last character anyway
+
+# New file operation
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+ removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+ removefile("testfile.txt.b")
+
+
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+myfile.writeat("S\r\nE", 0)             # valid input
+myfile.close()
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+try:
+ # reference monitor handled it correctly
+ assert('S\r\n\E' == myfile.readat(4,0))
+ myfile.close()
+except:
+ # reference monitor did not handle it correctly
+ myfile.close()
+ log("Success")
+

@@ -1,0 +1,40 @@
+# WRITE OPERATION
+# New File Operation
+
+#WRITING VALID DATA THEN INVALID
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+# Write valid data to the file
+myfile.writeat("SThis is validE",0)
+
+#Close the file
+myfile.close()
+
+# Reopen file again to write invalid data
+myfile=ABopenfile("testfile.txt",True)
+
+#Writing invalid data to end of file
+myfile.writeat("Not valid data", 15)
+myfile.close()
+
+# READ OPERATION
+# Reopen file again to read
+myfile=ABopenfile("testfile.txt",True)
+
+# Read the file to check the contents
+try:
+ assert('SThis is validE' == myfile.readat(None,0))
+ #Close the file
+ myfile.close()
+except:
+ #Close the file
+ myfile.close()
+ log("Invalid data resulted in valid data being overwritten!")

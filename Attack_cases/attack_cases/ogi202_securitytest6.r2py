@@ -1,0 +1,32 @@
+#Checks if can read file after deletion
+
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+myfile.writeat("SexampletextE",0)
+
+myfile.close()
+
+myfile=ABopenfile("testfile.txt",True)
+
+
+try:
+ myfile.writeat("StestE")
+ myfile.close()
+ removefile("testfile.txt")
+ myfile=openfile("testfile.txt",True)
+
+ readResult = myfile.readat(2,0)
+except :
+    pass
+else:
+    log("Should not be able to read after deletion.")
+finally:
+ myfile.close()
+
+
+

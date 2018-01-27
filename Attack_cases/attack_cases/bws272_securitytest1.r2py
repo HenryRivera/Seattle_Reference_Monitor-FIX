@@ -1,0 +1,21 @@
+
+if "testfile.txt.a" in listfiles():
+	removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+	removefile("testfile.txt.b")
+
+myfile=ABopenfile("testfile.txt",True)  
+
+try:
+	myfile.writeat("jhbGHHhhJBFCTI", 0)
+except:
+	myfile.close()
+ 	
+else:
+	log('Accuracy bug')
+	myfile.close()
+
+
+
+
+

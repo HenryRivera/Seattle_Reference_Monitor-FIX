@@ -1,0 +1,32 @@
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+# Write valid data to the file
+myfile.writeat("Sel",0)
+myfile.writeat("E",3)
+
+
+#Close the file
+myfile.close()
+
+#Case 3
+#Performing two separate writes to make a valid data
+try:
+ myfile=ABopenfile("testfile.txt.a",False)
+ assert("SelE" == myfile.readat(4,0))
+ #Close the file
+ myfile.close()
+ #log('hay\n')
+ 
+except:
+ #Close the file
+ myfile.close()
+ log("File does not write to both times\n")
+
+

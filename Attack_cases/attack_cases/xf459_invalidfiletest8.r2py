@@ -1,0 +1,33 @@
+# Security Test: check the invalid file 
+
+testid = 8
+testfilename = "test_"+ str(testid) + ".txt"
+testfilea = "test_"+ str(testid) + ".txt.a"
+testfileb = "test_"+ str(testid) + ".txt.b"
+
+
+#clear the file directory
+if testfilename in listfiles():
+  removefile(testfilename)
+if testfilea in listfiles():
+  removefile(testfilea)
+if testfileb in listfiles():
+  removefile(testfileb)
+
+try:
+  myfile=ABopenfile(testfilename,True)
+  assert('SE' == myfile.readat(None,0))
+ 
+  #write a invalid data
+  myfile.writeat("     ",0)
+  assert('SE' == myfile.readat(None,0))
+  myfile.close()
+
+  if testfilename in listfiles() or testfilea in listfiles() or testfileb in listfiles():
+    log("Error: Invalid file should be discarded!")
+
+except:
+  myfile.close()
+  log("Invalid file not handled properly!")
+
+

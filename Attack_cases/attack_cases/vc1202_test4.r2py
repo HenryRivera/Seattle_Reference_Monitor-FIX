@@ -1,0 +1,56 @@
+
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+myfile=ABopenfile("testfile.txt",True)
+myfile.writeat("SEEE",0) #Write valid characters to file
+myfile.close()
+mycontext['file']=0
+
+def openclosefile():
+    for i in range(0,1000):  #Loop in a file
+        try:
+            if(mycontext['file']==0):  #If file is close,Open it
+              myfile=ABopenfile("testfile.txt",True)
+              mycontext['file']=1
+            else:
+              myfile.close()   #If it is open close it
+              mycontext['file']=0
+        except:
+            pass
+
+def writeinvalid():
+
+    for i in range(0,1000):
+        try:
+            if(mycontext['file']==1):  #If file is open then write invalid data,Hoping the context switch happens in close call before calling and after check
+                myfile.writeat("SE123", 0)
+
+
+
+        except:
+            pass
+
+def check():
+    for i in range(0,10000):  #Loop and keep reading data from valid file
+        try:
+            if(mycontext['file']==1):
+
+                assert('SEEE'==myfile.readat(None,0))  #If file does not have SEEE then we may have found a timing attack
+        except:
+
+                log("Timing attack found")
+                break
+
+
+
+
+
+
+
+
+
+createthread(openclosefile) #Create 3 threads
+createthread(writeinvalid)
+createthread(check)

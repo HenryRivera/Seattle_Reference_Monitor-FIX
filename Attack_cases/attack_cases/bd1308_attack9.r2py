@@ -1,0 +1,46 @@
+# Clean up of existing file
+if "testfile1.txt.a" in listfiles():
+  removefile("testfile1.txt.a")
+if "testfile1.txt.b" in listfiles():
+  removefile("testfile1.txt.b")
+
+if "testfile2.txt.a" in listfiles():
+  removefile("testfile2.txt.a")
+if "testfile2.txt.b" in listfiles():
+  removefile("testfile2.txt.b")
+
+# Open File Function Call
+
+
+def thr1():
+  myfile1=ABopenfile("testfile1.txt",True)  #Create an AB file
+  myfile1.writeat("S123E",0)
+  myfile1.close()
+  
+def thr2():
+  myfile2=ABopenfile("testfile2.txt",True)  #Create an AB file
+  myfile2.writeat("S456E",0)
+  myfile2.close()
+  
+
+createthread(thr1)
+createthread(thr2)
+sleep(2)
+
+try:
+  myfile=ABopenfile("testfile1.txt",False)  #Create an AB file
+  assert('S123E' == myfile.readat(None,0))
+  myfile.close()
+except:
+  log(myfile.readat(None,0))
+  myfile.close()
+  log("Something went wrong")
+  
+try:
+  myfile=ABopenfile("testfile2.txt",False)  #Create an AB file
+  assert('S456E' == myfile.readat(None,0))
+  myfile.close()
+except:
+  log(myfile.readat(None,0))
+  myfile.close()
+  log("Something went wrong")

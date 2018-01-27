@@ -1,0 +1,35 @@
+# This test case checks whether valid data is persistent
+# even after writing invalid data
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+	removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+	removefile("testfile.txt.b")
+
+# Open File Function Call
+myfile = ABopenfile("testfile.txt",True)  #Create an AB file
+
+# Write valid entry to file
+myfile.writeat('S0123456789E',0)
+myfile.close()
+
+# Open the same file again
+myfile = ABopenfile("testfile.txt",False)  #Create an AB file
+
+# Writing invalid data to file
+myfile.writeat('wrong',0)
+myfile.close()
+
+# Opening this file again
+myfile = ABopenfile("testfile.txt",False)
+
+# Read the file to check the contents
+try:
+	# Writing an int to check whether that's handled or not
+	a = myfile.readat(None,0)
+	assert(a == 'S0123456789E')
+except:
+	log('It should have valid entry of before\n')
+finally:
+	myfile.close()

@@ -1,0 +1,34 @@
+
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+# Write valid data to the file
+myfile.writeat("StestE",0)
+myfile.close()
+
+#changing data
+# Reopen file again to read
+myfile=ABopenfile("testfile.txt",True)
+myfile.writeat("ShellE",0)
+myfile.close()
+
+myfile=ABopenfile("testfile.txt",True)
+# Read the file to check the contents
+try:
+ assert('StestE' == myfile.readat(6,0))
+ #Close the file
+ myfile.close()
+except:
+ #Close the file
+ myfile.close()
+ log("Original data changed!\n")
+
+#myfile.close()
+
+
+

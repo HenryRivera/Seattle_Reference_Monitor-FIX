@@ -1,0 +1,33 @@
+if "testfile.txt.a" in listfiles():
+    removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+    removefile("testfile.txt.b")
+
+
+#Test 7: I don't know, just open and close the same file
+#a whole bunch and see if anything weird happens with the file
+
+myfile = ABopenfile("testfile.txt", True)
+myfile.close()
+
+
+
+for i in range(0, 1000):
+    try:
+        myfile = ABopenfile("testfile.txt", False)
+        try:
+            assert(myfile.readat(None, 0) == "SE")
+        except:
+            log("File somehow modified during one of the 1000 opens\n")
+            break
+        
+        try:
+            myfile.close()
+        except:
+            log("Issue with one of the 1000 closes\n")
+            break
+            
+    except:
+        log ("Something else happened with one of the 1000 opens or closes\n")
+        break
+    

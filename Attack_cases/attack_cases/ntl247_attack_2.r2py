@@ -1,0 +1,21 @@
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+myfile=ABopenfile("testfile.txt",True)
+myfile.writeat("SAE", 0)
+myfile.close()
+
+try:
+	if "testfile.txt.a" in listfiles():
+		aexist = True
+	else:
+		aexist = False
+	if "testfile.txt.b" in listfiles():
+		bexist = True
+	else:
+		bexist = False
+	assert(aexist != bexist)
+except:
+	log("Failed removal of file.\n")

@@ -1,0 +1,26 @@
+#The following test case writes a valid string into the invalid file and then tries to read the entered string from the valid file after it performs a close operation.
+#If the data read does not match with the valid data entered previously, then it's a security loophole in the security layer
+
+
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+myfile=ABopenfile("testfile.txt",True)
+	
+myfile.writeat("StestE",0)
+
+myfile.close()
+
+myfile=ABopenfile("testfile.txt",True)
+
+try:
+	assert('StestE'==myfile.readat(None,0))
+	myfile.close()
+except:
+	log("Valid data write to the file is unsuccessful; Security compromised!\n\n")
+	myfile.close()
+
+
+

@@ -1,0 +1,29 @@
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+  try:
+    removefile("testfile.txt.a")
+  except:
+    log("Error! cannot remove file!\n")
+
+if "testfile.txt.b" in listfiles():
+  try:
+    removefile("testfile.txt.b")
+  except:
+    log("Error! cannot remove file!\n")
+
+# Open File Function Call
+try:
+  myfile = ABopenfile("testfile.txt",True)  #Create an AB file
+except:
+  log("Cannot open file\n")
+
+try:
+  # Empty/New File should have contents 'SE' satisfying the requirement
+  assert('SE' == myfile.readat(2,0))
+  # Close the file:
+  myfile.close()
+except:
+  # Close the file:
+  myfile.close()
+  # Error Handle or Failure Condition
+  log("Empty file is not handled properly!\n")

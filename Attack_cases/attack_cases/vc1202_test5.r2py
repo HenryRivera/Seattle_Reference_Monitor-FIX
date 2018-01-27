@@ -1,0 +1,16 @@
+if "test.txt.a" in listfiles():
+  removefile("test.txt.a")
+if "test.txt.b" in listfiles():
+  removefile("test.txt.b")
+
+
+myfile=ABopenfile("test.txt",True)
+myfile.writeat("S1234EF",0)
+myfile.close()
+myfile=ABopenfile("test.txt",True)
+
+try:
+    assert('SE'==myfile.readat(None,0))
+
+except:
+    log("Invalid characters in Valid file")

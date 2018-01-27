@@ -1,0 +1,40 @@
+'''
+Justina Choi
+jc8415@nyu.edu
+Information Security and Privacy - Cappos
+Assignment 2.2
+October 26, 2017
+
+Sample test 2 given in instructions
+'''
+
+# clean existing test files (assuming they're named testfile)
+testfiles = [x for x in listfiles() if x.startswith('testfile')]
+for file in testfiles:
+    removefile(file)
+
+# WRITE OPERATION
+# New File Operation
+
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+# Write valid data to the file
+myfile.writeat("StestE",0)
+
+#Close the file
+myfile.close()
+
+# READ OPERATION
+# Reopen file again to read
+myfile=ABopenfile("testfile.txt",True)
+
+# Read the file to check the contents
+try:
+    assert('StestE' == myfile.readat(6,0))
+    #Close the file
+    myfile.close()
+except:
+    log('File contents: %s\n' % myfile.readat(None, 0))
+    myfile.close()
+    log("Valid Data write to a file test unsuccessfull!\n")

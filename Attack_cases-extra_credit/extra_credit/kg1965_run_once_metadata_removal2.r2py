@@ -1,0 +1,28 @@
+# to check the valid data writting 
+# New File Operation
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+  	removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+myfile.writeat("Sabc", 0)
+myfile.writeat("eE",4)
+
+myfile.close()
+
+myfile =ABopenfile("testfile.txt", True)
+myfile.writeat("ab",0)
+
+# Read the file to check the contents
+try:
+ assert('SabcE' == myfile.readat(5,0))
+ #Close the file
+ myfile.close()
+except:
+ #Close the file
+ myfile.close()
+ log("Writting valid is not successfully!")

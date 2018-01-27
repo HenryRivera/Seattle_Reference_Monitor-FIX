@@ -1,0 +1,35 @@
+#Chaitanya Bolla
+#Test Case 3
+
+#Code derived from assignment
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+	removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+	removefile("testfile.txt.b")
+
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+# Write valid data to the file
+myfile.writeat("S",0)
+
+# Close file
+myfile.close()
+
+def threading():
+	# Open File Function Call
+	myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+	# Write valid data to the file
+	myfile.writeat("E",1)
+
+	# Close file
+	myfile.close()
+
+#Creates a thread
+createthread(threading)
+
+#Check to see if it is visible
+if testfile.txt.a" in listfiles():
+	log("Threading: Security Layer vulnerable. File shouldn't exist.\n")

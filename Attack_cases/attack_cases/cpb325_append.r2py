@@ -1,0 +1,21 @@
+if "testfile.txt.a" in listfiles():
+	removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+	removefile("testfile.txt.b")
+# Create file
+myfile=ABopenfile("testfile.txt",True)
+
+# Writes long input
+myfile.writeat("S-------E",0)
+
+# Writes in the middle
+myfile.writeat("HELLO",2)
+myfile.close()
+
+myfile=ABopenfile("testfile.txt",False)
+try:
+	assert('S-HELLO-E' == myfile.readat(None,0))
+	myfile.close()
+except:
+	myfile.close()
+	log("Invalid data is written")

@@ -1,0 +1,28 @@
+#checks to see if invalid data written to the file
+#is handled properly
+
+if "testfile.txt.a" in listfiles():
+		removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+		removefile("testfile.txt.b")
+
+myfile=ABopenfile("testfile.txt",True)
+
+#writing invalid information
+myfile.writeat("ssomerandominformation",0)
+
+try:
+	myfile.close()
+except:
+	log("File did not close correctly")
+
+myfile = ABopenfile("testfile.txt",True)
+
+try:
+	assert("SE" == myfile.readat(2,0))
+except:
+	try:
+		myfile.close()
+	except:
+		log("File did not close correctly")
+	log("Invalid data was written to file.")

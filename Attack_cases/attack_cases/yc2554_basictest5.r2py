@@ -1,0 +1,68 @@
+if "testfile.txt.a" in listfiles():
+    removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+    removefile("testfile.txt.b")
+if 'testfile.txt' in listfiles():
+    removefile('testfile.txt')
+
+s = 'S' + '1' * 200000 + 'E'
+
+try:    
+    myfile=ABopenfile("testfile.txt",True)
+except:
+    log('multithread open file failed\n')
+    exitall()
+
+def whelper():
+    try:
+        myfile.writeat(s,0)
+    except:
+        log('multithread write failed\n')
+        exitall()
+def whelper2():
+    try:
+        myfile.writeat('S1E',200000)
+    except:
+        log('multithread write failed\n')
+        exitall()
+def terminate():
+    try:    
+        myfile.close()
+    except:
+        exitall()
+        log('multithread close file failed')
+def rhelper():
+    try:
+        assert('S1E' == myfile.readat(3, 200000))
+    except:
+        log('123multithread Valid data write to a file is unsuccessful!\n')
+        exitall()
+
+try:
+    createthread(whelper)
+    createthread(whelper2)
+    createthread(terminate)
+    sleep(1)
+except:
+    log('multithread write failed\n')
+    exitall()
+
+try:    
+    myfile=ABopenfile("testfile.txt",True)  
+except:
+    log('multithread open file failed\n')
+    exitall()
+
+try:
+    createthread(rhelper)
+except:
+    log('123multithread Valid data write to a file is unsuccessful!\n')
+    exitall()
+finally:
+    try:
+        createthread(terminate)
+    except:
+        log('multithread close failed')
+        exitall()
+
+

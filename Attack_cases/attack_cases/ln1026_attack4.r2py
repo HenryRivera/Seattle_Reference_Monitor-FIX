@@ -1,0 +1,11 @@
+myfile=ABopenfile("testfile.txt",True)
+try:
+    myfile.readat(1,0)
+except :
+    log("pass")
+else:
+    log("")
+
+
+
+

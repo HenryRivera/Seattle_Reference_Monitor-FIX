@@ -1,0 +1,20 @@
+# ABopenfile with create set to True creates .a and .b files and writes SE to .a
+# when we write StestE and call close(), contents of file a should be StestE
+# now when we try to reopen the same file with create set to true again, SE gets written to .a
+# contents of .a file are SEestE when it still should have been StestE
+
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+myfile=ABopenfile("testfile.txt",True)
+myfile.writeat("StestE",0)
+myfile.close()
+mynewfile=ABopenfile("testfile.txt",True)
+try:
+ assert('StestE' == mynewfile.readat(None,0))
+ mynewfile.close()
+except:
+ mynewfile.close()
+ log("able to write to file a ")

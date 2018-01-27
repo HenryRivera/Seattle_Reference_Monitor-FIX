@@ -1,0 +1,15 @@
+def do_this():
+  try:
+    myfile= ABopenfile("testfile.txt",True)
+  except:
+    log("pass")
+  else:
+    log("")
+    myfile.close()
+def main():
+  myfile=ABopenfile("testfile.txt",True)
+  myfile.read(2,0)
+  myfile.close()
+  our_thread=createthread(target=do_this)
+  our_thread.start()
+

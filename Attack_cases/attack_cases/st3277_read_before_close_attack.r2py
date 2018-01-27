@@ -1,0 +1,16 @@
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+myfile.writeat("Stest12345E",0)
+
+try:
+    # I should get 'SE' when reading an empty file...
+    assert('SE' == myfile.readat(2,0))
+    myfile.close()
+except:
+    log('Wrong read, didn\'t read from old file\n')
+    myfile.close()

@@ -1,0 +1,15 @@
+#The following test case tries to write data into a file with a negative value of offset.
+#If the security layer fails to catch this exception, you will see RepyArgumentError with the log statement
+
+for file in listfiles():
+	if file.startswith('testfile'):
+	        removefile(file)
+		
+
+myfile=ABopenfile("testfile.txt",True)
+	
+try:
+	myfile.writeat("asdasdas",-3)
+except RepyArgumentError:
+	log("Offset is illegitimate value in the writeat operation; Security compromised \n\n")
+

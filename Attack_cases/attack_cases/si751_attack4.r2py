@@ -1,0 +1,45 @@
+if "testfile.txt.a" in listfiles():
+    removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+    removefile("testfile.txt.b")
+
+#Test 4: testing initial valid write and followup write cases (plus open clause)
+
+myfile = ABopenfile("testfile.txt", True)
+
+#initial write
+try:
+    myfile.writeat("SI feel like a complete fraud you know, like damn itE", 0)
+except:
+    log("Error Writing to file initially\n")
+    
+
+myfile.close()
+
+
+#Open previous file
+try:
+    myfile = ABopenfile("testfile.txt", False)
+except:
+    log("Issue opening previously created file\n")
+    
+
+try:
+    assert("SI feel like a complete fraud you know, like damn itE" == myfile.readat(None,0))
+except:
+    log("File has not been written to correctly\n")
+    
+
+#Subsequent write
+myfile.writeat("SI FEEL TRAPPEDE", 0)
+
+myfile.close()
+
+myfile = ABopenfile("testfile.txt", False)
+
+try:
+    assert("SI FEEL TRAPPEDEcomplete fraud you know, like damn itE" == myfile.readat(None,0))
+except:
+    log("Issue in writing to file already written to once\n")
+
+myfile.close()

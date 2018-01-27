@@ -1,0 +1,36 @@
+#import threading
+if "testfile.txt.a" in listfiles():
+    removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+    removefile("testfile.txt.b")
+
+
+
+def threadedwrite(text):
+    try:
+        myfile.writeat(text,0)
+    except:
+        pass #log("error writing")
+
+myfile=ABopenfile("testfile.txt",True)
+
+threadedwrite("invalid")
+threadedwrite("SvalidE")
+
+try:
+    myfile.close()
+except:
+    pass #log("error")
+
+myfile=ABopenfile("testfile.txt",False)
+
+try:
+    #log(myfile.readat(None,0)+"\n")
+    assert("SvalidE" == myfile.readat(None,0))
+except:
+    log("no thread locks!\n")
+
+try:
+    myfile.close()
+except:
+    pass #log("close error")

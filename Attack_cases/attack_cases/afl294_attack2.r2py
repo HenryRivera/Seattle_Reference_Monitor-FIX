@@ -1,0 +1,20 @@
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+file_1 = ABopenfile("testfile.txt",True)
+file_1.writeat("S1E",0)
+try:
+  assert('S1E' != file_1.readat(3,0))
+except:
+  log("ERROR - Invalid read data\n")
+file_1.close()
+
+file_1 = ABopenfile("testfile.txt",True)
+try:
+  assert('S1E' == file_1.readat(3,0))
+  file_1.close()
+except:
+  file_1.close()
+  log("ERROR - Wrong data saved in A!\n")

@@ -1,0 +1,11 @@
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+myfile=ABopenfile("testfile.txt",True) 
+myfile.writeat("SE",0)
+myfile.close()
+if "testfile.txt.b" in listfiles():
+	log("The older file is not removed")
+	
+

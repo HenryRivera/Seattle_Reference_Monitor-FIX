@@ -1,0 +1,15 @@
+# This attack makes sure that an empty file reads "SE".
+
+# Delete the A and B files for a clean start.
+ls = set(listfiles())
+if "testfile.txt.a" in ls:
+    removefile("testfile.txt.a")
+if "testfile.txt.b" in ls:
+    removefile("testfile.txt.b")
+# Open the file through the reference monitor.
+myfile = ABopenfile("testfile.txt", True)
+# An empty file should read "SE".
+if "SE" != myfile.readat(None, 0):
+    log("The empty file does not read SE.\n")
+# Close the file.
+myfile.close()

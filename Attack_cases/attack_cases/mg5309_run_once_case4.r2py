@@ -1,0 +1,29 @@
+if "testfile.txt.a" in listfiles():
+ removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+ removefile("testfile.txt.b")
+if "testfile.a" in listfiles():
+ removefile("testfile.a")
+if "testfile.b" in listfiles():
+ removefile("testfile.b")
+
+#having blanks at random bytes should be handled
+
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+try:
+	assert('SE' == myfile.readat(2,0))
+	myfile.writeat("S",0)
+	myfile.writeat("rE",2)
+	myfile.close()
+except:
+ 	log("File write is not handled properly!")
+ 	myfile.close()
+
+try:
+	myfile=ABopenfile("testfile.txt",False)  #Create an AB file
+	assert('S rE' == myfile.readat(4,0))
+	myfile.close()
+except:
+	log("File write is not consistent")
+ 	myfile.close()

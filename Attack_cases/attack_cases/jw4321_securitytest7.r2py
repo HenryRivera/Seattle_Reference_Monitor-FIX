@@ -1,0 +1,23 @@
+# to check invalid writting
+# Clean up of existing file
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+myfile.writeat(" ", 0)
+
+## a file is SE and is valid, b file is empty
+try:
+    assert(myfile.readat(2,0) == "SE")
+except:
+	log("invalid writting is not successful!")
+
+
+# Write invalid data to the file
+
+myfile.close()

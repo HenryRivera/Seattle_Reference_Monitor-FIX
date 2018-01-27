@@ -1,0 +1,12 @@
+if "_abc.txt.a" in listfiles():
+  removefile("_abc.txt.a")
+if "_abc.txt.b" in listfiles():
+  removefile("_abc.txt.b")
+myfile=ABopenfile("_abc.txt",True)  #Create an AB file
+
+# I should get 'SE' when reading an empty file...
+#assert('SE' == myfile.readat(None,0))
+
+if "_abc.txt.a" in listfiles():
+	log("Error! Invalid file name")
+myfile.close()

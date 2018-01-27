@@ -1,0 +1,35 @@
+'''
+Justina Choi
+jc8415@nyu.edu
+Information Security and Privacy - Cappos
+Assignment 2.2
+October 26, 2017
+
+'''
+
+# clean existing files
+testfiles = [x for x in listfiles() if x.startswith('testfile')]
+for file in testfiles:
+    removefile(file)
+
+myfile1 = ABopenfile('testfile1.txt', True)
+myfile2 = ABopenfile('testfile2.txt', True)
+
+myfile1.writeat('S hello there E', 0)
+
+myfile1.close()
+myfile2.close()
+
+myfile1 = ABopenfile('testfile1.txt', True)
+myfile2 = ABopenfile('testfile2.txt', True)
+
+try:
+    assert('S hello there E' == myfile1.readat(None, 0))
+    assert('SE' == myfile2.readat(2, 0))
+    myfile1.close()
+    myfile2.close()
+
+except:
+    myfile1.close()
+    myfile2.close()
+    log('Two file test unsuccessful!\n')

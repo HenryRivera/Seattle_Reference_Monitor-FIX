@@ -1,0 +1,20 @@
+#The following test case uses multiple file handlers in order to exploit the lack of locks in th security layer.
+#If the security layer didn't use lock mechanism in them, you will see FileInUseError with the log statement.
+
+for file in listfiles():
+	if file.startswith('testfile'):
+	        removefile(file)
+		
+
+
+try:
+	myfile=ABopenfile("testfile.txt",True)
+	myfile1=ABopenfile("testfile.txt",True)
+
+except FileInUseError: 
+	log("The file is already open; Security compromised \n\n")
+
+
+
+
+

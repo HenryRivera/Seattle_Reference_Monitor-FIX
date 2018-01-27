@@ -1,0 +1,19 @@
+#opened a file with False condition breaks aj1973 and kjh398
+
+if "testfile.txt.a" in listfiles():
+ removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+ removefile("testfile.txt.b")
+
+myfile=ABopenfile("testfile.txt",True)
+
+myfile.close()
+
+try:
+ myfile=ABopenfile("testfile.txt",False)
+ assert('SE' == myfile.readat(None,0))
+ myfile.close()
+except:
+ myfile.close()
+ # Error Handle or Failure Condition
+ log("Did not add a condition for False!\n")

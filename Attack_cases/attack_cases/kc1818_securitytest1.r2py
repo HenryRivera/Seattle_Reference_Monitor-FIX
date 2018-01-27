@@ -1,0 +1,19 @@
+#testo oneo
+
+if "testfile.txt.a" in listfiles():
+    removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+    removefile("testfile.txt.b")
+myfile = ABopenfile("testfile.txt", True)
+
+try:
+    myfile.writeat("StestE",-1);
+except RepyArgumentError:
+    log("Offset cannot be -1\n")
+    pass
+except ValueError:
+    pass
+else:
+    raise Exception
+    myfile.close()
+    

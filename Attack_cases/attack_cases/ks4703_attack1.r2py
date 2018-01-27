@@ -1,0 +1,33 @@
+# Attack on ka1745 also aab641, aat414, write data twice
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+ removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+ removefile("testfile.txt.b")
+
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+myfile.writeat("Shell0E",0)
+myfile.close()
+
+
+# Write again
+
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+myfile.writeat("SanythinghereE",0)
+myfile.close()
+
+#Reopen file to read
+
+myfile=ABopenfile("testfile.txt",True)
+
+try:
+ 
+ assert('SanythinghereE' == myfile.readat(14,0))
+ # Close the file:
+ myfile.close()
+except:
+ myfile.close()
+ # Error Handle or Failure Condition
+ log("File write not handled properly!")

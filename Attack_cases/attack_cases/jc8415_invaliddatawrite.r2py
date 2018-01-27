@@ -1,0 +1,27 @@
+'''
+Justina Choi
+jc8415@nyu.edu
+Information Security and Privacy - Cappos
+Assignment 2.2
+October 26, 2017
+
+Writes invalid data, should save only backup (with data "SE") instead
+'''
+
+# Clean up of existing files
+testfiles = [x for x in listfiles() if x.startswith('testfile')]
+for file in testfiles:
+    removefile(file)
+
+myfile = ABopenfile('testfile.txt', True)
+myfile.writeat('S invalid data', 0)
+myfile.close()
+
+myfile = ABopenfile('testfile.txt', True)
+try:
+    # should have saved the 'SE' valid data only
+    assert('SE' == myfile.readat(2, 0))
+    myfile.close()
+except:
+    myfile.close()
+    log('Invalid data write test unsuccessful\n')

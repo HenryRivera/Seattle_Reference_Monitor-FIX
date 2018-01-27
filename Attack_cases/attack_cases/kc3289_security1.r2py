@@ -1,0 +1,53 @@
+#code verifies  resource check for two threads
+
+file1="file1.txt"
+file2="file2.txt"
+mycontext['firstThread'] = False
+mycontext['secondThread'] = False
+mycontext['check'] = False
+
+def firstfile():
+  try:
+    if file1 in listfiles():
+      removefile(testfilename1)
+    myfile1=ABopenfile(file1,True)
+    #write something
+    myfile1.writeat("SjhfgjrgjerE",0)
+
+    #setting global variable
+    mycontext['firstThread'] = True
+
+    #sleep 2 seconds
+    while mycontext['secondThread'] == False:
+      sleep(2)
+
+    #Close the file
+    myfile1.close()
+    mycontext['check'] = True
+
+  except Exception as e:
+    log("Multiple thread test failed")
+
+def secondfile():
+  try:
+    if file2 in listfiles():
+      removefile(file2)
+    myfile2=ABopenfile(file2,True)  #Open a file
+
+    while mycontext['firstThread'] == False:
+      sleep(2)
+
+    myfile2.writeat("SkghkjdgE",0)
+    myfile2.close()
+    mycontext['secondThread'] = True
+
+  except Exception as e:
+    log("Multiple thread test failed")
+
+
+createthread(firstfile)
+createthread(secondfile)
+
+while mycontext['check'] == False:
+  sleep(1)
+

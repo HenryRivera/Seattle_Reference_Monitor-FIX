@@ -1,0 +1,15 @@
+# Checks to see if lower case string would yield a valid file
+
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+myfile=ABopenfile("testfile.txt",True)
+myfile.writeat("seexampletexte",0)
+
+try:
+    myfile.close()
+except :
+    log("New file should contain SE as the file content")
+

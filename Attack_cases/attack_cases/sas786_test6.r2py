@@ -1,0 +1,36 @@
+# 6 - Writing Multiple files
+#Clean up of existing file(s)
+if "testfile1.txt.a" in listfiles():
+  removefile("testfile1.txt.a")
+if "testfile1.txt.b" in listfiles():
+  removefile("testfile1.txt.b")
+
+if "testfile2.txt.a" in listfiles():
+  removefile("testfile2.txt.a")
+if "testfile2.txt.b" in listfiles():
+  removefile("testfile2.txt.b")
+
+#Open File Function Call
+myfile=ABopenfile("testfile1.txt",True)  #Create an AB file
+myfile.writeat("se",0)
+myfile.close()
+
+myfile2 = ABopenfile("testfile2.txt", True) # Create 2nd AB file
+myfile2.writeat("ES",0)
+myfile2.close()
+
+myfile=ABopenfile("testfile1.txt",True)
+myfile2 = ABopenfile("testfile2.txt", True)
+
+try:
+  x = myfile.readat(2,0)
+  y = myfile.readat(2,0)
+  assert("es" == x)
+  assert("ES" == y)
+  myfile1.close()
+  myfile2.close()
+
+except:
+  myfile.close()
+  myfile2.close()
+  log("Monitor Compromised: \'" + str(x) +"\'written in file 1 and \'" + str(y)+"\'in file 2!\n" )

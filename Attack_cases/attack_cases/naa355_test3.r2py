@@ -1,0 +1,25 @@
+#naa355_test3 checks to see if file will let me write to a closed file 
+
+try:
+    removefile("testfile.txt")
+except:
+  pass
+
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+ 
+def stall():
+    while getruntime() < 10.0:
+        pass
+
+try:
+    createthread(stall)
+    myfile.close()
+    myfile.writeat("SattackE",0)
+
+except 
+    log("Error: File allows write to closed file. ")
+
+else:
+  myfile.close()
+

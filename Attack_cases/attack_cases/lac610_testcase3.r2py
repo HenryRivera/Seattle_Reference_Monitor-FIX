@@ -1,0 +1,22 @@
+# Testing to see if only one backup is kept and not both to test for efficiency
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+#Close the file
+#Should not save invalid write data and only have 'SE' in file read after close
+myfile.close()
+
+# Read the file to check the contents
+try:
+	 #Only one file should exist
+	 assert(bool(("testfile.txt.a" in listfles())) != bool(("testfile.txt.b" in listfiles())))
+except:
+	 #both files either existed or deleted
+	 log("Storing both backups or no backups, not efficient!\n")

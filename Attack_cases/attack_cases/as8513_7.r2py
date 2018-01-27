@@ -1,0 +1,21 @@
+# Testing that illegal names are caught
+
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+# Create a new file
+try:
+  myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+except:
+  log("can't open a new file\n")
+  exitall()
+
+# Try to open the same file, by using illegal characters
+try:
+  myfile2=ABopenfile("./testfile.txt",False)  #Create an AB file
+except:
+  exitall()
+else:
+  log("Illegal characters used!")

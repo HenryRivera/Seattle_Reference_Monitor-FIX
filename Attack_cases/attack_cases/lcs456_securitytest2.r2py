@@ -1,0 +1,29 @@
+ # New File Operation
+
+ # Clean up of existing file
+ if "testfile.txt.a" in listfiles():
+     removefile("testfile.txt.a")
+ if "testfile.txt.b" in listfiles():
+     removefile("testfile.txt.b")
+
+ # Open File Function Call
+ myfile = ABopenfile("testfile.txt", True)  # Create an AB file
+ myfile.writeat('Z', len(myfile)-1)
+ myfile.close()
+
+ myfile = ABopenfile("testfile.txt", True)
+ length = len(myfile.readat(None,0)
+ #This gives the length of the file
+
+ try:
+     myfile = ABopenfile("testfile.txt", True)
+     assert("Z" == myfile.read(1,length-1))
+
+
+ except:
+     myfile.close()
+     # Error Handle or Failure Condition
+     log("File not valid!")
+
+
+

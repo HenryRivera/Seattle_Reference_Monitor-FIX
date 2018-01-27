@@ -1,0 +1,33 @@
+'''
+Justina Choi
+jc8415@nyu.edu
+Information Security and Privacy - Cappos
+Assignment 2.2
+October 26, 2017
+
+
+New File Operation sample test given in instructions
+'''
+
+# Clean up of existing files
+testfiles = [x for x in listfiles() if x.startswith('testfile')]
+for file in testfiles:
+    removefile(file)
+
+try:
+    # Open File Function Call
+    myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+    # Empty/New File should have contents 'SE' satisfying the requirement
+    assert('SE' == myfile.readat(2,0))
+
+except:
+    log('New File test unsuccessful\n')
+
+
+try:
+    # Close the file:
+    myfile.close()
+
+except:
+    log('Close file test unsuccessful\n')

@@ -1,0 +1,46 @@
+# Uses multiple threads to access one file and writes on it
+
+mycontext['completed_first_thread'] = False
+mycontext['completed_second_thread'] = False
+mycontext['completed_threads'] = False
+mycontext['filename'] = 'testfile.txt'
+
+if mycontext['filename']+'.a' in listfiles():
+	removefile(mycontext['filename']+'.a')
+if mycontext['filename']+'.b' in listfiles():
+	removefile(mycontext['filename']+'.b')
+
+mycontext['myfile'] = ABopenfile(mycontext['filename'], True)
+
+
+def first_thread():
+	mycontext['myfile'].writeat("StestE", 0)
+	mycontext['completed_first_thread'] = True
+
+	if mycontext['completed_second_thread'] == False:
+		sleep(2)
+
+	myfile = ABopenfile(mycontext['filename'], True)
+
+	data = myfile.readat(None, 0)
+	try:
+		assert(data == "StxytE")
+	except:
+		log("Write inaccurate. Invalid operation \n")
+
+	myfile.close()
+	mycontext['completed_threads'] = True
+
+def second_thread():
+	mycontext['myfile'].writeat('xy', 2)
+	mycontext['myfile'].close()
+	mycontext['completed_second_thread'] = True
+
+createthread(first_thread)
+createthread(second_thread)
+
+if mycontext['completed_threads'] == False:
+	sleep(1)
+
+
+

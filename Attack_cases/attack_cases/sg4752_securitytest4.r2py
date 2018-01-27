@@ -1,0 +1,17 @@
+#The following test case tries to read data from the file with a negative value of sizelimit.
+#If the security layer doesn't catch this exception, you will see a RepyArgumentError with the log statement
+
+
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+myfile=ABopenfile("testfile.txt",True)
+	
+
+try:
+	myfile.readat(-2,0)
+except RepyArgumentError:
+	log("Sizelimit is illegitimate value; Security compromised \n\n")
+

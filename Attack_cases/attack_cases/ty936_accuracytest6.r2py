@@ -1,0 +1,24 @@
+# WRITE OPERATION
+# New File Operation
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+myfile.close()
+
+try:
+ filename1= "testfile.txt.a"
+ filename2= "testfile.txt.b"
+ filename3= "testfile.txt"
+ marka= filename1 in listfiles()
+ markb= filename2 in listfiles()
+ markc= filename3 in listfiles()
+ assert(marka or markb or markc)
+
+except:
+ log("listfiles() function doesn't work well!")

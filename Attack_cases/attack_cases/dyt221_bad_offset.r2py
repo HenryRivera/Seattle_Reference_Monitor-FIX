@@ -1,0 +1,23 @@
+# This attack makes sure that edits to valid data that don't invalid the data are accepted.
+
+# Delete the A and B files for a clean start.
+ls = set(listfiles())
+if "testfile.txt.a" in ls:
+    removefile("testfile.txt.a")
+if "testfile.txt.b" in ls:
+    removefile("testfile.txt.b")
+# Write some valid data into the file.
+myfile = ABopenfile("testfile.txt", True)
+myfile.writeat("Stest1234E", 0)
+myfile.close()
+# Open the file again. The invalid copy should be blank.
+# Try to write data at an offset greater than 0.
+myfile = ABopenfile("testfile.txt", False)
+try:
+    myfile.writeat("5678", 5)
+except SeekPastEndOfFileError:
+    pass
+else:
+    log("The invalid copy was not blank.\n")
+# Close the file.
+myfile.close()

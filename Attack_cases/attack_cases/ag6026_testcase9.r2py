@@ -1,0 +1,22 @@
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+myfile.writeat("S123testE",0)
+myfile.close()
+
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+myfile.writeat("S123E",0)				#overwrite the valid data
+myfile.close()
+
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+try:
+ assert('S123EestE' == myfile.readat(None,0))
+ myfile.close()
+
+except:
+ myfile.close()
+ log("Valid Data write to a file is unsuccessfull!")

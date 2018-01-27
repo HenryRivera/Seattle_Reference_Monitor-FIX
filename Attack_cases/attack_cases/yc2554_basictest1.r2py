@@ -1,0 +1,20 @@
+if "testfile.txt.a" in listfiles():
+    removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+    removefile("testfile.txt.b")
+if 'testfile.txt' in listfiles():
+    removefile('testfile.txt')
+try:    
+    myfile=ABopenfile("testfile.txt",True)
+except:
+    log('open file failed\n')
+    
+try:
+    assert('SE' == myfile.readat(2,0))
+except:
+    log('Empty file is not handled properly\n')
+finally:
+    try:
+        myfile.close()
+    except:
+        log('File handler close failed\n')

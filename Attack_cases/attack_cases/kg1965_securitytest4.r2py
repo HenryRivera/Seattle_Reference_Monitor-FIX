@@ -1,0 +1,23 @@
+# New File Operation
+# jy2268 
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+ removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+ removefile("testfile.txt.b")
+
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+myfile.writeat("se", 0)
+myfile.close
+
+try:
+ # Empty/New File should have contents empty satisfying the requirement
+ assert("SE" == myfile.readat(2,0))
+ # Close the file:
+ myfile.close()
+ pass
+except:
+ # Error Handle or Failure Condition
+ log("Empty file is not handled properly!\n")

@@ -1,0 +1,97 @@
+try:
+    mycontext['END_LOCK'] = createlock()
+    mycontext['END'] = False
+    lock = createlock()
+
+    mycontext['SPIN_LOCK'] = [False]
+    mycontext['COUNT_LOCK'] = createlock()
+    mycontext['COUNT'] = 0
+    lock = createlock()
+
+
+    def deadLock():
+        for i in range(1, 20):
+            mycontext['END_LOCK'].acquire(True)
+            try:
+                if (mycontext['END']):
+                    return
+            finally:
+                mycontext['END_LOCK'].release()
+            sleep(0.5)
+        log("Dead lock exist!")
+
+
+    createthread(deadLock)
+
+
+    def validData():
+        mycontext['COUNT_LOCK'].acquire(True)
+        try:
+            mycontext['COUNT'] += 1
+        finally:
+            mycontext['COUNT_LOCK'].release()
+
+        spin_lock = mycontext['SPIN_LOCK']
+
+        while not spin_lock[0]:
+            pass
+
+        myfile.writeat("StestE", 0)
+        myfile.readat(None, 0)
+        myfile.writeat("tttt", 1)
+        myfile.readat(None, 0)
+        myfile.writeat("ttttt", 0)
+        myfile.readat(None, 0)
+
+        mycontext['COUNT_LOCK'].acquire(True)
+        try:
+            mycontext['COUNT'] -= 1
+        finally:
+            mycontext['COUNT_LOCK'].release()
+
+
+    if "ieojboiejb.jioejbioje.a" in listfiles():
+        removefile("ieojboiejb.jioejbioje.a")
+    if "ieojboiejb.jioejbioje.b" in listfiles():
+        removefile("ieojboiejb.jioejbioje.b")
+
+    myfile = ABopenfile("ieojboiejb.jioejbioje", True)
+
+    mycontext['MY_FILE'] = myfile
+
+    myfile.writeat("StestE", 0)
+
+    createthread(validData)
+
+    createthread(validData)
+
+    while True:
+        mycontext['COUNT_LOCK'].acquire(True)
+        try:
+            if mycontext['COUNT'] == 2:
+                break
+        finally:
+            mycontext['COUNT_LOCK'].release()
+        sleep(0.1)
+
+    mycontext['SPIN_LOCK'][0] = True
+
+    while True:
+        mycontext['COUNT_LOCK'].acquire(True)
+        try:
+            if mycontext['COUNT'] == 0:
+                break
+        finally:
+            mycontext['COUNT_LOCK'].release()
+        sleep(0.1)
+
+    myfile.close()
+
+    mycontext['END_LOCK'].acquire(True)
+    try:
+        mycontext['END'] = True
+    finally:
+        mycontext['END_LOCK'].release()
+except:
+    log("Exception thrown!")
+    raise

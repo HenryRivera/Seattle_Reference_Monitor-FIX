@@ -1,0 +1,22 @@
+#Chaitanya Bolla
+#Test Case 2
+#The attacker removes the file when they should not have been allowed to remove.
+
+#Code derived from assignment
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+# Write valid data to the file
+myfile.writeat("StestE",0)
+
+# Close file
+myfile.close()
+
+#Attempts to delete file, it should throw an excpetion when it tries to delete
+try:
+	#Only B should remain, since A is deleted since the file is valid.
+	removefile("testfile.txt.b")
+except RepyArgumentError:
+	pass
+except:
+	log("Security Layer Vulunerable. The reference monitor does not throw an exception\n")

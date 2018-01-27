@@ -1,0 +1,8 @@
+# Open a file
+myfile=openfile("testfile.txt",True)
+ 
+# Attempt to write "MZ" to the file
+try:
+  myfile.writeat("ab",0)
+  log("try worked")
+myfile.close()

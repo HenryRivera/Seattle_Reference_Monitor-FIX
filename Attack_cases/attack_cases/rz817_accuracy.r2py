@@ -1,0 +1,103 @@
+# Test if security layer handles writing/reading valid data
+
+# Clean up any old files in directory
+if "testfile.txt.a" in listfiles():
+    removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+    removefile("testfile.txt.b")
+
+# Try opening a new file and writing valid data to it
+try:
+    # Open new file
+    myfile = ABopenfile("testfile.txt", True)
+    # Write valid data into file
+    myfile.writeat("S TESTING WRITE E", 0)
+    # Close file
+    myfile.close()
+except:
+    # If any errors occur, try to catch them and log them
+    log("        ERROR writing to file \n")
+
+# Try opening the same file and reading its contents
+try:
+    # Open the same file as above
+    myfile = ABopenfile("testfile.txt", True)
+    # Read data from file
+    s = myfile.readat(17, 0)
+    # Check if read data matches what was written into file
+    assert(s == "S TESTING WRITE E")
+    # Close file
+    myfile.close()
+except:
+    # If any errors occur, try to catch them
+    log("        ERROR reading from file \n")
+
+# Test if security layer handles invalid data
+
+# Clean up any old files in directory
+if "testfile.txt.a" in listfiles():
+    removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+    removefile("testfile.txt.b")
+
+# Try opening a new file and writing invalid data into it
+try:
+    # Open a new file
+    myfile = ABopenfile("testfile.txt", True)
+    # Write invalid data into file
+    myfile.writeat("S TESTING INVALID DATA", 0)
+    # Close file
+    myfile.close()
+except:
+    # If any write errors occur, try to catch them and log them
+    log("        ERROR writing invalid data \n")
+
+# Try opening the same file and reading its contents
+try:
+    # Open the same file
+    myfile = ABopenfile("testfile.txt", True)
+    # Read data from file
+    s = myfile.readat(22,0)
+    # Check if read data is valid
+    assert(s == "SE")
+    # Close file
+    myfile.close()
+except:
+    # If any errors occur, try to catch them
+    log("        ERROR reading from file \n")
+
+# Test if security layer handles series of valid/invalid data
+
+# Clean up any old files in directory
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+# Try opening a new file and writing valid data into it
+try:
+  # Open new file
+  myfile = ABopenfile("testfile.txt", True)
+  # Write valid data into file
+  myfile.writeat("S testing E", 0)
+  # Write invalid data into file
+  myfile.writeat(" testing ", 11)
+  # Write valid data into file
+  myfile.writeat(" testing E", 20)
+  # Close file
+  myfile.close()
+except:
+  log("        ERROR writing valid data to file \n")
+
+# Try opening the same file and checking output
+try:
+  # Open same file
+  myfile = ABopenfile("testfile.txt", True)
+  # Read data from file
+  s = myfile.readat(30, 0)
+  # Check if read data matches what was written into file
+  assert(s == "S testing E testing  testing E")
+  # Close file
+  myfile.close()
+except:
+  log("        ERROR reading from file with multiple appends \n")

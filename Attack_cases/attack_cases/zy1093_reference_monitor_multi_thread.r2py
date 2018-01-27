@@ -1,0 +1,173 @@
+try:
+    mycontext['END_LOCK'] = createlock()
+    mycontext['END'] = False
+    lock = createlock()
+
+    mycontext['SPIN_LOCK'] = [False]
+    mycontext['COUNT_LOCK'] = createlock()
+    mycontext['COUNT'] = 0
+    lock = createlock()
+
+
+    def deadLock():
+        for i in range(1, 20):
+            mycontext['END_LOCK'].acquire(True)
+            try:
+                if (mycontext['END']):
+                    return
+            finally:
+                mycontext['END_LOCK'].release()
+            sleep(0.5)
+        log("Dead lock exist!")
+
+
+    createthread(deadLock)
+
+
+    def validData():
+        mycontext['COUNT_LOCK'].acquire(True)
+        count = 0
+        try:
+            count = mycontext['COUNT']
+            mycontext['COUNT'] += 1
+        finally:
+            mycontext['COUNT_LOCK'].release()
+
+        if "ieojboiejb.jioejbioje" + str(count) + ".a" in listfiles():
+            removefile("ieojboiejb.jioejbioje" + str(count) + ".a")
+        if "ieojboiejb.jioejbioje" + str(count) + ".b" in listfiles():
+            removefile("ieojboiejb.jioejbioje" + str(count) + ".b")
+
+        spin_lock = mycontext['SPIN_LOCK']
+
+        while not spin_lock[0]:
+            pass
+
+        myfile = ABopenfile("ieojboiejb.jioejbioje" + str(count), True)
+
+        myfile.writeat("StestE", 0)
+
+        myfile.close()
+
+        myfile = ABopenfile("ieojboiejb.jioejbioje" + str(count), True)
+
+        try:
+            myfile.writeat("StestE", 0)
+            myfile.writeat("tttt", 1)
+            assert ('StestE' == myfile.readat(None, 0))
+        except:
+            log("1 Valid Data write to a file is unsuccessful!")
+        finally:
+            myfile.close()
+
+        myfile = ABopenfile("ieojboiejb.jioejbioje" + str(count), True)
+
+        try:
+            myfile.writeat("ttttt", 0)
+            assert ('SttttE' == myfile.readat(None, 0))
+        except:
+            log("2 Valid Data write to a file is unsuccessful!")
+        finally:
+            myfile.close()
+
+        myfile = ABopenfile("ieojboiejb.jioejbioje" + str(count), False)
+        try:
+            myfile.writeat(randombytes(), 0)
+            assert ('SttttE' == myfile.readat(None, 0))
+        except:
+            log("3 Invalid Data write to a file is successful!")
+        finally:
+            myfile.close()
+
+        myfile = ABopenfile("ieojboiejb.jioejbioje" + str(count), True)
+        try:
+            myfile.writeat('SS', 0)
+            myfile.writeat('E' * 1024, 1)
+            assert ('SttttE' == myfile.readat(None, 0))
+        except:
+            log("4 Invalid Data write to a file is successful!")
+        finally:
+            myfile.close()
+
+        myfile = ABopenfile("ieojboiejb.jioejbioje" + str(count), True)
+        try:
+            myfile.writeat('S' * 1024, 0)
+            myfile.writeat('E', 1024)
+            assert ('S' + 'E' * 1024 == myfile.readat(None, 0))
+        except:
+            log("5 Valid Data write to a file is unsuccessful!")
+        finally:
+            myfile.close()
+
+        myfile = ABopenfile("ieojboiejb.jioejbioje" + str(count), True)
+        try:
+            myfile.writeat('S' * 1024 + 'E' * 1024, 0)
+            assert ('S' * 1024 + 'E' == myfile.readat(None, 0))
+        except:
+            log("6 Valid Data write to a file is unsuccessful!")
+        finally:
+            myfile.close()
+
+        myfile = ABopenfile("ieojboiejb.jioejbioje" + str(count), False)
+        try:
+            myfile.writeat(randombytes() + randombytes(), 0)
+            assert ('S' * 1024 + 'E' * 1024 == myfile.readat(None, 0))
+        except:
+            log("7 Valid Data write to a file is unsuccessful!")
+        finally:
+            myfile.close()
+
+        myfile = ABopenfile("ieojboiejb.jioejbioje" + str(count), False)
+        try:
+            myfile.writeat('S' * 1024 + 'E' * 1024, 0)
+            myfile.writeat('E' * 1024, 1500)
+            assert ('S' * 1024 + 'E' * 1024 == myfile.readat(None, 0))
+        except:
+            log("8 Valid Data write to a file is unsuccessful!")
+        finally:
+            myfile.close()
+
+        myfile = ABopenfile("ieojboiejb.jioejbioje" + str(count), True)
+        try:
+            assert ('S' * 1024 + 'E' * 1500 == myfile.readat(None, 0))
+        except:
+            log("9 Valid Data write to a file is unsuccessful!")
+        finally:
+            myfile.close()
+
+        mycontext['COUNT_LOCK'].acquire(True)
+        try:
+            mycontext['COUNT'] -= 1
+        finally:
+            mycontext['COUNT_LOCK'].release()
+
+
+    createthread(validData)
+
+    createthread(validData)
+
+    createthread(validData)
+
+    createthread(validData)
+
+    createthread(validData)
+
+    mycontext['SPIN_LOCK'][0] = True
+
+    while True:
+        mycontext['COUNT_LOCK'].acquire(True)
+        try:
+            if mycontext['COUNT'] == 0:
+                break
+        finally:
+            mycontext['COUNT_LOCK'].release()
+        sleep(0.1)
+
+    mycontext['END_LOCK'].acquire(True)
+    try:
+        mycontext['END'] = True
+    finally:
+        mycontext['END_LOCK'].release()
+except:
+    log("Exception thrown!")
+    raise

@@ -1,0 +1,18 @@
+# This attack makes sure that the monitor enforces create=False.
+
+# Delete the A and B files for a clean start.
+ls = set(listfiles())
+if "testfile.txt.a" in ls:
+    removefile("testfile.txt.a")
+if "testfile.txt.b" in ls:
+    removefile("testfile.txt.b")
+# Open the file through the reference monitor.
+try:
+    myfile = ABopenfile("testfile.txt", False)
+except FileNotFoundError:
+    # The reference monitor passed the test.
+    pass
+else:
+    # Oh, no! The file got opened.
+    log("I said no creating. It created.\n")
+    myfile.close()

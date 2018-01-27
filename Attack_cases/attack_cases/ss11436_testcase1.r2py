@@ -1,0 +1,18 @@
+# we create .a and .b files by setting create to True
+# subsequent calls to ABopenfile by setting create to False should reopen the files.
+
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+myfile=ABopenfile("testfile.txt",True)
+myfile.writeat("StestE",0)
+myfile.close()
+mynewfile=ABopenfile("testfile.txt",False)
+try:
+ assert('StestE' == mynewfile.readat(None,0))
+ #mynewfile.close()
+except:
+ #mynewfile.close()
+ log("unable to reopen the file")

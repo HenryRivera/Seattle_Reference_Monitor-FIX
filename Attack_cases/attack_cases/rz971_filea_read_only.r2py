@@ -1,0 +1,27 @@
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+#Create an AB file
+myfile=ABopenfile("testfile.txt",True)  
+
+try:
+    #Checks if SE is written to file
+    assert('SE' == myfile.readat(None,0))
+    
+    #Put some valid data in the file.
+    myfile.writeat("S2E",0)
+
+    #Checks if SE is written to file
+    #File a should still be read from
+    assert('SE' == myfile.readat(None,0))
+
+    myfile.close()
+
+except:
+    myfile.close()
+    log("Failed, does not use file a/ file b to read/write to \n")
+    
+
+

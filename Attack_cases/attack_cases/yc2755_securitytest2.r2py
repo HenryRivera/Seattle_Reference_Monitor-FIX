@@ -1,0 +1,45 @@
+# WRITE OPERATION
+# CLOSE OPERATION
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+  removefile("testfile1.txt.a")
+  removefile("testfile2.txt.a")
+  removefile("testfile3.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile1.txt.b")
+  removefile("testfile2.txt.b")
+  removefile("testfile3.txt.b")
+
+# Open File Function Call, create several AB files
+myfile1=ABopenfile("testfile1.txt",True)
+myfile2=ABopenfile("testfile2.txt",True)
+myfile3=ABopenfile("testfile3.txt",True)
+
+# Write valid data to files
+myfile1.writeat("SeeE",0)
+myfile2.writeat("sss",0)
+myfile3.writeat("SsssE",0)
+
+try:
+  myfile1.close()
+  myfile2.close()
+  myfile3.close()
+except:
+  log("Something wrong with file closing\n")
+
+# Open the file to verify multiple files' data
+myfile1=ABopenfile("testfile1.txt",False)
+myfile2=ABopenfile("testfile2.txt",False)
+myfile3=ABopenfile("testfile3.txt",False)
+
+# Read the file to check the contents
+try:
+ assert('SeeE' == myfile1.readat(4,0))
+ myfile1.close()
+ assert('SE' == myfile2.readat(2,0))
+ myfile2.close()
+ assert('SsssE' == myfile3.readat(5,0))
+ myfile3.close()
+except:
+ log("Something wrong with multiple file writing!\n")

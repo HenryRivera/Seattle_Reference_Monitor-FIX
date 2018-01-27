@@ -1,0 +1,26 @@
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+#Create an AB file
+myfile=ABopenfile("testfile.txt",True)  
+
+myfile.writeat("SeE",0) #SeE
+
+myfile.writeat("Sw",0) #SwE
+myfile.close()
+
+myfile=ABopenfile("testfile.txt",True)
+
+try:
+    #Checks if SwE is written to file
+    assert('SwE' == myfile.readat(None,0))
+    myfile.close()
+
+except:
+    myfile.close()
+    log("Failed to properly take care of mutiple writes \n")
+    
+
+

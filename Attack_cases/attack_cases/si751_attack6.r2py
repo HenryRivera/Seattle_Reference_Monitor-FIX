@@ -1,0 +1,26 @@
+if "testfile.txt.a" in listfiles():
+    removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+    removefile("testfile.txt.b")
+
+#Test 6: Testing double file create for files with the same name
+
+myfile = ABopenfile("testfile.txt", True)
+
+myfile.writeat("SI feel like I know nothing about what I'm learning, and can't care enough to do anything about itE", 0)
+
+myfile.close()
+
+#Make a new file again, should have replaced the previous AB files
+myfile = ABopenfile("testfile.txt", True)
+
+
+
+#Should be a new file
+try:
+    assert(myfile.readat(None, 0) == "SE")
+except:
+    log("Replacing an existing file isn't handled correctly\n")
+
+
+myfile.close()

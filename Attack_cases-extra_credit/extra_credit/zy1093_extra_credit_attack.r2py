@@ -1,0 +1,135 @@
+# For my manual code review, only dyt221,hd1004,yj1142,zy1093 support read any version of file, which is required.
+# But yj1142 readoldat is not exposed. It is still not complete the required function.
+# My attack code attack each of them one by one.
+# All extra credit code are attacked!
+# For other code, simply declare they are attacked since they are not complete the required function.
+
+try:
+    try:
+        # For dyt221 code. It load all version file into memory when open a file. Which should not be allowed.
+        versionedopenfile("testfile.dyt221.txt", True).close()
+        for i in range(0, 2):
+            if "testfile.dyt221.test.txt." + str(i) + ".bak" in listfiles():
+                removefile("testfile.dyt221.test.txt." + str(i) + ".bak")
+        for i in range(0, 2):
+            myfile = versionedopenfile("testfile.dyt221.test.txt", True)
+            myfile.writeat("SE", 0)
+            myfile.close()
+        log("This program load all version of single file to memory. That should not be allowed")
+    except NameError:
+        try:
+            if "testfile.hd1004.txt.a" in listfiles():
+                removefile("testfile.hd1004.txt.a")
+            if "testfile.hd1004.txt.a000" in listfiles():
+                removefile("testfile.hd1004.txt.a000")
+            if "testfile.hd1004.txt.a001" in listfiles():
+                removefile("testfile.hd1004.txt.a001")
+            if "testfile.hd1004.txt.a050" in listfiles():
+                removefile("testfile.hd1004.txt.a050")
+            if "testfile.hd1004.txt.b" in listfiles():
+                removefile("testfile.hd1004.txt.b")
+            if "testfile.hd1004.txt.b000" in listfiles():
+                removefile("testfile.hd1004.txt.b000")
+            if "testfile.hd1004.txt.b001" in listfiles():
+                removefile("testfile.hd1004.txt.b001")
+            if "testfile.hd1004.txt050.a" in listfiles():
+                removefile("testfile.hd1004.txt050.a")
+            ABopenfile("testfile.hd1004.txt", True).close()
+            if "testfile.hd1004.txt.a000" in listfiles():
+                # For hd1004 code, open not exist version will not fail. Attack it.
+                ABopenfile("testfile.hd1004.txt050", True).close()
+                log("Open not exist version file not failed")
+            else:
+                raise AttributeError
+        except (NameError, AttributeError):
+            try:
+                # For zy1093, my own code's testcase.
+                if "testfile.txt.count" in listfiles():
+                    removefile("testfile.txt.count")
+                if "testfile.txt.0" in listfiles():
+                    removefile("testfile.txt.0")
+                if "testfile.txt.1" in listfiles():
+                    removefile("testfile.txt.1")
+                if "testfile.txt.2" in listfiles():
+                    removefile("testfile.txt.2")
+                if "testfile.txt.3" in listfiles():
+                    removefile("testfile.txt.3")
+                if "testfile.txt.4" in listfiles():
+                    removefile("testfile.txt.4")
+                if "testfile.txt.5" in listfiles():
+                    removefile("testfile.txt.5")
+                if "testfile.txt.6" in listfiles():
+                    removefile("testfile.txt.6")
+                if "testfile.txt.7" in listfiles():
+                    removefile("testfile.txt.7")
+
+                try:
+                    version_openfile("testfile.txt", False, 0).close()
+                    log("Open not exist file do not failed!")
+                except FileNotFoundError:
+                    pass
+
+                myfile = version_openfile("testfile.txt", True, 0)
+                try:
+                    myfile.writeat('S' * 1024 + 'E' * 1024, 0)
+                    assert ('SE' == myfile.readat(None, 0))
+                except:
+                    log("Init data fail!")
+                finally:
+                    myfile.close()
+
+                myfile = version_openfile("testfile.txt", True, 1)
+                try:
+                    myfile.writeat('StestE', 0)
+                    assert ('S' * 1024 + 'E' * 1024 == myfile.readat(None, 0))
+                except:
+                    log("Write valid data fail!")
+                finally:
+                    myfile.close()
+
+                try:
+                    myfile = version_openfile("testfile.txt", True, 3)
+                    log('Open not exist version success')
+                    myfile.close()
+                except FileNotFoundError:
+                    pass
+
+                myfile = version_openfile("testfile.txt", True, 1)
+                try:
+                    assert ('S' * 1024 + 'E' * 1024 == myfile.readat(None, 0))
+                except:
+                    log("Read version 1 fail!")
+                finally:
+                    myfile.close()
+
+                myfile = version_openfile("testfile.txt", True, 2)
+                try:
+                    assert ('StestE' == myfile.readat(None, 0))
+                except:
+                    log("Read version 2 fail!")
+                finally:
+                    myfile.close()
+
+                myfile = version_openfile("testfile.txt", True, 1)
+
+                try:
+                    myfile2 = version_openfile("testfile.txt", True, 6)
+                    log('Open current writing version not failed!')
+                    myfile2.close()
+                except FileInUseError:
+                    pass
+
+                myfile.writeat('SESESE', 0)
+                try:
+                    assert ('S' * 1024 + 'E' * 1024 == myfile.readat(None, 0))
+                except:
+                    log("History not work")
+                finally:
+                    myfile.close()
+
+            except NameError:
+                log("All other extra credit code is not support read any version file. "
+                    "For my manual code review, only dyt221,hd1004,zy1093 support read any version of file, which is required. "
+                    "Therefore, all of them are treated attacked!")
+except:
+    log("Excpetion thrown!")

@@ -1,0 +1,24 @@
+#I don't know if this is intended but the test case makes a ton of other exceptions occur
+#rather than printing Empty file not handled properly. Seems related to bad use of 
+#close() function on the buggy ref monitors?
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+    removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+    removefile("testfile.txt.b")
+
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+
+###EXAMPLE TEST CASE: EMPTY FILE HANDLING###
+try:
+    # Empty/New File should have contents 'SE' satisfying the requirement
+    assert('SE' == myfile.readat(2,0))
+    # Close the file:
+    myfile.close()
+except:
+    myfile.close()
+    # Error Handle or Failure Condition
+    log("default_test_1 - Empty file is not handled properly!\n")

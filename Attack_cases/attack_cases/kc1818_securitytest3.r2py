@@ -1,0 +1,30 @@
+#testo treeo
+
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+myfile = ABopenfile("testfile.txt.a",True) 
+myfile2 = ABopenfile("testfile.txt.b",True)
+
+myfile.writeat("StestN",0)
+myfile2.writeat("StestN",0)
+
+myfile.close()
+myfile2.close()
+
+myfile = ABopenfile("testfile.txt.a",True)
+myfile2 = ABopenfile("testfile.txt.b",True)
+
+try:
+ assert('StestE' == myfile.readat(6,0))
+ myfile.close()
+except:
+ myfile.close()
+
+try:
+ assert('StestE' == myfile2.readat(6,0))
+ myfile2.close()
+except:
+ myfile2.close()

@@ -1,0 +1,16 @@
+#open twice is invalid
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+
+
+try:
+  myfile = ABopenfile('testfile.txt', True)
+  myfileB = ABopenfile('testfile.txt', False)
+  log('Failed~\n')
+except:
+  pass

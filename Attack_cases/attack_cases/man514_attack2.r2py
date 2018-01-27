@@ -1,0 +1,13 @@
+if "abc.txt.a" in listfiles():
+  removefile("abc.txt.a")
+if "abc.txt.b" in listfiles():
+  removefile("abc.txt.b")
+
+#SEQUENCE: Open New File -> Try to Write Content(Valid data)
+
+try:
+	myfile=ABopenfile("abc.txt",True)  #Create an AB file
+	myfile.writeat("SWEET TREE",0)
+except:
+	myfile.close()
+	log("Unable to write to a newly created file\n")

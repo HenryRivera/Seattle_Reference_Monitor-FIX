@@ -1,0 +1,29 @@
+# This test case checks whether multiple writes are happening
+# properly or not
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+    removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+    removefile("testfile.txt.b")
+
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+# Write valid data to the file
+myfile.writeat('hello',0)
+
+# Write data
+myfile.writeat('S',0)
+myfile.writeat('E',5)
+myfile.close()
+
+myfile=ABopenfile("testfile.txt",False)
+
+# Read the file to check the contents
+try:
+	assert('SelloE' == myfile.readat(None,0))
+except:
+	log("Valid Data write to a file is unsuccessful!")
+finally:
+    myfile.close()

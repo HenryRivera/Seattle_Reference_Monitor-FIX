@@ -1,0 +1,12 @@
+#No file and not create
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+try:
+  myfile=ABopenfile("testfile.txt",False)
+except:
+  log('No file and not create fail\n')

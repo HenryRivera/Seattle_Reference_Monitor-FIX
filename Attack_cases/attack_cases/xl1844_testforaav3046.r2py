@@ -1,0 +1,21 @@
+# New File Operation
+#test case 6: Accuracy-security
+#This test case is a  test case to test the accuracy and security. This
+#is to test in the case of when we read something
+#the offset position is negative and actually there is no corresponding position here indicated in the AB file ,we test if
+#the system handled it correctly.
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+    removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+    removefile("testfile.txt.b")
+
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+# put some invalid data in the file.
+try:
+    myfile.readat(5,-120)
+    myfile.close()
+except Exception as e:
+    log("it doesn't pass the test this time")
+    myfile.close()

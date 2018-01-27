@@ -1,0 +1,11 @@
+myfile=ABopenfile("testfile.txt",True)
+try:
+    myfile.writeat("abc",0)
+except :
+    log("pass")
+else:
+    log("")
+
+
+
+

@@ -1,0 +1,21 @@
+# This attack makes sure that opening a file with create=True does not overwrite existing valid data.
+
+# Delete the A and B files for a clean start.
+ls = set(listfiles())
+if "testfile.txt.a" in ls:
+    removefile("testfile.txt.a")
+if "testfile.txt.b" in ls:
+    removefile("testfile.txt.b")
+# Open the file through the reference monitor.
+myfile = ABopenfile("testfile.txt", True)
+# Write some data into the file.
+myfile.writeat("Stest1234E", 0)
+# Close the file.
+myfile.close()
+# Open the file again. Allow creation again.
+myfile = ABopenfile("testfile.txt", True)
+# The contents of the file should not be overwritten.
+if "Stest1234E" != myfile.readat(None, 0):
+    log("Allowing creation twice overwrote valid data.\n")
+# Close the file.
+myfile.close()

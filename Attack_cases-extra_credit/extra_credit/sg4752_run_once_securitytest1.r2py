@@ -1,0 +1,17 @@
+
+#The following test case inputs a False value of create variable 
+#Since the files don't exist initially, if the security layer doesn't include the logic of handling such a value of create variable, you will see FileNotFound Error with the log statement
+
+for file in listfiles():
+	if file.startswith('testfile'):
+	        removefile(file)
+		
+
+try:
+	myfile=ABopenfile("testfile.txt",False)
+
+except FileNotFoundError: 
+	log("The file is not found;Security compromised")
+
+
+

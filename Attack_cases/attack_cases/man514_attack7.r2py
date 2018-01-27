@@ -1,0 +1,25 @@
+if "abc.txt.a" in listfiles():
+  removefile("abc.txt.a")
+if "abc.txt.b" in listfiles():
+  removefile("abc.txt.b")
+
+#SEQUENCE: One thread is reading a file while the other one is writing it -> read thread sleeps for 1 second -> if write thread closes the file, read thread will raise exception
+# Ideally, while a thread is reading a file, no thread should be able to close it
+
+myfile=ABopenfile("abc.txt",True)  #Create an AB file
+
+def write_to_ab():
+	#log("thread 2 running\n")
+	myfile.writeat("SoftwarE",0)
+	myfile.close()
+
+def read_from_ab():
+	try:
+		#log("thread 1 running\n")
+		sleep(1)
+		x = myfile.readat(None,0)
+	except FileClosedError:
+		log("File closed by write thread while some other thread was reading it\n")
+
+createthread(read_from_ab)
+createthread(write_to_ab)

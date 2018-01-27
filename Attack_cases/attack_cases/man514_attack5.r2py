@@ -1,0 +1,16 @@
+if "abc.txt.a" in listfiles():
+  removefile("abc.txt.a")
+if "abc.txt.b" in listfiles():
+  removefile("abc.txt.b")
+
+#SEQUENCE: New File -> Write(Valid data) -> Close file -> Reopen file -> Read Contents
+
+myfile=ABopenfile("abc.txt",True)  #Create an AB file
+myfile.writeat("SWEET TREE",0)
+myfile.close()
+myfile=ABopenfile("abc.txt",True)  #Create an AB file
+curr_read = myfile.readat(None,0) #SWEET TREE expected
+if("SWEET TREE" != curr_read):
+	log("Incorrect data read \n")
+	
+myfile.close()

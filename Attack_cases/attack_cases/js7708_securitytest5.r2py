@@ -1,0 +1,16 @@
+if "testfile.txt" in listfiles():
+	removefile("testfile.txt")
+	
+myfile=openfilemyfile=ABopenfile("testfile.txt",True)
+try:                                                 
+    myfile.writeat("ABcd",0)
+    readVal = myfile.readat(4,0)
+
+except:  
+  	pass
+
+else:                                             
+  	log("Secure drive compromised!\n")	
+ 
+finally:                                         
+  	myfile.close()

@@ -1,0 +1,48 @@
+def valid_text(str_):
+  if str_[0] == 'S' and str_[-1] == 'E':
+    return True
+  else:
+    return False
+
+
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+myfile = ABopenfile("testfile.txt",True)
+
+removefile("testfile.txt.a")
+hack_file_a = openfile("testfile.txt.a", True)
+hack_file_a.writeat("ESednerDES", 0)
+hack_file_a.close()
+
+
+removefile("testfile.txt.b")
+hack_file_b = openfile("testfile.txt.b", True)
+hack_file_b.writeat("SE", 0)
+hack_file_b.close()
+
+
+myfile.close()
+
+
+myfile = ABopenfile("testfile.txt",True)
+try:
+  assert(valid_text(myfile.readat(None,0))
+except:
+  log("ERROR - Invalid data saved to file A!")
+
+myfile.close()
+
+
+hack_file_b = openfile("testfile.txt.b", True)
+
+try:
+  assert(not valid_text(hack_file_b.readat(None,0))
+except:
+  log("ERROR - Valid data was left saved to file B!")
+
+hack_file_b.close()
+
+

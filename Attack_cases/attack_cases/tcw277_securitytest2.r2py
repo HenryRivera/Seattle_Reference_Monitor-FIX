@@ -1,0 +1,51 @@
+# Timothy Wong 
+# HW 2.2
+
+# Attack strategy:
+# Write to the same file concurrently
+# Reference monitor may not use locks so there is a chance that we 
+# write the correct input to B file, the file inteprets it correctly, 
+# Looking for certain situation:
+# gets preempted before deleting A file and then write incorrect input to B file
+# then file closes
+# A correct reference monitor would output 'SE'
+
+# write from beginning of file
+def wtest(file, val):
+	file.writeat(val, 0)
+	# might have closed the file already
+	try:
+		file.close()
+	except:
+		pass
+
+# New file operation
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+ removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+ removefile("testfile.txt.b")
+
+
+myfile=ABopenfile("testfile.txt", True)  #Create an AB file
+
+write1 = wtest(myfile, "STestE")    # valid
+write2 = wtest(myfile, "ETestS")		# invalid
+
+# hope scheduler preempts at the worst time
+createthread(write1)
+createthread(write2)
+
+# wait for threads to be done
+sleep(2)
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+try:
+ # reference monitor handled it correctly
+ assert('SE' == myfile.readat(2,0))
+ myfile.close()
+except:
+ # reference monitor did not handle it correctly
+ myfile.close()
+ log("Success")
+

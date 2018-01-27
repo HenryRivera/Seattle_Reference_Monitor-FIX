@@ -1,0 +1,30 @@
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+def thr1():
+  myfile.writeat("S123E",0)
+  
+def thr2():
+  myfile.writeat("S456E",0)
+  
+#thr()
+createthread(thr1)
+createthread(thr2)
+sleep(1)
+myfile.close()
+
+
+try:
+  myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+  assert('S123E' == myfile.readat(None,0) or 'S456E' == myfile.readat(None,0))
+  myfile.close()
+except:
+  log(myfile.readat(None,0))
+  myfile.close()
+  log("Something went wrong")

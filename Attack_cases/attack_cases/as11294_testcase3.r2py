@@ -1,0 +1,13 @@
+if "hello.txt.a" in listfiles():
+ removefile("hello.txt.a")
+if "hello.txt.b" in listfiles():
+ removefile("hello.txt.b")
+f=ABopenfile("hello.txt", True)
+try:
+ assert('SE' == f.readat(2,0))
+ f.close()
+except exception_hierarchy.FileNotFoundError:
+ f.close()
+ log("file handling incomplete")
+ exitall()
+

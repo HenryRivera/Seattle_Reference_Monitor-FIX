@@ -1,0 +1,9 @@
+myfile=openfile("oldfile.txt",True)
+myfile.writeat("u",0)
+myfile.writeat("i",0)
+f=myfile.readat(1,0)
+if f=='i':
+  log("pass")
+else:
+  log("fail")
+

@@ -1,0 +1,16 @@
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+file_1 = ABopenfile("testfile.txt",True)
+file_1.writeat("SDDDDDDDDDDDDDDDDDE",0)
+file_1.close()
+
+file_1 = ABopenfile("testfile.txt",True)
+try:
+  assert('SDDDDDDDDDDDDDDDDDE' == file_1.readat(6,0))
+  file_1.close()
+except:
+  file_1.close()
+  log("ERROR - Valid Data write to a file is unsuccessfull!\n")

@@ -1,0 +1,14 @@
+
+myfile=ABopenfile("testfile.txt",True)
+try:
+	myfile.writeat("StestE",0)
+except:
+	log("write error")
+try:
+	assert('SE'==myfile.readat(None,0))
+except:
+	log("read error")
+try:
+	myfile.close()
+except:
+	log("close error")

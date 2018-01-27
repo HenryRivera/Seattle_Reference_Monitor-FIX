@@ -1,0 +1,21 @@
+# This test case checks whether anything other
+# than string is handled or not in writeat
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+    removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+    removefile("testfile.txt.b")
+
+# Open File Function Call
+myfile = ABopenfile("testfile.txt",True)  #Create an AB file
+
+# Read the file to check the contents
+try:
+	# Writing an int to check whether that's handled or not
+	myfile.writeat(56,0)
+	a = myfile.readat(None,0)
+except:
+	log("Oops! datatypes other than String is not handled\n")
+finally:
+	myfile.close()

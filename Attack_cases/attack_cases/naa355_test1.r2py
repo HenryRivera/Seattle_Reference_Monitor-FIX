@@ -1,0 +1,18 @@
+#naa355_test1 checks if b file exists when it shouldnt 
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+	removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+	removefile("testfile.txt.b")
+
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+# Write invalid data to the file
+myfile.writeat("attack",0)
+
+#Check if B is deleted (since A file is invalid)
+if "testfile.txt.b" in listfiles():
+	log("Error: A file is invalid then B file should not exist. ")
+

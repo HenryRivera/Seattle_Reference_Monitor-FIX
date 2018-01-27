@@ -1,0 +1,24 @@
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+#Create an AB file
+myfile=ABopenfile("testfile.txt",True)  
+
+#Put some valid data in the file.
+myfile.writeat("S2E",0)
+#Closes file
+myfile.close()
+
+#Reopens file
+myfile=ABopenfile("testfile.txt",True) 
+
+try:
+    #Checks if S2E is written to file
+    assert('S2E' == myfile.readat(None,0))
+    myfile.close()
+    
+except:
+    myfile.close()
+    log("Failed, unable to saved vaild file\n")

@@ -1,0 +1,40 @@
+# Check file 1 is deleted
+if "testfile1.txt.a" in listfiles():
+	removefile("testfile1.txt.a")
+if "testfile1.txt.b" in listfiles():
+	removefile("testfile1.txt.b")
+# Check file 2 is deleted
+if "testfile2.txt.a" in listfiles():
+	removefile("testfile2.txt.a")
+if "testfile2.txt.b" in listfiles():
+	removefile("testfile2.txt.b")
+
+
+# Create file 1
+myfile1=ABopenfile("testfile1.txt",True)
+myfile1.close()
+# Create file 2
+myfile2=ABopenfile("testfile2.txt",True)
+myfile2.close()
+
+
+# Writes wrong input
+myfile1=ABopenfile("testfile1.txt",False)
+myfile2=ABopenfile("testfile2.txt",False)
+myfile1.writeat("wrong",0)
+myfile2.writeat("SrightE",0)
+myfile1.close()
+myfile2.close()
+
+myfile1=ABopenfile("testfile1.txt",False)
+myfile2=ABopenfile("testfile2.txt",False)
+try:
+	assert('SE' == myfile1.readat(None,0))
+	assert('SrightE' == myfile2.readat(None,0))
+	myfile1.close()
+	myfile2.close()
+
+except:
+	myfile1.close()
+	myfile2.close()
+	log("Invalid data is written")

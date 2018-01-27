@@ -1,0 +1,17 @@
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+    removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+    removefile("testfile.txt.b")
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+myfile.writeat("SValidE",0)
+myfile.close()
+
+myfile=ABopenfile("testfile.txt",True)
+
+try:
+    assert('SValidE' == myfile.readat(None,0))
+    myfile.close()
+except:
+    myfile.close()
+    log("Did not write valid data!")

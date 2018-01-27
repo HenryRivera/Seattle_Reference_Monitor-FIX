@@ -1,0 +1,21 @@
+# This attack makes sure that invalid data is not saved.
+
+# Delete the A and B files for a clean start.
+ls = set(listfiles())
+if "testfile.txt.a" in ls:
+    removefile("testfile.txt.a")
+if "testfile.txt.b" in ls:
+    removefile("testfile.txt.b")
+# Open the file through the reference monitor.
+myfile = ABopenfile("testfile.txt", True)
+# Write some data into the file.
+myfile.writeat("Ha ha! This is invalid!", 0)
+# Close the file.
+myfile.close()
+# Open the file again. Do not allow creation this time.
+myfile = ABopenfile("testfile.txt", False)
+# The file should still be empty.
+if "SE" != myfile.readat(None, 0):
+    log("Invalid data was not discarded.\n")
+# Close the file.
+myfile.close()

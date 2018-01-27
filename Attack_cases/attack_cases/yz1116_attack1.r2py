@@ -1,0 +1,14 @@
+if "attack.txt" in listfiles():
+ removefile("attack.txt")
+if "attack0.txt" in listfiles():
+ removefile("attack0.txt")
+
+myfile=ABopenfile("test.txt",True)
+
+try:
+ assert('SE' == myfile.readat(2,0))
+ myfile.close()
+ 
+except:
+ myfile.close()
+ log("Empty file is not handled properly!")

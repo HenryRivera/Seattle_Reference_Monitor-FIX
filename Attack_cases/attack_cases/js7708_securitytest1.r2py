@@ -1,0 +1,23 @@
+#Tests if you can write special chars into the file
+
+def test():
+	myfile=ABopenfile("testfile.txt",True)
+
+	try: 
+		myfile.writeat("±!@#$%^&*()_{}|<><?:|",0)
+
+	except:
+		log("Accuracy bug")
+	else:
+		pass
+
+	finally:
+		myfile.close()
+		exitall()
+
+createthread(test)
+time = 0
+while time <= 8:
+	time = getruntime()
+log("Accuracy bug")
+exitall()

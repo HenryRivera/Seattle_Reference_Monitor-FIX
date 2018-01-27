@@ -1,0 +1,4 @@
+myfile=ABopenfile("Testfile.txt",True)  #Create an AB file
+if "Testfile.txt" in listfiles():
+    log("uppercase letter in filename)
+myfile.close()

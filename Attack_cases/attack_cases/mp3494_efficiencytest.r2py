@@ -1,0 +1,34 @@
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+# put some valid data in the file.
+myfile.writeat("Sabcd12345E",0)
+
+#Close the file
+myfile.close()
+
+# Now that the files closed we should check ande snure that there only remains
+# Only valid files, and only 1 max
+
+myfile=ABopenfile("testfile.txt",True)
+testfilea = False
+testfileb = False
+passed = False
+if "testfile.txt.a" in listfiles():
+  testfilea = True
+if "testfile.txt.b" in listfiles():
+  testfileb = True
+
+if(testfilea == False and testfileb == False):
+    passed = False
+else if(testfilea == False and testfileb == True):
+    if(assert('Sabcd12345E' == myfile.readat(11,0))):
+        log("You have saved the bfile but you haven't changed it to the valid a file")
+    else if(testfilea == True and testfileb == False):
+        if(assert('Sabcd12345E' == myfile.readat(11,0))):
+           log("You have sucessfully saved the valid file")
+        else if(testfilea == True and testfileb == True):
+               log("You have two files that exist, only the valid file should stay

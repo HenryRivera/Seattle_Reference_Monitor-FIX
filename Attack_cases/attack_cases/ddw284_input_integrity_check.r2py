@@ -1,0 +1,39 @@
+#This test case checks to see if the input is both valid AND unchanged (i.e. S E wasn't added to MAKE the input valid)
+#If the input was altered in an attempt to make it valid, throws error.
+
+#for referencemonitor in reference_monitor_*; do echo $referencemonitor under test; for testcase in ddw284_no*; do python repy.py restrictions.default encasementlib.r2py $referencemonitor $testcase; done; done
+
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+    removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+    removefile("testfile.txt.b")
+
+#Open file
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+data = "Spotato!E"
+
+#Write valid data to file
+myfile.writeat(data,0)
+
+#Close so it can validity check
+myfile.close()
+
+# Reopen file again to read
+myfile=ABopenfile("testfile.txt",True)
+
+try:
+    flen = len(myfile.readat(None, 0))
+
+    assert('S' == myfile.readat(1,0))
+    assert('E' == myfile.readat(1,flen-1))
+    assert(data == myfile.readat(None, 0))
+    myfile.close()
+except:
+    log("input_integrity_check - Data has been altered or is invalid.\n")
+    log("Original: " + data + "\n")
+    log("Read from file: " + myfile.readat(None, 0) + "\n")
+
+    myfile.close()

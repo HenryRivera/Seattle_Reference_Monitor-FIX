@@ -1,0 +1,76 @@
+# New File Operation
+
+
+#log("sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss")
+for file in listfiles():
+	if "testfile.txt" in file:
+		#log("sssssssssgggggggggggggggggggggggggggggggggggggggggggggggggggggggggggssssss\n\n")
+		log(file)
+		log("\n\n\n")
+		if "~" not in file:
+			removefile(file)	
+			#log("ssssssssssssssssssssssssssssssssssssssrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrsssssssssssssssssssssssssssssssss")
+
+#log("sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss")
+#1
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+# Write valid data to the file
+myfile.writeat("S1E",0)
+myfile.close()
+#log("sssssssssttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttssssssssss")
+#2
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+# Write valid data to the file
+myfile.writeat("S1aE",0)
+myfile.close()
+
+#3
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+# Write valid data to the file
+myfile.writeat("",0)
+myfile.close()
+
+#4
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+# Write valid data to the file
+myfile.writeat("S1afdfdE",0)
+myfile.close()
+
+#5
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+# Write valid data to the file
+myfile.writeat("S1asddasdsE",0)
+myfile.close()
+
+try:
+	f1=0
+	f2=0
+	f4=0
+	f5=0
+		
+	for file in listfiles():
+		
+		if "testfile.txt" in file and "~" not in file:
+		
+			myfile=ABopenfile(file,True)
+			if myfile.readat(None,0) == "S1asddasdsE":
+				f5=1
+			elif myfile.readat(None,0) == "S1afdfdE":
+				f4=1
+			elif myfile.readat(None,0) == "S1aE":
+				f2=1
+			elif myfile.readat(None,0) == "S1E":
+				f1=1
+			
+			myfile.close()
+			
+	if f1==0 or f2==0 or f4==0 or f5==0:
+		log("failed fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff")
+	#else:
+		
+		#log("ppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp")
+
+except:
+	k=1
+	#log("failed eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")

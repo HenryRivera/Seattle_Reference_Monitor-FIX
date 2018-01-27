@@ -1,0 +1,26 @@
+'''
+    this attack tests 
+'''
+
+
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+
+# put some valid data in the file.
+myfile.writeat("Stest12345",0)
+
+myfile.close()
+
+myfile = ABopenfile('testfile.txt', False)
+
+try:
+    assert('SE' == myfile.readat(2,0))
+except:
+    log('invalid data not discarded properly \n')
+    myfile.close()
+myfile.close()

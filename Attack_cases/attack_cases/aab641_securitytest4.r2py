@@ -1,0 +1,43 @@
+
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+# Write valid data to the file
+try:
+    myfile.writeat("SlongtextE",0)
+except:
+    pass #log("Error Writing\n")
+
+#Close the file
+try:
+    myfile.close()
+except:
+    pass #log("Error closing\n")
+
+myfile=ABopenfile("testfile.txt",True)  #Overwrite an AB file
+
+# Write valid data to the file
+try:
+    myfile.writeat("ShortextE",0)
+except:
+    pass #log("Error Writing\n")
+
+#Close the file
+try:
+    myfile.close()
+except:
+    pass #log("Error closing\n")
+
+myfile=ABopenfile("testfile.txt",False)  #Open an AB file
+
+try:
+    assert("ShortextE" == myfile.readat(None,0))
+except:
+    log("Error Reading an old ABfile.\n")
+
+#Close the file
+try:
+    myfile.close()
+except:
+    log("Error closing\n")
+

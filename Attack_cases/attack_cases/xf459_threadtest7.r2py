@@ -1,0 +1,73 @@
+# Security Test: two Threads, both write and read
+
+testid = 7
+
+testfilename = "test_thread1_"+ str(testid) + ".txt"
+testfilea = "test_thread1_"+ str(testid) + ".txt.a"
+testfileb = "test_thread1_"+ str(testid) + ".txt.b"
+
+mycontext['threadOneIsDone'] = False
+mycontext['threadTwoIsDone'] = False
+mycontext['TestingIsDone'] = False
+
+if testfilename in listfiles():
+  removefile(testfilename)
+if testfilea in listfiles():
+  removefile(testfilea)
+if testfileb in listfiles():
+  removefile(testfileb)
+
+mycontext['file']=ABopenfile(testfilename,True)  #Open a file
+mycontext['closed'] = 0
+def threadOne():
+  try:
+    #write something
+    assert('SE' == mycontext['file'].readat(None,0))
+    
+    mycontext['file'].writeat('S123E',0)
+    assert('SE' == mycontext['file'].readat(None,0))
+
+    mycontext['threadOneIsDone'] = True
+
+    while mycontext['threadTwoIsDone'] == False:
+      sleep(1)
+    mycontext['file']=ABopenfile(testfilename,True)
+    mycontext['closed'] = 0
+
+    assert('S12345E' == mycontext['file'].readat(None,0))
+
+    #Close the file
+    mycontext['file'].close()
+    mycontext['closed'] = 1
+
+    mycontext['TestingIsDone'] = True
+  except:
+    if mycontext['closed'] == 0:
+      mycontext['file'].close()
+    log("Thread Error: one read one write failed!\n")
+    exitall()
+
+def threadTwo():
+  try:
+    
+    while mycontext['threadOneIsDone'] == False:
+      sleep(1)
+    assert('SE' == mycontext['file'].readat(None,0))
+
+    mycontext['file'].writeat("S12345E",0)
+    mycontext['file'].close()
+    mycontext['closed'] = 1
+    mycontext['threadTwoIsDone'] = True
+
+  except:
+    if mycontext['closed'] == 0:
+      mycontext['file'].close()
+    log("Thread Error: one read one write failed!\n")
+    exitall()
+
+createthread(threadOne)
+createthread(threadTwo)
+
+while mycontext['TestingIsDone'] == False:
+  sleep(1)
+

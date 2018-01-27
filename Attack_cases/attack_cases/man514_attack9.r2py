@@ -1,0 +1,28 @@
+if "abc.txt.a" in listfiles():
+  removefile("abc.txt.a")
+if "abc.txt.b" in listfiles():
+  removefile("abc.txt.b")
+
+#SEQUENCE: multiple threads writing on the same file -> save/close -> read back from the file -> expected data = SoftwarE
+
+myfile=ABopenfile("abc.txt",True)  #Create an AB file	
+i = 10
+
+def write_to_ab():
+	myfile.writeat("SoftwarE",0)
+
+while(i > 0):
+	createthread(write_to_ab)
+	i = i - 1
+
+sleep(2)
+myfile.close()
+myfile=ABopenfile("abc.txt",True)  #Create an AB file	
+
+x = myfile.readat(None,0)
+try:
+	assert('SoftwarE' == x)
+except:
+	log("Invalid data")
+finally:
+	myfile.close()

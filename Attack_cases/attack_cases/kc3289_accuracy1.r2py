@@ -1,0 +1,28 @@
+##### testing accuracy by using negative offset to write, it should raise an exception
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+# Write valid data to the file
+myfile.writeat("StestE",0)
+
+#Close the file
+myfile.close()
+
+# READ OPERATION
+# Reopen file again to read
+myfile=ABopenfile("testfile.txt",True)
+
+# Read the file to check the contents
+try:
+ myfile.writeat("StestE",-1)
+except ValueError:
+ pass
+except:
+ #Close the file
+ myfile.close()
+ log("negative offset write does not throw proper exception")

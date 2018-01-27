@@ -1,0 +1,18 @@
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+# put some valid data in the file.
+myfile.writeat("Stestvalid1stwritE",0)
+
+# 'SE' must be returned on read because the file wasn't closed.
+try:
+ assert('SE' == myfile.readat(None,0))
+#Close the file
+ myfile.close()
+except:
+#Close the file
+ myfile.close()
+ log("Valid Data write to a file is unsuccessfull!")

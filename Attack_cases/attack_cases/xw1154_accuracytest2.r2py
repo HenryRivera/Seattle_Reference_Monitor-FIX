@@ -1,0 +1,20 @@
+#New File Operation
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+
+myfile.writeat("StestE",0)
+myfile.close()
+
+#Read Operation
+myfile=ABopenfile("testfile.txt",True) 
+
+try:
+ assert('StestE' == myfile.readat(6,0))
+ myfile.close()
+except:
+ myfile.close()
+ log("Error: Data write\n")

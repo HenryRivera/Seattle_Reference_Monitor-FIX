@@ -1,0 +1,21 @@
+# This attack makes sure that valid data is saved.
+
+# Delete the A and B files for a clean start.
+ls = set(listfiles())
+if "testfile.txt.a" in ls:
+    removefile("testfile.txt.a")
+if "testfile.txt.b" in ls:
+    removefile("testfile.txt.b")
+# Open the file through the reference monitor.
+myfile = ABopenfile("testfile.txt", True)
+# Write some data into the file.
+myfile.writeat("Stest1234E", 0)
+# Close the file.
+myfile.close()
+# Open the file again. Do not allow creation this time.
+myfile = ABopenfile("testfile.txt", False)
+# The contents of the file should be different now.
+if "Stest1234E" != myfile.readat(None, 0):
+    log("The correct data was not read back after a reopen.\n")
+# Close the file.
+myfile.close()

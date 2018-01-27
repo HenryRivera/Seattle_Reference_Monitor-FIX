@@ -1,0 +1,42 @@
+"""
+python repy.py restrictions.default encasementlib.r2py reference_monitor_afl294.r2py attack.r2py
+"""
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+myfile = ABopenfile("testfile.txt",True)
+
+try:
+  assert('SE' == myfile.readat(None,0))
+except:
+  log("File does not contain SE")
+
+
+myfile.writeat("ES", 0)
+
+# I should still get 'SE' because the file wasn't closed.
+try:
+  assert('SE' == myfile.readat(None,0))
+except:
+  log("AB saved to A prematurely")
+
+#Close the file
+myfile.close()
+
+removefile("testfile.txt.a")
+hack_file_a = openfile("testfile.txt.a", True)
+hack_file_a.writeat("ES", 0)
+hack_file_a.close()
+
+
+myfile=ABopenfile("testfile.txt",False)
+try:
+  assert('ES' != myfile.readat(None,0))
+except:
+  log("Invalid data saved to file A!")
+
+myfile.close()
+
+

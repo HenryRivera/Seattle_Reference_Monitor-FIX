@@ -1,0 +1,19 @@
+#test case 0: Accuracy. This test case is very basic and it only tests if we can create the
+#AB document and then close it
+#author: Richard Liu(xl1844)
+
+# Clean up of existing file
+
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+try:
+     # Empty/New File should have contents 'SE' satisfying the requirement
+     assert('SE' == myfile.readat(2,0))
+     # Close the file:
+     myfile.close()
+     
+except:
+     myfile.close()
+     # Error Handle or Failure Condition
+     log("Empty file is not created clearly!")

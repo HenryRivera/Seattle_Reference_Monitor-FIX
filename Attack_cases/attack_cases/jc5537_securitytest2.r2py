@@ -1,0 +1,12 @@
+if "testfile.txt.a" in listfiles():
+	removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+	removefile("testfile.txt.b")
+
+try:
+	#Trying invalid filename formats (caps and special chars)
+	myfile=ABopenfile("Test_!@filE.txt",True)
+	myfile.close()
+except:
+	myfile.close()
+	log("FAIL: Invalid filename not handled correctly!")

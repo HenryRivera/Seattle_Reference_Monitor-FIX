@@ -1,0 +1,29 @@
+# WRITE OPERATION
+
+# Clean up of existing file
+if "testfile.txt" in listfiles():
+  removefile("testfile.txt")
+
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+# Write something here
+myfile.writeat("StestE",0)
+
+
+try:
+  assert(myfile.readat(2,0) == "St")
+except SeekPastEndOfFileError:
+	log("Seek offset extends past the error of file\n")
+	pass
+except RepyArgumentError:
+	log("there is repy argumenet error\n")
+	pass
+except:
+  log("valid written is not propery")
+else:
+	pass
+
+#Close the file
+myfile.close()
+

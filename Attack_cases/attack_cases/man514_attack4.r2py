@@ -1,0 +1,16 @@
+if "abc.txt.a" in listfiles():
+  removefile("abc.txt.a")
+if "abc.txt.b" in listfiles():
+  removefile("abc.txt.b")
+
+#SEQUENCE: New File -> Write(Invalid data) -> Close file -> Reopen file -> Read Contents
+
+myfile=ABopenfile("abc.txt",True)  #Create an AB file
+myfile.writeat("WEET",0)
+myfile.close()
+myfile=ABopenfile("abc.txt",True)  #Create an AB file
+curr_read = myfile.readat(None,0) #SE expected
+if('SE' != curr_read):
+	log("Incorrect write, SE expected\n")
+
+myfile.close()

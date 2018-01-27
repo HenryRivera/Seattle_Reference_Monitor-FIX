@@ -1,0 +1,99 @@
+try:
+    mycontext['END_LOCK'] = createlock()
+    mycontext['END'] = False
+    lock = createlock()
+
+
+    def deadLock():
+        for i in range(1, 20):
+            mycontext['END_LOCK'].acquire(True)
+            try:
+                if (mycontext['END']):
+                    return
+            finally:
+                mycontext['END_LOCK'].release()
+            sleep(0.5)
+        log("Dead lock exist!")
+
+
+    createthread(deadLock)
+
+    if "ieojboiejb.jioejbioje.a" in listfiles():
+        removefile("ieojboiejb.jioejbioje.a")
+    if "ieojboiejb.jioejbioje.b" in listfiles():
+        removefile("ieojboiejb.jioejbioje.b")
+
+    try:
+        ABopenfile("ieojboiejb.jioejbioje", False).close()
+        log("Open not exist file do not failed!")
+    except FileNotFoundError:
+        pass
+
+    myfile = ABopenfile("ieojboiejb.jioejbioje", True)
+
+    try:
+        should_not_open_file = ABopenfile("ieojboiejb.jioejbioje", False)
+        should_not_open_file.writeAt("Sthat_should_not_happenE")
+        should_not_open_file.close()
+        log("1 Reopen file not failed!")
+    except FileInUseError:
+        pass
+
+    try:
+        should_not_open_file = ABopenfile("ieojboiejb.jioejbioje", False)
+        should_not_open_file.writeAt("Sthat_should_not_happenE")
+        should_not_open_file.close()
+        log("2 Reopen file not failed!")
+    except FileInUseError:
+        pass
+
+    myfile.writeat("StestE", 0)
+
+    myfile.close()
+
+    myfile = ABopenfile("ieojboiejb.jioejbioje", True)
+
+    try:
+        should_not_open_file = ABopenfile("ieojboiejb.jioejbioje", False)
+        should_not_open_file.writeAt("Sthat_should_not_happenE")
+        should_not_open_file.close()
+        log("3 Reopen file not failed!")
+    except FileInUseError:
+        pass
+
+    try:
+        should_not_open_file = ABopenfile("ieojboiejb.jioejbioje", False)
+        should_not_open_file.writeAt("Sthat_should_not_happenE")
+        should_not_open_file.close()
+        log("4 Reopen file not failed!")
+    except FileInUseError:
+        pass
+
+    myfile.close()
+
+    myfile = ABopenfile("ieojboiejb.jioejbioje", True)
+
+    try:
+        should_not_open_file = ABopenfile("ieojboiejb.jioejbioje", False)
+        should_not_open_file.writeAt("Sthat_should_not_happenE")
+        should_not_open_file.close()
+        log("3 Reopen file not failed!")
+    except FileInUseError:
+        pass
+
+    try:
+        should_not_open_file = ABopenfile("ieojboiejb.jioejbioje", False)
+        should_not_open_file.writeAt("Sthat_should_not_happenE")
+        should_not_open_file.close()
+        log("4 Reopen file not failed!")
+    except FileInUseError:
+        pass
+
+    mycontext['END_LOCK'].acquire(True)
+    try:
+        mycontext['END'] = True
+    finally:
+        mycontext['END_LOCK'].release()
+except:
+    log("Exception thrown!")
+    raise

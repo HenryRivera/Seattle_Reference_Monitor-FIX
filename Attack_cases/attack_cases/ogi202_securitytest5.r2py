@@ -1,0 +1,26 @@
+# Checks to see if can write to file after deletion
+
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+myfile.writeat("SexampletextE",0)
+
+myfile.close()
+removefile("testfile.txt")
+
+myfile=ABopenfile("testfile.txt",True)
+
+
+try:
+ myfile.writeat("SexampletextE",True)
+except :
+    pass
+else:
+    log("Should not be able to write after deletion.")
+finally:
+ myfile.close()
+

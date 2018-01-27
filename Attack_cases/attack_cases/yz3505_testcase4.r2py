@@ -1,0 +1,42 @@
+# MULTITHREADING
+#CREATE TWO THREADS
+
+s = 'S' + '1' * 10000 + 'E'
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+
+def thread1():
+	try:
+		myfile.writeat(s,0)
+	except:
+		log('multithreading1 test failed \n')
+
+def thread2():
+	try:
+		myfile.writeat('S2E',10000)
+	except:
+		log('multithreading2 test failed \n')
+createthread(thread1)
+createthread(thread2)
+myfile.close()
+
+# READ OPERATION
+# Reopen file again to read
+myfile=ABopenfile("testfile.txt",True)
+
+try:
+ assert('S2E' == myfile.readat(3,10000))
+ #Close the file
+ myfile.close()
+except:
+ #Close the file
+ myfile.close()
+ log("multithreading test2 failed! \n")

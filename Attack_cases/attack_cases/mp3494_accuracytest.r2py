@@ -1,0 +1,46 @@
+# WRITE OPERATION
+# New File Operation
+
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+# Write valid data to the file
+myfile.writeat("StestE",0)
+
+#Close the file
+myfile.close()
+
+# READ OPERATION
+# Reopen file again to read
+myfile=ABopenfile("testfile.txt",True)
+
+# Read the file to check the contents
+try:
+ assert('StestE' == myfile.readat(6,0))
+ #Close the file
+ myfile.close()
+except:
+ #Close the file
+ myfile.close()
+ log("Valid Data write to a file is unsuccessfull!")
+
+# lets try to open a file without trying to create a new one
+myfile=ABopenfile("testfile.txt",False)
+
+#lets now try to write to that file
+myfile.writeat("Stest2E",0)
+myfile.close()
+
+#lets read and see
+try:
+    assert('Stest2E' == myfile.readat(7,0)
+    myfile.close()
+except:
+    myfile.close()
+    log("File fails to check and see if one of the files exists already to keep the newest one

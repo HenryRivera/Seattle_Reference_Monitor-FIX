@@ -1,0 +1,32 @@
+
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+try:
+    # I should get 'SE' when reading an empty file...
+    assert('SE' == myfile.readat(None,0))
+except:
+    log('empty file not handled properly \n')
+
+# put some valid data in the file.
+myfile.writeat("Stest12345E",0)
+myfile.close()
+
+
+myfile=ABopenfile("testfile.txt", False) 
+myfile.writeat("Sthis is my test for a valid file contentE",0)
+myfile.close()
+
+
+myfile=ABopenfile("testfile.txt", False) 
+content = myfile.readat(11, 0)
+myfile.close()
+
+try:
+    assert("Sthis is my test for a valid file contentE" != content)
+except:
+    log('Failed to write valid data to already created file ! \n')

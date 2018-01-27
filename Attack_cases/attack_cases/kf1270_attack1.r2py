@@ -1,0 +1,24 @@
+# Clean up of existing file
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+
+# Open File Function Call
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+
+# Write valid data to the file
+myfile.writeat("StestE",0)
+
+#Close the file
+myfile.close()
+
+#Case 1
+try:
+ #checking if both files exist at the same time
+ assert("testfile.txt.a" in listfiles() and "testfile.txt.b" in listfiles())
+ log("both files present at the same time. unsuccessful!\n")
+except:
+ pass
+ 
+ 

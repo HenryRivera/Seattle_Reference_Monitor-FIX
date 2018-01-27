@@ -1,0 +1,30 @@
+#Accuracy Test: check open new file
+
+testid = 0
+testfilename = "test_"+ str(testid) + ".txt"
+testfilea = "test_"+ str(testid) + ".txt.a"
+testfileb = "test_"+ str(testid) + ".txt.b"
+
+
+if testfilename in listfiles():
+  removefile(testfilename)
+if testfilea in listfiles():
+  removefile(testfilea)
+if testfileb in listfiles():
+  removefile(testfileb)
+myfile=ABopenfile(testfilename,True)
+try:
+  assert('SE' == myfile.readat(None,0))
+
+  myfile.writeat("aaabbbccc",0)
+  assert('SE' == myfile.readat(None,0))
+  
+  myfile.writeat("S",0)
+  assert('SE' == myfile.readat(None,0))
+
+  myfile.writeat(".E",5)
+  assert('SE' == myfile.readat(None,0))
+  myfile.close()
+except:
+  myfile.close()
+  log("Open new file is not handled properly!")

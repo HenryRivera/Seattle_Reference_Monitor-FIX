@@ -1,0 +1,23 @@
+#Inalid write breaks jh4339
+
+if "testfile.txt.a" in listfiles():
+ removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+ removefile("testfile.txt.b")
+
+myfile=ABopenfile("testfile.txt",True)
+
+myfile.writeat("Sabcde",0)
+
+myfile.close()
+
+myfile=ABopenfile("testfile.txt",True)
+
+try:
+ 
+ assert('SE' == myfile.readat(None,0))
+ myfile.close()
+except:
+ myfile.close()
+ # Error Handle or Failure Condition
+ log("Error for valid write\n")

@@ -1,0 +1,41 @@
+TYPE="type"
+ARGS="args"
+RETURN="return"
+EXCP="exceptions"
+TARGET="target"
+FUNC="func"
+OBJC="objc"
+
+# cleanup for test
+def cleanup():
+  if "testfile.txt.a" in listfiles():
+    removefile("testfile.txt.a")
+  if "testfile.txt.b" in listfiles():
+    removefile("testfile.txt.b")
+	
+# assumption 5 - lets see what happens when one instance of ABFile is writeat over 2nd
+# I will create 2 ABFiles, try to put wrong content into 2nd, then assign 1st to second
+# It I still expect getting valid content - no rules should be broken
+
+try:
+	
+	cleanup()
+	myfile=ABopenfile("testfile.txt",True)
+	myfake = ABopenfile("fake.txt",True)
+	myfake.writeat("MaliciousContent",0)
+	
+	myfile = myfake
+	myfile.close()
+	
+	checkfile = ABopenfile("testfile.txt",True)
+	content = checkfile.readat(None,0)
+	expected = "SE"
+	assert(expected == content)
+	
+except AssertionError:
+	log("[(5) ERROR]: Myfile of ABFile type created, Myfake of ABFile type created, Incorrect content written to Myfake, Myfile assigned to Myfake, Myfake successfully put over incorrect properties. \n")
+	pass
+	
+finally:
+	checkfile.close()
+	pass
